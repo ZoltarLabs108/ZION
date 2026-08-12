@@ -135,3 +135,8 @@ Append-only. One row per stage ACTION. Columns:
 - Extend Silver history pre-2000; add Platinum data if reinstated; repair Copper 2000-08 unit splice.
 - Per-asset cycle definitions (only S&P defined).
 - Wire live FRED/Yahoo fetch (needs `~/.config/ghsys/fred_key` + network); default build reads the panel.
+
+### Added by operator (2026-08-12)
+| variable | source | release lag | role |
+|---|---|---|---|
+| WTI_Backwardation | CME/EIA futures curve (spot - 12mo future, or M1-M12 spread); legacy ASSET_PIPELINE/wti_extra.csv | 0 (market) | CANDIDATE POOL: oil futures-curve shape (backwardation/contango). Cushing storage thesis DISCARDED (operator); backwardation kept as a raw candidate variable for RED DAWN discovery + regime lenses. Never a storage-timing claim. |
