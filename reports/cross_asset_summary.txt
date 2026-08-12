@@ -1,0 +1,17 @@
+========================================================================================================================
+ZION MULTIASSET — CONSOLIDATED CROSS-ASSET SUMMARY (3-month sequential OOS)
+generated: 2026-08-12 16:45:55.099022   passes to clean: 2   clean-streak: 2
+========================================================================================================================
+asset   ratio (flag)                        N sweep  pulled(cov%,acc)           cascade B OOS(n,LB)    board ACT/CAS/GF/FL  MIRROR                      
+Gold    Dollar_Index/M2_Money [prior]       6 FLAT ( T1;T2;T25(19.5%,71.8%)     51.9%(n187,LB44.7)     85/188/62/104        EDGE — OOS beats mirror AND 
+Silver  Industrial_Production/GS10_Rate [   9 FLAT ( T9;T17;T19(25.5%,70.5%)    50.0%(n32,LB33.6)      61/33/69/150         EDGE — OOS beats mirror AND 
+WTI     US_2Y_Treasury/Fed_Funds_Rate [*P   3 peaked T25;T26(15.3%,73.4%)       56.8%(n111,LB47.5)     64/111/64/200        drift-capture only (OOS<=dri
+USD     Gold_Close/US_CPI [*PROP]           6 FLAT ( none                       52.8%(n125,LB44.1)     0/126/244/69         drift-capture only (OOS<=dri
+
+HONEST EDGE VERDICT (one line per asset):
+  Gold   : 3 type-pull(s) cover 19.5% at 71.8% blended; cascade 51.9% (LB 44.7%) over n=187 adds little; MIRROR: acted edge survives
+  Silver : 3 type-pull(s) cover 25.5% at 70.5% blended; cascade 50.0% (LB 33.6%) over n=32 adds little; MIRROR: acted edge survives
+  WTI    : 2 type-pull(s) cover 15.3% at 73.4% blended; cascade 56.8% (LB 47.5%) over n=111 adds little; MIRROR: drift-capture only
+  USD    : no type clears the pull bar; cascade 52.8% (LB 44.1%) over n=125 adds little; MIRROR: drift-capture only
+
+NOTE: Silver/WTI/USD ratios are PROPOSED placeholders (NOT operator-confirmed). WTI rate-ratio is ZIRP-fragile. Gold = operator prior.

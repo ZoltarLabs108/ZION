@@ -1,0 +1,7 @@
+[PRODUCTION BOARD — final summary]
+    bucket                         types                          months  share%  status
+    ACT standing rules (pulled)    T25,T26                            64   14.6%  ACT (standing rules)
+    CASCADE split-permitted        T2,T6,T10,T11,T13,T14,T15...      111   25.3%  ACT via in-fold cascade (R2>=20%)
+    ABSTAIN gate-fail              T2,T11,T14,T17,T18                 64   14.6%  ABSTAIN — no filter cleared R2>=20%
+    ABSTAIN floor                  UNTYPED,T1,T2,T3,T5,T6,T9...      200   45.6%  ABSTAIN — n<8 / degenerate / missing
+    partition check: 64 + 111 + 64 + 200 = 439 (decision months=439) -> OK

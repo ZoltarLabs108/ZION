@@ -1,0 +1,30 @@
+====================================================================================================
+ZION MULTIASSET — ERROR-CHECK LOOP (strict): audit >=3 passes; stop on 2 consecutive clean
+start: 2026-08-12 16:45:49.100439
+====================================================================================================
+
+----- PASS 1 -----
+  [Gold] N=6 design=pre-1990 sweep=FLAT (no-signal) | pulled=T1;T2;T25 (cov 19.5%) | cascade B OOS=51.9% n=187 | board ACT/CAS/GF/FL=85/188/62/104 | mirror=EDGE — OOS beats mirror AND drift [CAVEAT: pull-set membership selected in-sample (full-sample WF>67.5%); per-month routing is walk-forward but acted-months edge is an UPPER BOUND]
+      audit: CLEAN (zero findings)
+  [Silver] N=9 design=first 40% (<2011-01-01) sweep=FLAT (no-signal) | pulled=T9;T17;T19 (cov 25.5%) | cascade B OOS=50.0% n=32 | board ACT/CAS/GF/FL=61/33/69/150 | mirror=EDGE — OOS beats mirror AND drift [CAVEAT: pull-set membership selected in-sample (full-sample WF>67.5%); per-month routing is walk-forward but acted-months edge is an UPPER BOUND]
+      audit: CLEAN (zero findings)
+  [WTI] N=3 design=pre-1990 sweep=peaked | pulled=T25;T26 (cov 15.3%) | cascade B OOS=56.8% n=111 | board ACT/CAS/GF/FL=64/111/64/200 | mirror=drift-capture only (OOS<=drift) [CAVEAT: pull-set membership selected in-sample (full-sample WF>67.5%); per-month routing is walk-forward but acted-months edge is an UPPER BOUND]
+      audit: CLEAN (zero findings)
+  [USD] N=6 design=pre-1990 sweep=FLAT (no-signal) | pulled=none (cov 0.0%) | cascade B OOS=52.8% n=125 | board ACT/CAS/GF/FL=0/126/244/69 | mirror=drift-capture only (OOS<=drift)
+      audit: CLEAN (zero findings)
+  PASS 1 VERDICT: ZERO findings (clean #1 consecutive)
+
+----- PASS 2 -----
+  [Gold] N=6 design=pre-1990 sweep=FLAT (no-signal) | pulled=T1;T2;T25 (cov 19.5%) | cascade B OOS=51.9% n=187 | board ACT/CAS/GF/FL=85/188/62/104 | mirror=EDGE — OOS beats mirror AND drift [CAVEAT: pull-set membership selected in-sample (full-sample WF>67.5%); per-month routing is walk-forward but acted-months edge is an UPPER BOUND]
+      audit: CLEAN (zero findings)
+  [Silver] N=9 design=first 40% (<2011-01-01) sweep=FLAT (no-signal) | pulled=T9;T17;T19 (cov 25.5%) | cascade B OOS=50.0% n=32 | board ACT/CAS/GF/FL=61/33/69/150 | mirror=EDGE — OOS beats mirror AND drift [CAVEAT: pull-set membership selected in-sample (full-sample WF>67.5%); per-month routing is walk-forward but acted-months edge is an UPPER BOUND]
+      audit: CLEAN (zero findings)
+  [WTI] N=3 design=pre-1990 sweep=peaked | pulled=T25;T26 (cov 15.3%) | cascade B OOS=56.8% n=111 | board ACT/CAS/GF/FL=64/111/64/200 | mirror=drift-capture only (OOS<=drift) [CAVEAT: pull-set membership selected in-sample (full-sample WF>67.5%); per-month routing is walk-forward but acted-months edge is an UPPER BOUND]
+      audit: CLEAN (zero findings)
+  [USD] N=6 design=pre-1990 sweep=FLAT (no-signal) | pulled=none (cov 0.0%) | cascade B OOS=52.8% n=125 | board ACT/CAS/GF/FL=0/126/244/69 | mirror=drift-capture only (OOS<=drift)
+      audit: CLEAN (zero findings)
+  PASS 2 VERDICT: ZERO findings (clean #2 consecutive)
+
+====================================================================================================
+LOOP COMPLETE after 2 passes: TWO CONSECUTIVE CLEAN
+====================================================================================================
