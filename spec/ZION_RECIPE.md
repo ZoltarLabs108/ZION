@@ -258,3 +258,241 @@ Sequential one-step-ahead (retrain all-past each month, predict 1 ahead, reset m
 SPY/CAPE result (real legs, N=1, +-0.5 SD, 1990+): ACTED 67.0% (n=197, LB 60.2%); edge
 concentrated in CAPE-up momentum types T27 (83.9%) / T26 (73.1%); down-side near chance;
 flat-CAPE sub-types abstain. Cumulative-accuracy path + hit/miss strip accompany it.
+
+---
+
+## PHASE 2 / RED DAWN — POOL-REMOVAL + CONVICTION (operator rulings 2026-08-12)
+Phase 2 analyzes MONTHS IN THE POOL, removing them as valid analyses appear.
+- PULL RULE: any type with sequential-WF > 65% AND n >= 8 (operator floor) is PULLED from
+  the pool and becomes a standing rule — that type predicts on its type alone going
+  forward. Cascade hunts only the shrunken remainder pool (recursive coverage:
+  accept -> remove months -> re-analyze remainder).
+- CONVICTION: pulled types with WF > 70% enter the conviction-weighting system — for now
+  rated ONE STAR (weighting system to be elaborated).
+- STARS AT TIER LEVEL: same bar, same currency — a tier-cell earns a star ONLY via
+  realized sequential-OOS track (WF>70%, n>=8, + placebo since it was searched for).
+  Tier MEMBERSHIP confers zero stars (train labels anti-predict OOS). Since >67.5% pulls
+  a cell into standing rules, stars in practice attach only to STANDING RULES at any
+  level. Labels inform where to look, never what to award.
+- TIMING (C6 guard, operator AGREED): for BACKTESTED numbers the pull decision is IN-FOLD —
+  a type locks only when its TRAILING past-only OOS record clears the bar at that month.
+  Full-record pulls act only as GOING-FORWARD standing rules from today; never historical
+  pool-carving.
+- PULL BARS (operator-set 2026-08-12, BOTH required): WF > 67.5% AND n >= 8. Fail either ->
+  stays in pool. (Bar raised from 65% by operator; conviction star bar stays 70%.)
+- SPY standing snapshot (2026-08-12 FINAL @67.5): PULLED = T27* (77.1%, n=35), T5* (72.7%,
+  n=11), T14 (68.8%, n=125); * = one star (>70%). Coverage 171/434 (~39%) at 70.8% blended.
+  REMAINDER POOL = 263 months @ ~58.6%: T26(59, 66.1) T15(52, 59.6) T1(36) T17(31) T2(30)
+  T13(21) T25(9, 66.7) T3(8) T18(7) + 10 degenerate. T26/T25 fell back in at the new bar.
+- Other assets @67.5 (n>=8): WTI pulls T3 only (71.4, n=14; T18 67.4 n=46 misses by 0.1);
+  Silver [provisional predictor] pulls T19 (68.0, n=25) + T5 (77.8, n=9); USD pulls T22
+  (71.4, n=14, C5 lone-cell caution); Gold none.
+  (Operator said "T11" — recorded as T5, whose n=11; no T11 exists in the SPY table.)
+- FLIP verdicts: trailing-OOS flip TESTED AND REJECTED (flip months 23.1% vs base 76.9% —
+  losing streaks mean-revert; matches ARTEMIS flip-not-learnable). Train-side under-50
+  flip only, Wilson-gated. Post-dip rebound subsets are NEVER certification evidence
+  (selection artifact — C5/C6 class).
+- TIER verdict (first honest cascade test on SPY remainder): IS 67-71% -> WF 52.6%
+  (15-19pt overfit gap; tier1 not better than tier2 OOS). Tiers = conviction labels only,
+  never direction-changers. NOTE: legacy RED DAWN cascade NEVER EXECUTED on SPY/CAPE
+  (missing _Z6 column code; all months Model 1 = raw CAPE direction) — the 71%/0.623
+  legacy anchor was CAPE+convergence, NOT tiers; there is no legacy evidence tiers add value.
+- Other assets' pulls (floor 8): WTI T18 (67.4%, n=46), T3 (71.4%, n=14); Silver T19
+  (68.0%, n=25) + T3/T5 (66.7%/77.8%, n=9) [provisional — predictor unconfirmed];
+  Gold none; USD T22 (71.4%, n=14) borderline-lone-cell, treat with C5 suspicion.
+- Workflow: read original RED DAWN + CYCLOPS letters first (DONE), then walk the
+  cascade step-by-step on SPY's remainder pool, one checkpoint per step.
+
+### CASCADE WORKFLOW ORDER (operator, 2026-08-12)
+1. RUN the cascading tier analysis on the remainder pool (in-fold, per type).
+2. AFTER EACH tier run: FILTER ANALYSIS — which (predictor, threshold) the in-fold search
+   chose, modal filter + selection-stability %, WITH the per-type color scatter plots
+   (x = primary-filter z (train-scored), y = forward return, color = tier, o=hit x=miss).
+   Scatters are part of the standing diagnostics, emitted every run.
+3. Tier table format (legacy O-value format + the new OOS column):
+   type | tier | n | IS% | Bayes% | AvgRet|ok | Cov | O-val | o_cov | WF sequential-OOS% | LB.
+   OOS column = SEQUENTIAL 3-MONTH-FORWARD forecast (train <= t-3, predict t+3, roll monthly).
+   Artifacts: reports/RD_cascade3m_months.csv + RD_cascade3m_scatter.png.
+
+### TRUNCATION DOUBLE-CHECK (operator, 2026-08-12 — mandatory, EVERY analysis stage)
+Truncation overturns verdicts (full-algo convention). Check TWICE, independently:
+- CHECK 1 — PRE-RUN (machinery audit): before running, verify against the stage spec that
+  NOTHING is cut down: full threshold grid (percentile, not token points), all derivative
+  forms (incl. 2nd-order), full candidate pool, all cascade retries, all types included.
+  Any deliberate reduction must be DECLARED in the run header (what + why), never silent.
+- CHECK 2 — POST-RUN (month accounting): pool_total == emitted + abstained_with_reason,
+  reconciled PER TYPE and printed. Zero silently dropped months; ABSTAIN rows carry
+  reasons (type-train<floor, leaf<floor, candidate-missing). Display shows ALL types
+  including degenerates — no display filtering.
+- LOOP-UNTIL-CLEAN (operator): repeat the audit cycle (CHECK 1 + CHECK 2, fix anything
+  found, re-run) until TWO CONSECUTIVE full audit passes discover ZERO truncations.
+  One clean pass is not enough; the verdict unlocks only after the second consecutive
+  clean pass. Each pass's findings (or "none") are logged in the run record.
+A verdict is PROVISIONAL until the loop closes. (Audit 2026-08-12 caught v1 cascade:
+12/263 months silently dropped incl. all of T18; 3-point threshold grid vs legacy
+50-point percentile; 1 derivative form vs 5; 9 candidates vs 34 — verdict held open.)
+
+### FILTER-STRENGTH DIAGNOSTIC (operator, 2026-08-12 — MANDATORY, before threshold analysis)
+Measure each candidate filter's strength BEFORE any threshold is searched:
+- Statistic: point-biserial R^2 = corr(candidate z, Match)^2 within the type, TRAIN-side
+  in-fold — the % of Match-variance the candidate accounts for. (Match = base direction
+  correct that month. Monotone with the Welch/Cohen-d screen: d 0.2/0.5/0.8 ~ R^2 1%/6%/14%.)
+- Report R^2 for EVERY screened candidate per type; the chosen filter's R^2 travels with
+  it into all downstream tables.
+- HARD GATE (operator, 2026-08-12): a candidate must explain >= 20% of Match-variance
+  (train-side, in-fold) or it is DISCARDED before threshold analysis. If NO candidate
+  clears 20% for a type -> the type ABSTAINS (operator ruling — supersedes earlier
+  "emit base direction": no qualifying filter = no call; dark is valid).
+  (R^2 20% ~ Cohen's d ~ 1.0.) The gate kills noise-carving outright.
+- CAVEAT the gate does NOT cover: small-n luck. Null R^2 ~ 1/(n-1); at n~30 the max
+  across ~50 candidate-columns can clear 20% by chance (cf. T25 55.2% @ n=28). The gate
+  therefore NEVER substitutes for the n-floor or the max-stat placebo — gate + floor +
+  placebo together are the full lock. At n>=300, 20% is unreachable by chance; a large-
+  cell pass is a genuine monster and goes straight to placebo confirmation.
+- SPY effect (descriptive preview): splits attemptable only in T1 (US_2Y 22.0%), T15
+  (WTI 27.3%), T17 (Gold 28.7%), T25 (Gold 55.2%, small-n suspect); T2/T3/T13/T26 ABSTAIN.
+
+### PRODUCTION BOARD — STANDARD OUTPUT INTO HAL (operator, 2026-08-12; per asset, every run)
+The monthly HAL report carries this table per asset (re-printed every run; gate runs
+in-fold so bucket membership can shift as evidence accumulates):
+  bucket | types | months | share% | status/acc
+  1. ACT — standing rules (pulled types, WF>67.5 & n>=8; stars >70%)  -> emit type direction
+  2. CASCADE — split permitted (some filter R^2>=20% in-fold)          -> tier calls if survived
+  3. ABSTAIN — gate-fail (no filter >=20%)                             -> dark, no forced call
+  4. ABSTAIN — floor (type n<8 / degenerate)                           -> dark
+SPY snapshot: ACT 171mo/39.4% @70.8% (T27* T5* T14); CASCADE 128mo/29.5% (T1 T15 T17 T25,
+pending untruncated run + placebo); ABSTAIN gate-fail 118mo/27.2% (T26 T2 T13 T3);
+ABSTAIN floor 17mo/3.9%. Dark board = valid answer (~31% dark).
+- Evidence (2026-08-12, SPY v1 post-mortem): cells where the selector chose near-zero
+  filters collapsed hardest (T2: chosen 0.2% vs 4.7% available -> IS72/OOS31; T15: 0.7%
+  vs 27.3% -> IS77/OOS33); cells where chosen = strongest (T17 28.7%, T26 8.5%) behaved
+  least pathologically. Selection criterion must track variance strength (Welch-d screen).
+
+### TARGET-CONVENTION ASYMMETRY (operator catch, 2026-08-12)
+When a leaf/type flips, the t-test screen can run against the OLD (base) or NEW (flipped)
+Match target. INVARIANT across the two: the primary variable chosen, its |d|/R^2 strength,
+and the primary threshold VALUE (Youden-J magnitude is symmetric under label complement).
+NOT INVARIANT: the pass/fail ORIENTATION inverts (positive-predictive side flips to the
+other side of the same threshold). Because the cascade recurses ASYMMETRICALLY (secondary
+on pass, model-3 on fail), the two conventions build DIFFERENT TREES -> different tier
+membership -> per-tier OOS numbers are CONVENTION-DEPENDENT.
+RULES: (a) the target convention MUST be declared in every run header; an undeclared
+convention is a truncation-check finding. (b) v1 SPY per-tier figures are provisional on
+this axis too. (c) Flip validity is NOT rescued by convention: forward corr(leaf train
+acc, base outcome) ~ 0 (-0.107) either way; relabeling adds no forward info. (d) Under
+flip-abolition, emitted direction = base everywhere -> aggregate accuracy is convention-
+INVARIANT (61.8% survives); only the conviction LABEL depends on the (pinned) tree.
+
+### PULL HORIZON LOCKED = 3-MONTH (operator 2026-08-12)
+All type-level pulls AND tier OOS computed at the 3-MONTH sequential horizon (train <= t-3,
+predict t+3), consistent with the tier cascade. Earlier 1-month pulls SUPERSEDED.
+SPY CAPE @3mo, TYPE LEVEL: 5 types pull (T5 90% n10 LB60, T27 80% n35 LB64, T14 77.4% n124
+LB69, T26 74.6% n59 LB62, T15 73.1% n52 LB60) — ALL reliably predictive (LB>50).
+COVERAGE = 280/420 scored months = 67% @ ~77% blended; remainder 140mo (T1,T2,T3,T13,T17,
+T25) -> cascade closure (expected null, few months). CAPE edge is ENTIRELY type-level; no
+tier required. (Horizon inconsistency caught: cascade had wrongly kept T15/T26 in remainder.)
+REGIME/WAVEFORM (CAPE 3mo stream, 420mo 68.6%): NO two-simultaneous-waveform evidence
+(2-sinusoid R2=0.19; the 4.3yr candidate = 2nd harmonic of 8.5yr = ONE non-sinusoidal
+cycle). 3 extreme drops (2012-09, 2020-10, 2022-11; all to ~50-53% at trend->reversal
+stress) = SEQUENTIAL rupture signature (CYCLOPS), not a mixture. Proper 2-regime test =
+condition accuracy on a state variable (pre-registered + placebo). Charts: reports/
+regime_decay_spy_cape.png, cape_waveform_decomp.png.
+
+### FLIP DOCTRINE — CORRECTED (operator 2026-08-12; supersedes earlier "abolish flip")
+The flip STAYS in the recipe permanently (it is valid method — e.g. reliably-inverse
+markers in medicine). Earlier "abolish" recommendation RETRACTED. Corrected criterion —
+THREE ZONES around 50% (LB may be as low as .4; a coin toss is neutral, not failure):
+  - RELIABLY PREDICTIVE: Wilson LOWER bound > 50% -> act on base direction.
+  - RELIABLY ANTI-PREDICTIVE: Wilson UPPER bound < 50% -> FLIP (this is the flip's job).
+  - COIN-TOSS: interval spans 50% -> ABSTAIN (no reliable direction either way).
+The v1 "flips destructive" finding was flipping on the WRONG TRIGGER (train acc<50%,
+endogenous to the search). Correct trigger = realized-OOS anti-predictiveness (UB<50).
+SPY result: ZERO reliably-anti-predictive cells (n>=8) — the sub-50 cells (T1-t4 35.3%
+UB59, T2-t2 33.3% UB65) STRADDLE 50 = coin-tosses. Verdict = "n too small," NOT "flips
+worthless." Flip machinery remains; on SPY it fires never.
+- DOUBLE-FLIP: current rebuild = single leaf-flip (no month flips twice; predA/predB
+  compositions verified correct). If the full 4-model cascade (base-flip -> model3 re-flip
+  -> leaf flip) is implemented, double/triple flips CAN occur and each composition MUST be
+  verified (two flips = base) — mandatory trace step.
+- FLIP AS DIAGNOSTIC: even when a cell fails gates, its flipped direction + percentage
+  carry information for the DECISION step (a reliably-wrong-leaning cell is a soft veto).
+
+### O-VALUE ROLE — CORRECTED: veto/derating diagnostic, not selection, not flip-trigger
+Negative O-value flags UNDERPERFORMING cells (SPY: 3 neg-O-val cells averaged ~39% OOS;
+corr(O-val,OOS)=+0.92 on survivors BUT partly mechanical — AvgRet touches realized ret —
+and only 5 cells). USE: soft veto / conviction-derating input to the decision step.
+NEVER: selection ranking, nor a flip trigger (flip still needs UB<50 confirmation).
+
+### PHASE-2 CANONICAL WORKFLOW (operator 2026-08-12, per predictor/asset, IN ORDER)
+1. Anchor 27-type analysis -> pulls (WF>67.5 & n>=8) -> standing rules.
+2. Cascade tiers on remainder (in-fold; R^2>=20% gate; gate-fail=ABSTAIN; filter-strength
+   + scatter after each tier run; tiers across-all AND within-each-type).
+3. If a type/tier COLLAPSES in OOS -> REGIME ANALYSIS (CYCLOPS): rolling-accuracy chart,
+   when it last worked, decay trend, cyclicality (dominant period, # cycles) — see below.
+4. If still no WF validity after regime analysis -> ABSTAIN.
+5. MIRROR-inverse: test IN-SAMPLE first (is an inverse/error engine plausible?), THEN
+   out-of-sample, scoped to that predictor's ACTED months only. Survivor = satellite.
+6. SECOND PREDICTOR on the REMAINING months only: LOWER thresholds; seek a second
+   threshold ideally covering ~half the prior predictor's months.
+7. FINAL RECKONING: coverage + in-sample AND out-of-sample accuracy of the covered months.
+8. Flip direction+percentage retained as decision-step diagnostic throughout.
+
+### REGIME-ESTABLISHMENT / DECAY RULES (operator 2026-08-12)
+Trigger: a cell/predictor no longer matches direction ~3 readings out. Then present:
+- 10-yr (36-mo) ROLLING OOS-accuracy chart; shade below-50% regimes.
+- WHEN it last worked (last month rolling>=50%); decay TREND (pp/yr, declining vs stable).
+- CYCLICALITY: autocorrelation / FFT -> dominant period + # full cycles over span.
+- Question answered: is the failure a persistent decay (act on it) or a cyclical trough
+  (a working pattern that no change was enacted around)?
+Built: reports/regime_decay_*.png (regime_decay_spy_cape). SPY anchor HEALTHY: 61.8%,
+6/188 windows <50%, still working (2025-07), flat -0.13pp/yr, ~7.8yr mild cycle.
+
+### TIER VERDICT (SPY, untruncated rebuild, variant B, 2026-08-12)
+Across all types: tier2 n54 OOS57.4 (UB70), tier3 n3 100 (tiny), tier4 n39 51.3 (UB66);
+tier1 NEVER emitted (secondary fails R^2 gate). Within each type: all real-n cells are
+coin-toss; only micro-n T1-t2(n4)/T2-t4(n8) read PRED (placebo suspects). Tier best-bucket
+is INCONSISTENT across types -> no stable directional info; tiers = conviction/coverage
+labels only. Pool 56.2% (LB_ovl 39%) = no edge over drift. Loop closed 2 clean passes.
+
+### FILTER METHOD (v1, stated for the record)
+Per fold, per type: candidates (HYPERION registry, PIT-lagged) z-scored on TRAIN stats;
+threshold grid z in {-0.5, 0, +0.5}; primary = (predictor,threshold) maximizing train
+J = |acc(pass) - acc(fail)| (floor 8/side); secondary re-splits pass side (different
+predictor); model-3 re-splits fail side -> 4 tiers; leaf flips only if TRAIN acc < 50%.
+Modal filter + stability % reported: stable modal = candidate correspondence; churn = noise.
+
+### MIRROR-INVERSE / ERROR-REGIME TEST (MANDATORY after predictor analysis, every asset)
+Lineage: HYACINTH_10_MIRROR (inverse-predictor finder; error-month engine; fed TEARS
+satellites/hedge legs). ZION rule (operator 2026-08-12): after the anchor predictor
+analysis, TEST whether any candidate predicts the anchor's ERROR months — in-fold: flag
+month if its candidate-state's TRAIN error-rate > train base +10pp (state n>=8); PASS iff
+Wilson-LB(err|flagged) > base error rate. If PASS -> reserve as ERROR-TESTING REGIME /
+future SATELLITE function (never sizes; conditioning only). If FAIL -> move on. Either
+way the test runs and the result is recorded — possibility is tested, never assumed.
+- SEQUENCING RULE (operator, 2026-08-12): MIRROR-INVERSE may NOT run until the prediction
+  pool for the specific predictor is exactly known — i.e., AFTER the production board is
+  finalized (pulls + cascade + gate/floor abstentions locked). Its input = the ACTED
+  months of that predictor ONLY (standing rules + surviving cascade calls). Errors on
+  would-have-abstained months are not errors; scoping to the full stream is invalid.
+- SPY status: earlier FAIL verdict (run on the ungated 434-mo stream) is MIS-SCOPED and
+  WITHDRAWN -> back to UNTESTED. Re-run on the finalized acted set once the untruncated
+  cascade + flip ruling close the board (currently 171 standing-rule months + pending
+  cascade bucket).
+
+### O-VALUE vs SEQUENTIAL OOS — MEASURED VERDICT (2026-08-12, 11 tiers n>=8)
+corr(O-value, OOS3m) = +0.33 (partly mechanical — AvgRet|ok touches realized outcomes);
+corr(Bayes, OOS3m) = -0.48 Pearson / -0.55 Spearman; corr(IS, OOS3m) = -0.40.
+The accuracy core of O-value ANTI-predicts sequential OOS (inverted conviction gradient,
+tier level — matches WF-pilot type-level finding). RULE: O-value/O-score = descriptive
+payoff context ONLY; never selection. Selection ranks on realized OOS Wilson-LB.
+STATUS: SPY remainder-pool cascade currently FAILS OOS as a whole (45.4%, LB_ovl ~35%);
+isolated bright tiers (T2-t1 78.6% n=14) are C5 best-of-N suspects — placebo before belief.
+
+### O-VALUE AS INVERSE PREDICTOR — TESTED, REJECTED (2026-08-12)
+Conviction-fade rule (a-priori bar: invert months routed to leaves with TRAIN acc > 70%,
+the overfit-wall signature): faded acc 54.8% (LB 44%), decaying 59.5% -> 50.0% across
+halves = noise consumption, not a standing inverse edge. RULE: the IS/O-value
+anti-correlation is a DIAGNOSTIC ONLY — use as VETO/derating (refuse to act on months
+routed to IS>70% overfit-flagged leaves), NEVER as an inversion signal. Third flip-family
+rejection (ARTEMIS, trailing-flip, conviction-fade) — flips are not learnable in this
+ecosystem; the recipe stops testing new inversion variants without new evidence.
