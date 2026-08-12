@@ -8,7 +8,8 @@ LOCKED DISCIPLINE (operator):
   - Anchor SPY: outcome SP_Price; ratio = CAPE column; legs Real_Price / Real_Earnings;
     N=6; +-0.5 train-SD dead zone; 27 sign-triple types (ORACLE indexing).
   - PIT lags: Industrial_Production, US_CPI, M2_Money shifted 2 months (C2).
-  - Pulled types (standing rules, excluded from pool): T27 (1,1,1), T5 (-1,0,0), T14 (0,0,0).
+  - Pulled types (3-MO-horizon pull set, WF>67.5% n>=8, excluded from pool):
+    T27 (1,1,1), T14 (0,0,0), T5 (-1,0,0), T15 (0,0,1), T26 (1,1,0)  [5 types; was 3 at H=1].
   - OOS = SEQUENTIAL 3-MONTH-FORWARD: at decision month t, train ONLY on rows s <= t-3
     (labels resolved by t); target sign(SP[t+3]/SP[t]-1); roll monthly from 1990.
   - All selection in-fold.  NO LB/OOS gates on emission (pure measurement).
@@ -73,7 +74,11 @@ MIN_PER_GROUP = 5                        # Welch screen min per group (primary/s
 MIN_PER_GROUP_M3 = 3
 YOUDEN_MIN_SAMPLES = 10                  # legacy find_optimal min segment rows
 YOUDEN_MIN_SAMPLES_M3 = 5
-PULLED = {26, 4, 13}                     # T27 (1,1,1), T5 (-1,0,0), T14 (0,0,0)  (0-based)
+# PULL SET recomputed at the 3-MONTH horizon (coordinator 2026-08-12 CLOSURE RUN):
+# five types clear the pull bar (WF>67.5%, n>=8) at H=3 (was only 3 at H=1).
+# 0-based idx = (cs+1)*9+(ps+1)*3+(es+1):
+#   T27(1,1,1)=26  T14(0,0,0)=13  T5(-1,0,0)=4  T15(0,0,1)=14  T26(1,1,0)=25
+PULLED = {26, 13, 4, 14, 25}
 PUB_LAG = {"Industrial_Production": 2, "US_CPI": 2, "M2_Money": 2}
 FORMS = ("Z6", "Z3", "Z12", "Z6_vel", "Z6_acc")
 RATE_LIKE = {"GS10_Rate", "Fed_Funds_Rate", "US_2Y_Treasury",
@@ -102,7 +107,10 @@ GATE_FAIL_REASONS = {"gate-fail-r2", "no-valid-split"}
 FLOOR_REASONS = {f"type-train<floor{TYPE_FLOOR}", "degenerate-screen",
                  "candidate-missing", "leaf-empty", f"leaf<floor{LEAF_FLOOR}",
                  "anchor-leg-missing", "train<MIN_TRAIN"}
-SNAPSHOT = {"ACT": 171, "CASCADE": 128, "GATE-FAIL": 118, "FLOOR": 17}   # descriptive ref
+# descriptive reference from the H=1 3-pull run (ACT=171); at H=3 the pull set is 5
+# types, so ACT rises and the remainder shrinks to ~140 months — the board prints the
+# actual H=3 numbers and this ref is annotated as the prior-run baseline only.
+SNAPSHOT = {"ACT": 171, "CASCADE": 128, "GATE-FAIL": 118, "FLOOR": 17}
 
 
 # ======================================================================================
@@ -697,6 +705,41 @@ def diagnostics(records, oos_checks, pool, pool_lines, elapsed, audit_findings_f
     P(f"    [C7 coverage guard] corr(acted, up)={c7:+.3f}   acted-up-rate={au*100:.1f}%  abstained-up-rate={bu*100 if np.isfinite(bu) else float('nan'):.1f}%")
     P("")
 
+    # ---------- TIER SIGNIFICANCE VERDICT (coordinator CLOSURE question) ----------
+    P("[TIER SIGNIFICANCE — does any (type,tier) cell clear reliably-predictive / anti-predictive? variant B]")
+    P("   bar: reliably-PREDICTIVE = Wilson 95% LB > 50 ; reliably-ANTI = Wilson 95% UB < 50")
+    P("   HONEST bar additionally requires overlap-adjusted LB (C4, eff n=n/3) to hold + Stage-5 placebo.")
+    cells = {}
+    for r in scored:
+        cells.setdefault((r["typ"], r.get("tier")), []).append(r)
+    nominal, honest = [], []
+    for (ti, tier), cell in sorted(cells.items()):
+        n = len(cell)
+        k = int(sum(rr["hitB"] for rr in cell))
+        lo, hi = wilson_bounds(k, n)
+        lo_ov = wilson_lb_overlap(k, n)
+        _, hi_ov = wilson_bounds((k / n) * max(n / H, 1.0), max(n / H, 1.0))
+        if lo > 0.5:
+            nominal.append((ti, tier, n, k / n, lo, lo_ov, "PREDICTIVE"))
+            if lo_ov > 0.5:
+                honest.append((ti, tier, n))
+        elif hi < 0.5:
+            nominal.append((ti, tier, n, k / n, hi, hi_ov, "ANTI"))
+            if hi_ov < 0.5:
+                honest.append((ti, tier, n))
+    if nominal:
+        for ti, tier, n, acc, b, b_ov, kind in nominal:
+            surv = "SURVIVES overlap-adj" if ((kind == "PREDICTIVE" and b_ov > 0.5) or
+                                              (kind == "ANTI" and b_ov < 0.5)) else "FAILS overlap-adj"
+            P(f"     T{ti+1} {tier}: n={n} acc={acc*100:.1f}% nominal-{kind} (bound {b*100:.1f}%) "
+              f"-> overlap-adj bound {b_ov*100:.1f}% -> {surv}")
+    else:
+        P("     (no cell clears even the nominal bound)")
+    P(f"   VERDICT: nominal-significant cells = {len(nominal)}; "
+      f"survive overlap adjustment = {len(honest)}  -> "
+      f"{'TIER EDGE SURVIVES' if honest else 'NO tier-level cell survives the honest bar — CAPE edge is entirely TYPE-level'}")
+    P("")
+
     # ---------- FULL tier table: ALL 27 types x tiers, abstain rows, no filtering ----------
     P("[TIER TABLE — ALL 27 TYPES, no display filtering; B = primary presentation, A = comparison]")
     hdr = (f"{'type':<20} {'tier':<6} {'n':>4} {'IS%':>6} {'Bayes%':>7} {'AvgRet|ok':>9} "
@@ -830,11 +873,11 @@ def diagnostics(records, oos_checks, pool, pool_lines, elapsed, audit_findings_f
         board[key] = len(rs)
     P(f"    partition check: {' + '.join(str(board[k]) for k in board)} = {sum(board.values())} "
       f"(decision months={total}) -> {'OK' if sum(board.values()) == total else 'FAIL'}")
-    P(f"    vs descriptive snapshot (ACT {SNAPSHOT['ACT']}, CASCADE {SNAPSHOT['CASCADE']} "
-      f"[T1/T15/T17/T25], gate-fail {SNAPSHOT['GATE-FAIL']} [T26/T2/T13/T3], floor {SNAPSHOT['FLOOR']}): "
-      f"WF in-fold run gives ACT {board['ACT']}, CASCADE {board['CASCADE']}, "
-      f"gate-fail {board['GATE-FAIL']}, floor {board['FLOOR']} — membership refit monthly, "
-      f"so bucket composition is a DISTRIBUTION across folds, not a constant.")
+    P(f"    pull set = {len(PULLED)} sign-triples (H=3 recompute) -> ACT={board['ACT']} months; "
+      f"remainder pool = {board['CASCADE'] + board['GATE-FAIL'] + board['FLOOR']} months "
+      f"(CASCADE {board['CASCADE']}, gate-fail {board['GATE-FAIL']}, floor {board['FLOOR']}). "
+      f"Prior H=1 3-pull baseline had ACT {SNAPSHOT['ACT']}. Bucket membership is refit "
+      f"monthly -> a DISTRIBUTION across folds, not a constant.")
     P("")
     return lines, tier_rows, headline
 

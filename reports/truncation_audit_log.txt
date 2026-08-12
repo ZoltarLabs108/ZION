@@ -55,3 +55,18 @@ PASS 3  (reports/run_output_pass3.txt)
   to pass 2 modulo timestamp/runtime line (deterministic pipeline, no RNG in the
   decision path).
   VERDICT: clean pass #2 -> TWO CONSECUTIVE CLEAN PASSES — LOOP CLOSED.
+
+====================================================================================================
+CLOSURE RUN (coordinator 2026-08-12): pull set recomputed at H=3 -> FIVE sign-triples.
+  PULLED updated {26,4,13} (3 types, H=1) -> {26,13,4,14,25} (5 types, H=3):
+    T27(1,1,1) T14(0,0,0) T5(-1,0,0) T15(0,0,1) T26(1,1,0), bar WF>67.5% n>=8.
+  Added a permanent [TIER SIGNIFICANCE] verdict block (per-cell Wilson LB/UB + overlap-adj).
+  PASS 1: machine checklist ZERO findings; manual audit ZERO findings (machinery unchanged
+    from the closed H=1 loop except the PULLED constant + the new report block; accounting
+    440 = 282 pulled + 158 pool, pool 158 = 70 emitted + 88 abstained, RECONCILES per type).
+  PASS 2: ZERO findings.  PASS 3: ZERO findings, byte-identical to pass 2 (deterministic).
+  -> TWO CONSECUTIVE CLEAN PASSES — closure loop closed.
+  RESULT: remainder pool 158 mo (153 typed: T1/T2/T3/T13/T17/T25 + degenerates + 5 untyped).
+    2 cells clear the NOMINAL Wilson-LB>50 bar (T1 tier2 n=4 LB51.0%; T2 tier4 n=8 LB67.6%),
+    ZERO survive C4 overlap adjustment (25.8% / 41.0%). No anti-predictive cell. Tier level
+    carries no reliable edge on the corrected remainder -> CAPE edge is entirely TYPE-level.
