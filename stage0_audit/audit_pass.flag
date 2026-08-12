@@ -1,0 +1,127 @@
+{
+  "verdict": "BLOCK",
+  "ok": false,
+  "n_rows": 1868,
+  "target_usable": 684,
+  "up_rate": 0.5248538011695907,
+  "anchor": {
+    "monotonic": true,
+    "dups": 0,
+    "gaps": 0
+  },
+  "hard_splices": [
+    "Copper_Close"
+  ],
+  "features": [
+    {
+      "col": "Copper_Close",
+      "nn": 416,
+      "cov": 0.22269807280513917,
+      "start": "1992-01-01",
+      "zeros": 0,
+      "stale": 1,
+      "splice": "SPLICE",
+      "lag": "-"
+    },
+    {
+      "col": "Dollar_Index",
+      "nn": 644,
+      "cov": 0.34475374732334046,
+      "start": "1973-01-01",
+      "zeros": 0,
+      "stale": 0,
+      "splice": "clean",
+      "lag": "-"
+    },
+    {
+      "col": "Fed_Funds_Rate",
+      "nn": 865,
+      "cov": 0.46306209850107066,
+      "start": "1954-07-01",
+      "zeros": 0,
+      "stale": 98,
+      "splice": "spike",
+      "lag": "-"
+    },
+    {
+      "col": "GS10_Rate",
+      "nn": 1868,
+      "cov": 1.0,
+      "start": "1871-01-01",
+      "zeros": 0,
+      "stale": 25,
+      "splice": "clean",
+      "lag": "-"
+    },
+    {
+      "col": "Gold_Close",
+      "nn": 704,
+      "cov": 0.37687366167023556,
+      "start": "1968-01-01",
+      "zeros": 0,
+      "stale": 19,
+      "splice": "clean",
+      "lag": "-"
+    },
+    {
+      "col": "Industrial_Production",
+      "nn": 1290,
+      "cov": 0.6905781584582441,
+      "start": "1919-01-01",
+      "zeros": 0,
+      "stale": 28,
+      "splice": "clean",
+      "lag": "LAG"
+    },
+    {
+      "col": "M2_Money",
+      "nn": 810,
+      "cov": 0.4336188436830835,
+      "start": "1959-01-01",
+      "zeros": 0,
+      "stale": 2,
+      "splice": "clean",
+      "lag": "LAG"
+    },
+    {
+      "col": "Term_Spread_10Y_2Y",
+      "nn": 603,
+      "cov": 0.3228051391862955,
+      "start": "1976-06-01",
+      "zeros": 2,
+      "stale": 16,
+      "splice": "clean",
+      "lag": "-"
+    },
+    {
+      "col": "US_2Y_Treasury",
+      "nn": 602,
+      "cov": 0.3222698072805139,
+      "start": "1976-06-01",
+      "zeros": 0,
+      "stale": 18,
+      "splice": "spike",
+      "lag": "-"
+    },
+    {
+      "col": "US_CPI",
+      "nn": 955,
+      "cov": 0.5112419700214133,
+      "start": "1947-01-01",
+      "zeros": 0,
+      "stale": 41,
+      "splice": "clean",
+      "lag": "LAG"
+    },
+    {
+      "col": "WTI_Crude_Close",
+      "nn": 488,
+      "cov": 0.26124197002141325,
+      "start": "1986-01-01",
+      "zeros": 0,
+      "stale": 1,
+      "splice": "spike",
+      "lag": "-"
+    }
+  ]
+}
