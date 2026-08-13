@@ -24,6 +24,24 @@ CYCLOPS train/test numbers are discarded, not ported.
 Only the second question is honest. "test_acc/wf_acc" from CYCLOPS is a misnomer and
 must never be cited. See [[contamination register C6 house-wide selection]].
 
+## LOCKED PARAMETERS (single source of truth — all values operator-set)
+- Horizon: 3-month-forward direction. target = sign(outcome[t+3]/outcome[t] - 1).
+- Cadence: monthly, first-of-month decision.
+- Training: expanding window, frontier <= t-3 (label gap = horizon); ALL selection in-fold.
+- OOS scoring starts 1990. Design sample = pre-1990 (first-40% fallback for short history).
+- Predictor N (change window): N in {3,6,9,12} (>=3, multiple of 3 = quarterly), FROZEN from
+  the pre-1990 sweep, per asset (SPY 6, Gold 6, Silver 9, WTI 3, USD 6).
+- Dead zone: +-0.5 TRAIN-SD on pct_change(N) of each leg, z-scored on train, per fold.
+- MIN_TRAIN 60 months. Leaf/cell/type floor n = 8.
+- Pull bar: WF > 67.5% AND n >= 8 -> standing rule. Conviction star: WF > 70%.
+- Filter-strength gate: point-biserial R^2 >= 0.20 (train, in-fold) or discard; none clear -> ABSTAIN.
+- Overlap: 3-mo windows rolled monthly -> effective independent n ~ n/3 (report LB_ovl).
+- PIT publication lags: Industrial_Production, US_CPI, M2_Money = +2 months.
+- Zones: Wilson LB>50 = predictive(act base); UB<50 = anti-predictive(FLIP); spans 50 = coin-toss(abstain).
+- Placebo: NOT a gate (dropped). Acceptance = accuracy + Wilson-LB + n.
+- Ledger: 1x flat sizing, monthly rebalance, no costs; CAGR = eq[-1]^(12/n)-1; fire-months + calendar.
+- Final step: Dollar-Index overlay (declared short-USD tilt), applied LAST.
+
 ## CONTAMINATION REGISTER — resolve + anticipate (standing, all assets)
 Every leak found becomes a permanent guard. Format: source · manifests as · resolve · anticipate.
 
@@ -31,13 +49,13 @@ Every leak found becomes a permanent guard. Format: source · manifests as · re
 - **C2 Publication-timing leak** · mid-month series (Industrial_Production, US_CPI, M2_Money) used as-of-1st-of-month → inflated acc that collapses when lagged (M2/Term_Spread 50.7%→34.0%) · resolve: PIT publication-lag (≥1mo; INDPRO/M2 realistically ~2mo at a 1st-of-month decision) · anticipate: PITlag flag in Stage 0, explicit lag calendar per series in Stage 1, never use a value before its real release date.
 - **C3 Drift-capture as skill** · long-horizon (3mo) accuracy dominated by the asset's own trend; high raw OOS acc (60-68%) but ≤0 edge vs always-predict-majority · resolve: net the drift baseline, rank on EDGE (acc−drift), never raw acc · anticipate: always report drift + edge; a call only counts if it beats always-trend.
 - **C4 Overlapping-window autocorrelation** · H-month horizon rolled monthly overlaps by H−1 → independence violated, Wilson-LB too tight · resolve: overlap-adjusted LB (eff n≈n/H) · anticipate: always print LB_ovl; treat nominal LB as an upper bound.
-- **C5 Multiple-comparison / best-of-N** · sweeping many pairs×types, the best clears 50% by luck (lone survivor out of dozens) · resolve: max-stat placebo (permute labels, re-run the ENTIRE selection, tail test) = Stage 5 · anticipate: never quote best-of-N without placebo; always report N tested.
+- **C5 Multiple-comparison / best-of-N** · sweeping many pairs×types, the best clears 50% by luck (lone survivor out of dozens) · resolve: judge on Wilson-LB + n (and overlap-adjusted LB_ovl) · anticipate: report N tested + LB + n. (Max-stat placebo DROPPED as a gate per operator 2026-08-12; selection-luck acknowledged via LB + n, not a placebo pass.)
 - **C6 House-wide selection** · picking predictors on the full sample then scoring "OOS" (the original contamination) · resolve: ALL selection in-fold only · anticipate: fold-local everything — the ZION invariant.
 - **C7 Coverage-selection leak** · months acted ≈ months the asset rose · resolve: report corr(acted, up); abstain must be direction-blind · anticipate: coverage guard in Stage 3.
 - **C8 Rate/spread zero-crossing** · pct_change on near-zero/negative series explodes → false splice/outliers (Fed_Funds, Term_Spread) · resolve: unit-aware ops (absolute-point for RATE_LIKE) · anticipate: classify RATE_LIKE columns; never pct_change them.
 - **C9 Reprint vs as-issued drift** · tapes silently revised → reprint acc ≫ as-issued (~85% vs ~52%) · resolve: score only frozen-at-issue calls (MIMESIS) · anticipate: never backfill from reprints.
 
-Open guards not yet built: C5 (max-stat placebo = Stage 5, next), exact per-series lag calendar (Stage 1).
+Open guards: exact per-series publication-lag calendar (Stage 1). (C5 placebo dropped as a gate.)
 
 ---
 
@@ -127,16 +145,16 @@ Runner: `stage1_pit_data/oracle_stage.py` (config-driven, all assets).
 - WALK-FORWARD (from 1990, one-step-ahead): raw rule 58.3% (LB 53.6%), learned
   CAPE-type cell 60.8% (LB 56.1%). Always state which one.
 
-### Predictor lookback N — DECISION D6b: FIX N=6 a-priori
-Never choose N from the full-sample sweep (that is C6 house-wide selection). Head-to-head
-WF: fixed N=6 = 58.3% > fixed N=1 = 57.4% = in-fold-selected N (which picks N=1 every
-month). Data-driven N selection underperforms the fixed economic choice. → fix N=6.
+### Predictor lookback N — RULE (canonical; see LOCKED PARAMETERS + Phase-1 step 6)
+N in {3,6,9,12} (>=3, multiple of 3 = quarterly reporting), chosen by the PRE-1990
+design-sample sweep then FROZEN per asset (first-40% fallback if <40 pre-1990 obs). Never
+chosen from the full-sample sweep (C6). In-fold data-driven N-selection underperforms the
+frozen choice (WF head-to-head). Per asset: SPY=6, Gold=6, Silver=9, WTI=3, USD=6.
 
-### "No movement" / dead zone — DECISION D6 (open, operator to confirm)
-Legacy RED DAWN: `CAPE_TYPE_FLAT_THRESHOLD=0.005` applied to `.diff(6)` ABSOLUTE level
-changes of CAPE/Price/Earnings (mislabeled "±0.5%"; almost never flags price flat).
-ZION current: ±0.5 train-SD adaptive. Neither is a true ±0.5%. RECOMMEND: true ±0.5%
-band on `pct_change(6)` of each component. LOCK THIS before type counts are trusted.
+### "No movement" / dead zone — DECISION D6 RESOLVED (operator: +-0.5 SD)
+LOCKED: dead zone = +-0.5 TRAIN-standard-deviations on pct_change(N) of each leg
+(ratio/num/den), z-scored on TRAIN only, per fold. |z| < 0.5 -> flat. (Legacy used a
+mislabeled +-0.005 on .diff(6) absolute levels that rarely flagged price; superseded.)
 
 ### 27-type distribution string (format)
 `<Outcome> Type Distribution: T1:<count>(<acc%>[F]), T2:..., ...` — one entry per
@@ -263,14 +281,14 @@ flat-CAPE sub-types abstain. Cumulative-accuracy path + hit/miss strip accompany
 
 ## PHASE 2 / RED DAWN — POOL-REMOVAL + CONVICTION (operator rulings 2026-08-12)
 Phase 2 analyzes MONTHS IN THE POOL, removing them as valid analyses appear.
-- PULL RULE: any type with sequential-WF > 65% AND n >= 8 (operator floor) is PULLED from
+- PULL RULE: any type with sequential-WF > 67.5% AND n >= 8 (operator floor) is PULLED from
   the pool and becomes a standing rule — that type predicts on its type alone going
   forward. Cascade hunts only the shrunken remainder pool (recursive coverage:
   accept -> remove months -> re-analyze remainder).
 - CONVICTION: pulled types with WF > 70% enter the conviction-weighting system — for now
   rated ONE STAR (weighting system to be elaborated).
 - STARS AT TIER LEVEL: same bar, same currency — a tier-cell earns a star ONLY via
-  realized sequential-OOS track (WF>70%, n>=8, + placebo since it was searched for).
+  realized sequential-OOS track (WF>70%, n>=8).
   Tier MEMBERSHIP confers zero stars (train labels anti-predict OOS). Since >67.5% pulls
   a cell into standing rules, stars in practice attach only to STANDING RULES at any
   level. Labels inform where to look, never what to award.
@@ -346,9 +364,9 @@ Measure each candidate filter's strength BEFORE any threshold is searched:
   (R^2 20% ~ Cohen's d ~ 1.0.) The gate kills noise-carving outright.
 - CAVEAT the gate does NOT cover: small-n luck. Null R^2 ~ 1/(n-1); at n~30 the max
   across ~50 candidate-columns can clear 20% by chance (cf. T25 55.2% @ n=28). The gate
-  therefore NEVER substitutes for the n-floor or the max-stat placebo — gate + floor +
-  placebo together are the full lock. At n>=300, 20% is unreachable by chance; a large-
-  cell pass is a genuine monster and goes straight to placebo confirmation.
+  therefore NEVER substitutes for the n-floor. gate + n-floor are the lock; small-n cells
+  are judged on Wilson-LB + n (placebo dropped as a gate per operator). At n>=300, 20% is
+  unreachable by chance; a large-cell pass is a genuine monster.
 - SPY effect (descriptive preview): splits attemptable only in T1 (US_2Y 22.0%), T15
   (WTI 27.3%), T17 (Gold 28.7%), T25 (Gold 55.2%, small-n suspect); T2/T3/T13/T26 ABSTAIN.
 
@@ -360,9 +378,9 @@ in-fold so bucket membership can shift as evidence accumulates):
   2. CASCADE — split permitted (some filter R^2>=20% in-fold)          -> tier calls if survived
   3. ABSTAIN — gate-fail (no filter >=20%)                             -> dark, no forced call
   4. ABSTAIN — floor (type n<8 / degenerate)                           -> dark
-SPY snapshot: ACT 171mo/39.4% @70.8% (T27* T5* T14); CASCADE 128mo/29.5% (T1 T15 T17 T25,
-pending untruncated run + placebo); ABSTAIN gate-fail 118mo/27.2% (T26 T2 T13 T3);
-ABSTAIN floor 17mo/3.9%. Dark board = valid answer (~31% dark).
+SPY snapshot (3-mo horizon, FINAL): ACT 282mo/64% @~77% (T5* T14 T15 T26 T27*); remainder
+CASCADE tiers = NOTHING survives (untruncated, 2 clean passes); ABSTAIN gate-fail + floor
+cover the rest. Dark board = valid answer. (Earlier 1-mo snapshot superseded by the 3-mo lock.)
 - Evidence (2026-08-12, SPY v1 post-mortem): cells where the selector chose near-zero
   filters collapsed hardest (T2: chosen 0.2% vs 4.7% available -> IS72/OOS31; T15: 0.7%
   vs 27.3% -> IS77/OOS33); cells where chosen = strongest (T17 28.7%, T26 8.5%) behaved
@@ -383,6 +401,11 @@ acc, base outcome) ~ 0 (-0.107) either way; relabeling adds no forward info. (d)
 flip-abolition, emitted direction = base everywhere -> aggregate accuracy is convention-
 INVARIANT (61.8% survives); only the conviction LABEL depends on the (pinned) tree.
 
+### PLACEBO NOT REQUIRED (operator 2026-08-12)
+Max-stat placebo is DROPPED as an acceptance gate. Standard = accuracy + Wilson-LB (and
+n). Do not re-insert placebo as a survival condition. (Selection-luck is acknowledged via
+LB + n; operator accepts the accuracy numbers on that basis.)
+
 ### PULL HORIZON LOCKED = 3-MONTH (operator 2026-08-12)
 All type-level pulls AND tier OOS computed at the 3-MONTH sequential horizon (train <= t-3,
 predict t+3), consistent with the tier cascade. Earlier 1-month pulls SUPERSEDED.
@@ -395,7 +418,7 @@ REGIME/WAVEFORM (CAPE 3mo stream, 420mo 68.6%): NO two-simultaneous-waveform evi
 (2-sinusoid R2=0.19; the 4.3yr candidate = 2nd harmonic of 8.5yr = ONE non-sinusoidal
 cycle). 3 extreme drops (2012-09, 2020-10, 2022-11; all to ~50-53% at trend->reversal
 stress) = SEQUENTIAL rupture signature (CYCLOPS), not a mixture. Proper 2-regime test =
-condition accuracy on a state variable (pre-registered + placebo). Charts: reports/
+condition accuracy on a state variable (pre-registered). Charts: reports/
 regime_decay_spy_cape.png, cape_waveform_decomp.png.
 
 ### FLIP DOCTRINE — CORRECTED (operator 2026-08-12; supersedes earlier "abolish flip")
@@ -450,7 +473,7 @@ Built: reports/regime_decay_*.png (regime_decay_spy_cape). SPY anchor HEALTHY: 6
 ### TIER VERDICT (SPY, untruncated rebuild, variant B, 2026-08-12)
 Across all types: tier2 n54 OOS57.4 (UB70), tier3 n3 100 (tiny), tier4 n39 51.3 (UB66);
 tier1 NEVER emitted (secondary fails R^2 gate). Within each type: all real-n cells are
-coin-toss; only micro-n T1-t2(n4)/T2-t4(n8) read PRED (placebo suspects). Tier best-bucket
+coin-toss; only micro-n T1-t2(n4)/T2-t4(n8) read PRED (thin, n too small). Tier best-bucket
 is INCONSISTENT across types -> no stable directional info; tiers = conviction/coverage
 labels only. Pool 56.2% (LB_ovl 39%) = no edge over drift. Loop closed 2 clean passes.
 
@@ -474,10 +497,11 @@ way the test runs and the result is recorded — possibility is tested, never as
   finalized (pulls + cascade + gate/floor abstentions locked). Its input = the ACTED
   months of that predictor ONLY (standing rules + surviving cascade calls). Errors on
   would-have-abstained months are not errors; scoping to the full stream is invalid.
-- SPY status: earlier FAIL verdict (run on the ungated 434-mo stream) is MIS-SCOPED and
-  WITHDRAWN -> back to UNTESTED. Re-run on the finalized acted set once the untruncated
-  cascade + flip ruling close the board (currently 171 standing-rule months + pending
-  cascade bucket).
+- SPY FINAL (2026-08-12, re-scoped to the 280 acted standing-rule months): base error
+  23.2%; NO candidate reliably predicts the standing rules' errors -> NO MIRROR satellite
+  for SPY. (The earlier ungated-434-mo FAIL was mis-scoped and withdrawn; this is the clean run.)
+- SPY SECOND-PREDICTOR pass (152 remainder months, lower bar 60%): nothing — best is GS10
+  covering 61% but only 53.8% (LB 44%, coin). No second predictor. SPY edge = type-level only.
 
 ### O-VALUE vs SEQUENTIAL OOS — MEASURED VERDICT (2026-08-12, 11 tiers n>=8)
 corr(O-value, OOS3m) = +0.33 (partly mechanical — AvgRet|ok touches realized outcomes);
@@ -485,8 +509,9 @@ corr(Bayes, OOS3m) = -0.48 Pearson / -0.55 Spearman; corr(IS, OOS3m) = -0.40.
 The accuracy core of O-value ANTI-predicts sequential OOS (inverted conviction gradient,
 tier level — matches WF-pilot type-level finding). RULE: O-value/O-score = descriptive
 payoff context ONLY; never selection. Selection ranks on realized OOS Wilson-LB.
-STATUS: SPY remainder-pool cascade currently FAILS OOS as a whole (45.4%, LB_ovl ~35%);
-isolated bright tiers (T2-t1 78.6% n=14) are C5 best-of-N suspects — placebo before belief.
+STATUS: SPY remainder-pool cascade FAILS OOS as a whole (untruncated rebuild 55.7%,
+LB_ovl ~36%); isolated bright tiers are best-of-N thin cells — judged on accuracy+LB+n
+(placebo dropped per operator); none survive. SPY tier level: nothing survives (final).
 
 ### O-VALUE AS INVERSE PREDICTOR — TESTED, REJECTED (2026-08-12)
 Conviction-fade rule (a-priori bar: invert months routed to leaves with TRAIN acc > 70%,
@@ -496,3 +521,105 @@ anti-correlation is a DIAGNOSTIC ONLY — use as VETO/derating (refuse to act on
 routed to IS>70% overfit-flagged leaves), NEVER as an inversion signal. Third flip-family
 rejection (ARTEMIS, trailing-flip, conviction-fade) — flips are not learnable in this
 ecosystem; the recipe stops testing new inversion variants without new evidence.
+
+---
+
+## STAGE 6 — LEDGER (money) + BOOK   [method locked 2026-08-13]
+Converts directional predictions to P&L; reports ACCURACY and MONEY together.
+- POSITION: on acted months, position = predicted direction (the 3-mo signal), realize
+  the 1-MONTH forward return (monthly rebalance); 0 (cash) on abstain. Assumptions stated
+  every run: 1x FLAT sizing, NO costs (both refined later by TRON sizing / a cost model).
+- METRICS: CAGR = eq[-1]**(12/n) - 1 (n = MONTHS; NEVER len(r)/52 — the annualization
+  defect); Sortino = mean(r)/downside-std * sqrt(12); Calmar = CAGR/|MaxDD|; MaxDD.
+- TWO BASES, always both: FIRE-MONTHS (annualize over only fired months) and CALENDAR
+  (all months incl cash). Report for BOTH the last-10-yr window AND the full period.
+- YEAR-BY-YEAR table: calendar return, fired count, accuracy per year.
+- RECONCILIATION RULE (truncation-class, mandatory): build the ledger on the VALIDATED
+  positions (the pipeline's own in-fold acted-month directions). Reconcile each sleeve's
+  acted-month count to the validated coverage; a MISMATCH is a truncation finding. Never
+  re-derive positions a different way (caught: an inline recompute gave Gold 17 acted vs
+  validated ~85 — discarded).
+- SPY result (2026-08-12, type-level standing rules): FIRE-MONTHS 16.0% CAGR / 2.80 Sortino
+  / -11.5% MaxDD / 84% acc (86 mo); CALENDAR 11.1% / 1.99 (121 mo, 35 cash); 8 of 10 years
+  positive; down years 2018 & 2022 = the low-accuracy years. MIRROR (re-scoped, 280 acted):
+  NO error engine. Second-predictor pass (152 remainder): nothing (best GS10 53.8% coin).
+  SPY edge = type-level standing rules ONLY.
+
+## STAGE 6b — SYZYGY BOOK (combine sleeves)   [status: BUILDING 2026-08-13]
+Equal-weight combine the 5 monthly sleeves (SPY, Gold, Silver, WTI, USD; USD = cash, no
+rules) into one book; book monthly return = mean of sleeves with data (cash sleeves = 0).
+Same two-base metrics + coverage (months with >=1 sleeve firing) + all-cash %. Runs under
+the truncation double-check loop (reconcile per-sleeve acted counts; loop until 2 clean).
+RESULTS (2026-08-13, syzygy_book.py; all 5 sleeves reconciled exact; 2 consecutive clean):
+- BOOK last-10yr: fire 9.3% CAGR / Sortino 3.88 / Calmar 2.12 / MaxDD -4.4%; cal 7.5% / 3.49.
+- BOOK full 1990+: fire 6.2% / 2.47 / MaxDD -7.1%; cal 4.9% / 2.20.
+- Coverage 350/440 fire (79.5%); 90 all-cash (20.5%).
+- Per-sleeve fire (full): SPY 12.9%/2.29, Gold 10.7%/1.02, Silver 50.1%/3.21 [PROPOSED],
+  WTI 47.1%/2.61 [PROPOSED], USD cash.
+- READ: SPY-dominated (57% of fired months, effectively always-long drift). Diversification
+  buys RISK not return: SPY-only cal 8.1%/1.83/-12.8% -> book 4.9%/2.20/-7.1% (Sortino up,
+  MaxDD halved). Silver/WTI CAGRs not trustworthy (proposed ratios, thin). USD costs ~1.3pp.
+- BOOK WEIGHTING (operator-locked 2026-08-13): SPY-ANCHORED 50/20/15/15 (SPY .5, Gold .2,
+  Silver .15, WTI .15, USD 0) — highest-Sortino, lowest-DD scheme. 1x = BASE; 1.3x =
+  optional "push for ~1%/mo" (Sortino invariant to leverage). Last-10yr 1x: 9.7% CAGR /
+  Sortino 2.93 / -6.5% DD; full-1990 1x: 6.5% / 1.84 / -7.8% (the HONEST full-cycle read;
+  last decade flattered by bull + SPY-drift). Rejected: max-gain weighting (concentrates in
+  thin/PROPOSED sleeves), equal-active (22% CAGR but Sortino 1.35 / DD -22%).
+- Book value = DIVERSIFICATION + DRAWDOWN CONTROL, not directional alpha (SPY always-long).
+- Stage 9 overlay APPLIED -> OFF (not a hedge; all-USD book).
+
+### FIVE-ASSET SUMMARY (type-level accuracy, 3-mo OOS, 2026-08-12)
+SPY: 5 pulls ~77% (ROBUST, T14 n124 LB69) — 64% coverage. Gold: 3 pulls 71.8% (T1/T2/T25).
+Silver: 3 pulls 70.5% [PROPOSED ratio + IndProd non-timely leg]. WTI: 2 pulls 73.4%
+[PROPOSED, ZIRP-fragile]. USD: NONE — clean ABSTAIN. Tier level: NOTHING survives on ANY
+asset. Combined monthly (5 sleeves): ~17% of months all-dark (no asset predicts; matches
+legacy ~13% stand-down); max 4 assets ever fire together; USD always cash.
+
+## STAGE 9 — DOLLAR-INDEX OVERLAY (FINAL STEP — applied LAST, after the book)  [operator 2026-08-13]
+The very last step of monthly ZION, after SYZYGY combines the sleeves. The book is
+USD-denominated, so a Dollar-Index overlay adjusts the whole book for dollar exposure.
+- Applied as a DECLARED SHORT-USD TILT, NOT a hedge (ecosystem currency-step verdict: no
+  genuine FX hedge survived for a USD-denom book; a declared tilt is the honest form,
+  effect marginal, TRAIN k ~ 0.1).
+- DISTINCT from the USD sleeve (which is an asset/outcome): this overlay is a book-level
+  currency tilt on the combined portfolio, not a directional prediction.
+- Reported as a final adjustment to book CAGR/Sortino/Calmar (with/without overlay).
+- It is the LAST step; nothing runs after it.
+- TIMING (fix): overlay currency return must be FORWARD-aligned (t->t+1) to the book's
+  holding period. First attempt used backward pct_change -> garbage; corrected.
+- RESULT (2026-08-13, corrected, k=0.10): the whole book is USD-DENOMINATED (all 5 sleeves
+  USD-priced) -> there is NO foreign-currency exposure to hedge. A currency overlay is a
+  fresh SPECULATIVE bet, not a hedge. Tested Dollar-Index + 5 majors (EUR/JPY/GBP/AUD/CAD):
+  almost any currency nudges Sortino +0.1-0.4 in one direction, but the helpful SIGN is
+  INCONSISTENT across currencies (AUD-short vs CAD-long etc.) = pure DIVERSIFICATION, not
+  a hedge; best-fit (AUD-short 2.61 vs base 2.16) is best-of-N overfit. Only real dollar
+  link = commodities (Gold/WTI/Silver) inversely dollar-sensitive, and that bet is weak.
+- VERDICT: overlay stays OFF (k=0). A currency position for this book would need its OWN
+  directional edge (JANUS-style FX predictor), not an overlay. (Reproduces ecosystem verdict.)
+
+---
+
+## MONTHLY ZION — STUDY CONCLUSION (wrapped 2026-08-13)
+Clean-OOS monthly system COMPLETE end-to-end (Stage 0->9), entirely under sequential
+one-step-ahead WF, in-fold selection, PIT lags, and the truncation loop-until-2-clean.
+FINDINGS:
+- SPY/CAPE = the one robust monthly anchor: 5 type-level standing rules, 3-mo directional
+  accuracy ~77% (fire-months 84% last decade), 282mo/64% coverage. Its money is mostly
+  BETA (always-long momentum) + drawdown-capping; not proven directional alpha.
+- TIER/CASCADE: NOTHING survives on ANY asset (all coin-toss at honest n / overlap-adj LB).
+  The edge is TYPE-LEVEL only. Flip family rejected 4 ways. O-value = veto diagnostic only.
+  MIRROR (SPY, re-scoped): no error engine. Second-predictor pass: nothing.
+- Gold (Dollar/M2, prior) 71.8% type-level, thin. Silver/WTI/USD ratios PROPOSED (not
+  priors) - suggestive at best; USD a clean ABSTAIN. Currency overlay = not a hedge
+  (all-USD book) -> OFF.
+- BOOK: SPY-anchored 50/20/15/15, 1x base (1.3x optional). HONEST full-cycle ~Sortino 1.84,
+  ~0.55-0.70%/mo, DD ~-8 to -10% levered; last-decade flattered (2.93 / ~1%/mo). Value =
+  diversification + drawdown control, not alpha. ~17% of months all-dark (valid stand-down).
+- Book monthly return = equal per-month blend, so book != sum of columns (1/n dilution;
+  verified exact, not a bug).
+OPEN (deferred, non-blocking): confirm Silver/WTI/USD real priors (need MXN in panel);
+cost model; live emission (MIMESIS/HAL); MCP server to serve monthly_state (legacy pattern).
+NEXT: WEEKLY ZION - same OOS methodology, single asset at a time; ~4x data so cascade/tier
+may have power monthly lacked (do NOT assume it inherits 'tiers don't survive').
+Deliverables: pipeline/ (oracle_stage, hyperion_build, reddawn_cascade_full, multiasset_pipeline,
+syzygy_book), reports/, spec/ (this recipe + ROADMAP + HYPERION + RED_DAWN + PROGRAM_MAP).
