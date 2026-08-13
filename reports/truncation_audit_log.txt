@@ -1,0 +1,72 @@
+ZION RED DAWN — TRUNCATION-AUDIT LOOP LOG (operator rule: repeat until TWO consecutive clean passes)
+run family: reddawn_cascade_full.py   panel: /Users/castaglia/Desktop/HYACINTH_X/combined_macro_0826.csv
+====================================================================================================
+
+PASS 1  (reports/run_output_pass1.txt)
+  machine checklist: clean.
+  MANUAL audit (machinery-vs-spec + accounting): 5 FINDINGS ->
+    F1  SILENT DROP: only 435 decision records vs 440 calendar months >= 1990-01.
+        The 5 most-recent months (2026-04..2026-08) have unpublished Real_Earnings
+        (anchor leg NaN) and never entered the records at all — violates "EVERY pool
+        month accounted". FIX: every calendar month >= START now gets a record; these
+        months abstain with reason 'anchor-leg-missing' (FLOOR bucket, UNTYPED row).
+    F2  SILENT-DROP CLASS: the len(train)<MIN_TRAIN skip path recorded nothing
+        (not triggered on this panel, but same defect class). FIX: records
+        'train<MIN_TRAIN' abstain.
+    F3  DELIVERABLE GAP: operator requires EVERY screened candidate column's R^2
+        reported, not only chosen/max. FIX: reports/filter_strength.csv (per fold x
+        candidate column, with cleared_gate flag) + audit check for its presence.
+    F4  Small-n placebo-adjudication flag missing (max-across-candidates can clear
+        the 20% gate by luck at n~30). FIX: mean type-train n + '*' flag (<30) in the
+        filter-strength table.
+    F5  TRANSPARENCY: percentile grid evaluated on raw train values (affine-identical
+        to the spec's grid on train-z values) was undocumented. FIX: header note;
+        thresholds/z still reported in train-z units.
+  machine checklist HARDENED: calendar-month reconciliation (records == calendar
+  months >= 1990-01), duplicate-month check, no-emission-from-untypeable,
+  filter_strength.csv presence.
+  VERDICT: 5 findings -> fixed -> re-run.
+
+PASS 2  (reports/run_output_pass2.txt)
+  machine checklist: ZERO findings.
+  MANUAL audit: zero findings.
+    (a) machinery vs spec verified item-by-item: 50-pt p5-p95 grid cov (0.10,0.70)
+        excl primary+secondary; 100-pt cov (0.05,0.90) excl + J>0 model-3; Youden J
+        on base-direction Match; 5 derivative forms Z6/Z3/Z12/Z6_vel/Z6_acc train-z
+        per fold (RATE_LIKE abs-point per C8); pool=14 documented (Copper banned,
+        Silver seam, 4 unlagged releases excluded per C2); Welch-t screen ranked on
+        |Cohen's d|, top-10 primary / top-5 first-valid secondary / up-to-10 model-3;
+        R^2>=0.20 hard gate at ALL three nodes, gate-fail => ABSTAIN (no base
+        emission path exists); floors 8/8/10/15; flips A bare + B Wilson-gated both
+        scored; PIT lags 2mo; pulled T5/T14/T27; sequential 3-mo-forward with
+        expanding window verified at 5 checkpoints (frontier gap = 3 rows each);
+        all 27 types + UNTYPED printed; production board partitions 440/440.
+    (b) accounting: 440 = 171 pulled + 269 pool; pool 269 = 96 emitted + 173
+        abstained; every abstain carries a reason; per-type RECONCILES=True on all
+        populated types.
+    note (documented, not a finding): the model-3 DISCOVERY flip (search-target
+    inversion when fail-subset raw Match < 0.5) is bare in BOTH variants — it is
+    legacy structure-growth logic shared by A and B; only per-tier EMISSION flips
+    differ between variants.
+  VERDICT: clean pass #1.
+
+PASS 3  (reports/run_output_pass3.txt)
+  identical code, full re-run: machine checklist ZERO findings; output byte-identical
+  to pass 2 modulo timestamp/runtime line (deterministic pipeline, no RNG in the
+  decision path).
+  VERDICT: clean pass #2 -> TWO CONSECUTIVE CLEAN PASSES — LOOP CLOSED.
+
+====================================================================================================
+CLOSURE RUN (coordinator 2026-08-12): pull set recomputed at H=3 -> FIVE sign-triples.
+  PULLED updated {26,4,13} (3 types, H=1) -> {26,13,4,14,25} (5 types, H=3):
+    T27(1,1,1) T14(0,0,0) T5(-1,0,0) T15(0,0,1) T26(1,1,0), bar WF>67.5% n>=8.
+  Added a permanent [TIER SIGNIFICANCE] verdict block (per-cell Wilson LB/UB + overlap-adj).
+  PASS 1: machine checklist ZERO findings; manual audit ZERO findings (machinery unchanged
+    from the closed H=1 loop except the PULLED constant + the new report block; accounting
+    440 = 282 pulled + 158 pool, pool 158 = 70 emitted + 88 abstained, RECONCILES per type).
+  PASS 2: ZERO findings.  PASS 3: ZERO findings, byte-identical to pass 2 (deterministic).
+  -> TWO CONSECUTIVE CLEAN PASSES — closure loop closed.
+  RESULT: remainder pool 158 mo (153 typed: T1/T2/T3/T13/T17/T25 + degenerates + 5 untyped).
+    2 cells clear the NOMINAL Wilson-LB>50 bar (T1 tier2 n=4 LB51.0%; T2 tier4 n=8 LB67.6%),
+    ZERO survive C4 overlap adjustment (25.8% / 41.0%). No anti-predictive cell. Tier level
+    carries no reliable edge on the corrected remainder -> CAPE edge is entirely TYPE-level.

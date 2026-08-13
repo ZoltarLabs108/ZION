@@ -1,0 +1,143 @@
+======================================================================================================================
+### ZION RED DAWN — UNTRUNCATED CASCADING TIER ANALYSIS — SPY REMAINDER POOL ###
+run: 2026-08-12 16:36:06.411320  panel: /Users/castaglia/Desktop/HYACINTH_X/combined_macro_0826.csv
+[discipline]  anchor=CAPE (legs Real_Price/Real_Earnings)  N=6  dead-zone=+-0.5 train-SD
+              OOS = SEQUENTIAL 3-MO-FORWARD (train s<=t-3, target sign(SP[t+3]/SP[t]-1), roll monthly from 1990)
+              PIT lags: {'Industrial_Production': 2, 'US_CPI': 2, 'M2_Money': 2}   pulled types: T5(-1,0,0) T14(0,0,0) T27(1,1,1)
+              floors: type-train>=8, leaf>=8, secondary>=10, model3>=15  (gate-fail => ABSTAIN, no base emission)
+              NO LB/OOS emission gates (pure measurement).  Structure refit EVERY month (no declared reduction).
+[machinery]   grids: primary/secondary 50pt p5-p95 cov (0.1, 0.7) excl | model-3 100pt cov (0.05, 0.9) excl
+              forms per candidate: ('Z6', 'Z3', 'Z12', 'Z6_vel', 'Z6_acc') (train-z per fold; RATE_LIKE=['Fed_Funds_Rate', 'GS10_Rate', 'Term_Spread_10Y_2Y', 'Term_Spread_10Y_3M', 'US_2Y_Treasury'] use abs-point changes, C8)
+              screen: Welch t Match vs non-Match, rank |Cohen's d| | HARD GATE: point-biserial R^2 >= 0.2 (operator)
+              note: percentile grid evaluated on raw train values == grid on train-z values (z is affine; identical splits); thresholds/z reported in train-z units. Every screened column's R^2 -> reports/filter_strength.csv
+              retries: primary top 10 | secondary top 5 first-valid | model-3 up to 10 first-valid J>0
+              flips (per-tier, train-side): A=bare(<0.5)  B=Wilson-95-upper<0.5 (PRIMARY presentation, operator 2026-08-12)
+[candidates]  final pool size = 14
+    Dollar_Index             INCLUDED (operator-named)
+    GS10_Rate                INCLUDED (operator-named)
+    Fed_Funds_Rate           INCLUDED (operator-named)
+    US_2Y_Treasury           INCLUDED (operator-named)
+    WTI_Crude_Close          INCLUDED (operator-named)
+    Gold_Close               INCLUDED (operator-named)
+    M2_Money                 INCLUDED (operator-named)
+    Industrial_Production    INCLUDED (operator-named)
+    US_CPI                   INCLUDED (operator-named)
+    Term_Spread_10Y_2Y       INCLUDED (operator-named)
+    Term_Spread_10Y_3M       INCLUDED (extra; PIT-safe close/spread, splice scan clean, start=1982-01-01)
+    VIX_Close                INCLUDED (extra; PIT-safe close/spread, splice scan clean, start=1990-01-01)
+    Natural_Gas_Close        INCLUDED (extra; PIT-safe close/spread, splice scan clean, start=1997-01-01)
+    Platinum_Futures_Close   INCLUDED (extra; PIT-safe close/spread, splice scan clean, start=1997-10-01)
+    Copper_Close             EXCLUDED — BANNED — hard unit splice 2000-08 (C1)
+    Silver_Close             EXCLUDED — starts 2000-08 (copper-style seam risk, unverified pre-history)
+    Unemployment_Rate        EXCLUDED — mid-month release, no locked PIT-lag rule (C2)
+    Nonfarm_Payrolls         EXCLUDED — mid-month release, no locked PIT-lag rule (C2)
+    Retail_Sales             EXCLUDED — mid-month release, no locked PIT-lag rule (C2)
+    Housing_Starts           EXCLUDED — mid-month release, no locked PIT-lag rule (C2)
+
+[OOS-METHOD VERIFICATION] expanding window; train frontier = decision month t-3 (3-mo label gap):
+    decision 1990-01-01: train n= 1293  span 1881-07-01..1989-10-01  frontier gap=3 rows (>= 3)
+    decision 1995-01-01: train n= 1353  span 1881-07-01..1994-10-01  frontier gap=3 rows (>= 3)
+    decision 2005-01-01: train n= 1473  span 1881-07-01..2004-10-01  frontier gap=3 rows (>= 3)
+    decision 2015-01-01: train n= 1593  span 1881-07-01..2014-10-01  frontier gap=3 rows (>= 3)
+    decision 2026-03-01: train n= 1727  span 1881-07-01..2025-12-01  frontier gap=3 rows (>= 3)
+    window EXPANDS across checkpoints: YES   (1990 is where SCORING starts, not a train freeze)
+
+[accounting]  decision months=440 (EVERY calendar month >= 1990-01)  pulled=282  POOL=158 (of which untypeable=5)
+              pool -> emitted=70 (scored=70, label-unresolved=0)  abstained=88
+              abstain reasons: {'gate-fail-r2': 44, 'degenerate-screen': 9, 'type-train<floor8': 12, 'leaf<floor8': 17, 'candidate-missing': 1, 'anchor-leg-missing': 5}
+              RECONCILES: pool_total == emitted + abstained -> True
+
+[HEADLINE — pool overall, sequential 3-mo-forward OOS]
+    variant A (bare flip                   ): acc= 52.9%  n=70  LB=41.3%  LB_ovl(C4,n/3)=33.7%
+    variant B (Wilson-gated flip (PRIMARY) ): acc= 55.7%  n=70  LB=44.1%  LB_ovl(C4,n/3)=36.2%
+    flip incidence: A flipped 34/70 emitted months; B flipped 20/70
+    drift baseline (always-UP on emitted months): 52.9%
+    [C7 coverage guard] corr(acted, up)=-0.170   acted-up-rate=52.9%  abstained-up-rate=69.4%
+
+[TIER SIGNIFICANCE — does any (type,tier) cell clear reliably-predictive / anti-predictive? variant B]
+   bar: reliably-PREDICTIVE = Wilson 95% LB > 50 ; reliably-ANTI = Wilson 95% UB < 50
+   HONEST bar additionally requires overlap-adjusted LB (C4, eff n=n/3) to hold + Stage-5 placebo.
+     T1 tier2: n=4 acc=100.0% nominal-PREDICTIVE (bound 51.0%) -> overlap-adj bound 25.8% -> FAILS overlap-adj
+     T2 tier4: n=8 acc=100.0% nominal-PREDICTIVE (bound 67.6%) -> overlap-adj bound 41.0% -> FAILS overlap-adj
+   VERDICT: nominal-significant cells = 2; survive overlap adjustment = 0  -> NO tier-level cell survives the honest bar — CAPE edge is entirely TYPE-level
+
+[TIER TABLE — ALL 27 TYPES, no display filtering; B = primary presentation, A = comparison]
+type                 tier      n    IS%  Bayes% AvgRet|ok    Cov   O-val   o_cov     R2 WF-OOS-3m%     LB LB_ovl
+----------------------------------------------------------------------------------------------------------------
+T1    DN/  DN/  DN   tier2     4  83.6%   83.3%    20.24%  0.114  25.662   2.933  27.4%     100.0%  51.0%  25.8%
+T1    DN/  DN/  DN   tier4    17  80.5%   36.8%     8.78%  0.486  -0.674  -0.327  32.5%      35.3%  17.3%  10.3%
+                       (A)    17  89.0%   21.1%     3.89%  0.486  -0.363  -0.176             17.6%   6.2%   3.2%
+T1    DN/  DN/  DN   --     pool=35 emitted=21 abstained=14 {'leaf<floor8': 9, 'candidate-missing': 1, 'gate-fail-r2': 4}   RECONCILES=True
+T2    DN/  DN/flat   tier2     9  93.3%   36.4%     7.27%  0.281  -0.387  -0.109  35.2%      33.3%  12.1%   6.1%
+T2    DN/  DN/flat   tier4     8  94.8%   90.0%     7.70%  0.250  11.837   2.959  39.0%     100.0%  67.6%  41.0%
+T2    DN/  DN/flat   --     pool=32 emitted=17 abstained=15 {'gate-fail-r2': 13, 'leaf<floor8': 2}   RECONCILES=True
+T3    DN/  DN/  UP   tier4     1  37.5%   33.3%     0.00%  0.125  -1.028  -0.128  22.3%       0.0%   0.0%   0.0%
+                       (A)     1  62.5%   66.7%     8.01%  0.125   5.815   0.727            100.0%  20.7%  20.7%
+T3    DN/  DN/  UP   --     pool=8 emitted=1 abstained=7 {'gate-fail-r2': 7}   RECONCILES=True
+T4    DN/flat/  DN   --     pool=2 emitted=0 abstained=2 {'type-train<floor8': 2}   RECONCILES=True
+T5    DN/flat/flat   PULLED (standing rule)  months=10
+T6    DN/flat/  UP   n=0 pool months  --
+T7    DN/  UP/  DN   n=0 pool months  --
+T8    DN/  UP/flat   n=0 pool months  --
+T9    DN/  UP/  UP   n=0 pool months  --
+T10 flat/  DN/  DN   --     pool=2 emitted=0 abstained=2 {'degenerate-screen': 2}   RECONCILES=True
+T11 flat/  DN/flat   n=0 pool months  --
+T12 flat/  DN/  UP   n=0 pool months  --
+T13 flat/flat/  DN   tier2     8  85.2%   50.0%     6.69%  0.381  -0.470  -0.179  30.8%      50.0%  21.5%  11.6%
+T13 flat/flat/  DN   tier4     7  29.9%   44.4%     4.25%  0.333  -0.912  -0.304  25.8%      42.9%  15.8%   8.0%
+T13 flat/flat/  DN   --     pool=21 emitted=15 abstained=6 {'gate-fail-r2': 5, 'leaf<floor8': 1}   RECONCILES=True
+T14 flat/flat/flat   PULLED (standing rule)  months=126
+T15 flat/flat/  UP   PULLED (standing rule)  months=52
+T16 flat/  UP/  DN   --     pool=1 emitted=0 abstained=1 {'type-train<floor8': 1}   RECONCILES=True
+T17 flat/  UP/flat   tier2     4  96.0%   66.7%     3.64%  0.129   1.868   0.241  36.8%      75.0%  30.1%  14.8%
+T17 flat/  UP/flat   tier4     4  29.2%   50.0%     4.89%  0.129   0.519   0.067  33.1%      50.0%  15.0%   6.9%
+T17 flat/  UP/flat   --     pool=31 emitted=8 abstained=23 {'degenerate-screen': 6, 'gate-fail-r2': 13, 'leaf<floor8': 4}   RECONCILES=True
+T18 flat/  UP/  UP   --     pool=7 emitted=0 abstained=7 {'type-train<floor8': 7}   RECONCILES=True
+T19   UP/  DN/  DN   n=0 pool months  --
+T20   UP/  DN/flat   n=0 pool months  --
+T21   UP/  DN/  UP   n=0 pool months  --
+T22   UP/flat/  DN   --     pool=2 emitted=0 abstained=2 {'type-train<floor8': 2}   RECONCILES=True
+T23   UP/flat/flat   tier2     1  87.5%   66.7%     5.35%  0.500   3.883   1.941  25.1%     100.0%  20.7%  20.7%
+T23   UP/flat/flat   --     pool=2 emitted=1 abstained=1 {'degenerate-screen': 1}   RECONCILES=True
+T24   UP/flat/  UP   --     pool=1 emitted=0 abstained=1 {'leaf<floor8': 1}   RECONCILES=True
+T25   UP/  UP/  DN   tier2     6  97.9%   62.5%     1.82%  0.667  -0.713  -0.476  24.1%      66.7%  30.0%  15.9%
+T25   UP/  UP/  DN   tier4     1  50.0%   66.7%     1.61%  0.111   1.172   0.130  25.4%     100.0%  20.7%  20.7%
+T25   UP/  UP/  DN   --     pool=9 emitted=7 abstained=2 {'gate-fail-r2': 2}   RECONCILES=True
+T26   UP/  UP/flat   PULLED (standing rule)  months=59
+T27   UP/  UP/  UP   PULLED (standing rule)  months=35
+UNTYPED (anchor n/a) --     pool=5 emitted=0 abstained=5 {'anchor-leg-missing': 5}   RECONCILES=True
+
+[MODAL PRIMARY FILTER + SELECTION STABILITY + FILTER STRENGTH — per type (pool months)]
+  (chosenR2 averaged over months WITH a primary; maxR2 over ALL split-attempted months incl. gate-fails;
+   smallN* = mean type-train n < 30 -> max-across-candidates can clear the 20% gate by luck; placebo adjudication)
+type                  pool  split% modal primary                stability% mean chosenR2  mean maxR2  noSurv% mean nTT
+T1    DN/  DN/  DN      35   88.6% Fed_Funds_Rate:Z12                29.0%         30.5%       30.6%    11.4%   155.0 
+T2    DN/  DN/flat      32   59.4% Platinum_Futures_Close:Z6         78.9%         35.8%       26.6%    40.6%   258.2 
+T3    DN/  DN/  UP       8   12.5% Term_Spread_10Y_3M:Z6            100.0%         22.3%       17.3%    87.5%    59.0 
+T4    DN/flat/  DN       2    0.0% --                                 0.0%          0.0%        0.0%     0.0%     7.0*
+T10 flat/  DN/  DN       2    0.0% --                                 0.0%          0.0%        0.0%   100.0%     8.0*
+T13 flat/flat/  DN      21   76.2% M2_Money:Z12                      31.2%         28.2%       26.9%    23.8%   109.5 
+T16 flat/  UP/  DN       1    0.0% --                                 0.0%          0.0%        0.0%     0.0%     5.0*
+T17 flat/  UP/flat      31   38.7% Platinum_Futures_Close:Z6         75.0%         32.9%       20.2%    61.3%    32.4 
+T18 flat/  UP/  UP       7    0.0% --                                 0.0%          0.0%        0.0%     0.0%     5.4*
+T22   UP/flat/  DN       2    0.0% --                                 0.0%          0.0%        0.0%     0.0%     4.0*
+T23   UP/flat/flat       2   50.0% Industrial_Production:Z6         100.0%         25.1%       12.5%    50.0%    15.0*
+T24   UP/flat/  UP       1  100.0% GS10_Rate:Z3                     100.0%         41.9%       41.9%     0.0%    11.0*
+T25   UP/  UP/  DN       9   77.8% Term_Spread_10Y_2Y:Z6             85.7%         24.3%       28.6%    22.2%    70.1 
+
+[C5 hook] candidate columns screened per fold (splits attempted): min=0 median=47 max=70  -> Stage 5 max-stat placebo input
+[runtime] fold loop 0.4s (target <20min: OK)
+
+[PRODUCTION BOARD — final summary]
+    bucket                       types                                  months  share%  status
+    ACT standing rules (pulled)  T5,T14,T15,T26,T27                        282   64.1%  ACT (standing rules T27/T5/T14)
+    CASCADE split-permitted      T1,T2,T3,T13,T17,T23,T25                   70   15.9%  ACT via in-fold cascade (R2>=20% filter)
+    ABSTAIN gate-fail            T1,T2,T3,T13,T17,T25                       44   10.0%  ABSTAIN — no filter cleared R2>=20%
+    ABSTAIN floor                UNTYPED,T1,T2,T4,T10,T13,T16,T17,...       44   10.0%  ABSTAIN — n<8 / degenerate / missing value
+    partition check: 282 + 70 + 44 + 44 = 440 (decision months=440) -> OK
+    pull set = 5 sign-triples (H=3 recompute) -> ACT=282 months; remainder pool = 158 months (CASCADE 70, gate-fail 44, floor 44). Prior H=1 3-pull baseline had ACT 171. Bucket membership is refit monthly -> a DISTRIBUTION across folds, not a constant.
+
+======================================================================================================================
+[TRUNCATION AUDIT — pass 2 — machine checklist]
+    VERDICT: ZERO truncation findings (machine checklist clean)
+======================================================================================================================
