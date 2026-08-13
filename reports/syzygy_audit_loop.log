@@ -1,0 +1,27 @@
+====================================================================================================
+ZION SYZYGY BOOK — TRUNCATION/DISCREPANCY DOUBLE-CHECK LOOP (strict)
+require TWO CONSECUTIVE completely clean passes; any finding -> fix & re-run FROM TOP
+start: 2026-08-13 00:07:12.404977
+====================================================================================================
+
+----- PASS 1 -----
+  sleeve reconciliation (validated ACT vs computed acted):
+    SPY     target= 282  computed= 282  OK   (+0 cell month(s) with-cells)
+    Gold    target=  85  computed=  85  OK   (+21 cell month(s) with-cells)
+    Silver  target=  61  computed=  61  OK   (+0 cell month(s) with-cells)
+    WTI     target=  64  computed=  64  OK   (+16 cell month(s) with-cells)
+    USD     target=   0  computed=   0  OK   (+0 cell month(s) with-cells)
+  PASS 1 VERDICT: ZERO findings (clean #1 consecutive)
+
+----- PASS 2 -----
+  sleeve reconciliation (validated ACT vs computed acted):
+    SPY     target= 282  computed= 282  OK   (+0 cell month(s) with-cells)
+    Gold    target=  85  computed=  85  OK   (+21 cell month(s) with-cells)
+    Silver  target=  61  computed=  61  OK   (+0 cell month(s) with-cells)
+    WTI     target=  64  computed=  64  OK   (+16 cell month(s) with-cells)
+    USD     target=   0  computed=   0  OK   (+0 cell month(s) with-cells)
+  PASS 2 VERDICT: ZERO findings (clean #2 consecutive)
+
+====================================================================================================
+LOOP COMPLETE after 2 passes: TWO CONSECUTIVE CLEAN
+====================================================================================================
