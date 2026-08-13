@@ -1,0 +1,146 @@
+========================================================================================================================
+### ZION MULTIASSET — Gold — 3-MONTH SEQUENTIAL OOS ###  [operator prior]
+run: 2026-08-12 16:45:53.026320   panel: /Users/castaglia/Desktop/HYACINTH_X/combined_macro_0826.csv
+[note] Dollar/M2 (gold NOT in numerator); CPI-real legs. Operator prior.
+
+[PROVENANCE]
+    outcome  = Gold_Close
+    predictor RATIO = Dollar_Index/M2_Money  [operator prior]
+    inflation adj (discrete, per-leg, pre-ratio) = US_CPI (discrete, per-leg, pre-ratio)
+    PIT lags: {'Industrial_Production': 2, 'US_CPI': 2, 'M2_Money': 2}
+    data rows 643  1973-01-01..2026-08-01
+[N SWEEP]  N chosen = 6 mo   design sample = pre-1990   sweep FLAT (no-signal): 3:49.0%, 6:50.3%, 9:46.9%, 12:48.2%
+           (sweep target = H=3 forward sign on design rows; N in [3, 6, 9, 12], FROZEN)
+
+[3-MONTH 27-TYPE TABLE — sequential majority-vote WF | zones | PULL bar WF>67.5% & n>=8]
+    OVERALL ungated WF from 1990: 49.2%  n=435  (LB 44.5%, informational)
+    T    signs                 n    WF%     LB     UB  zone
+    ------------------------------------------------------------
+    T1     DN/  DN/  DN       13  84.6%  57.8%  95.7%  PREDICTIVE  <== PULLED (ACT)
+    T2     DN/  DN/flat       56  69.6%  56.7%  80.1%  PREDICTIVE  <== PULLED (ACT)
+    T3     DN/  DN/  UP       20  50.0%  29.9%  70.1%  COIN-TOSS
+    T4     DN/flat/  DN        0     --     --     --  (no pool months)
+    T5     DN/flat/flat        4  75.0%  30.1%  95.4%  COIN-TOSS
+    T6     DN/flat/  UP       20  40.0%  21.9%  61.3%  COIN-TOSS
+    T7     DN/  UP/  DN        0     --     --     --  (no pool months)
+    T8     DN/  UP/flat        0     --     --     --  (no pool months)
+    T9     DN/  UP/  UP        4  50.0%  15.0%  85.0%  COIN-TOSS
+    T10  flat/  DN/  DN       13  15.4%   4.3%  42.2%  ANTI
+    T11  flat/  DN/flat        2   0.0%   0.0%  65.8%  COIN-TOSS
+    T12  flat/  DN/  UP        0     --     --     --  (no pool months)
+    T13  flat/flat/  DN       22  54.5%  34.7%  73.1%  COIN-TOSS
+    T14  flat/flat/flat       64  39.1%  28.1%  51.3%  COIN-TOSS
+    T15  flat/flat/  UP       31  38.7%  23.7%  56.2%  COIN-TOSS
+    T16  flat/  UP/  DN        0     --     --     --  (no pool months)
+    T17  flat/  UP/flat        7   0.0%   0.0%  35.4%  ANTI
+    T18  flat/  UP/  UP       21  33.3%  17.2%  54.6%  COIN-TOSS
+    T19    UP/  DN/  DN        0     --     --     --  (no pool months)
+    T20    UP/  DN/flat        0     --     --     --  (no pool months)
+    T21    UP/  DN/  UP        0     --     --     --  (no pool months)
+    T22    UP/flat/  DN       19  57.9%  36.3%  76.9%  COIN-TOSS
+    T23    UP/flat/flat        7  71.4%  35.9%  91.8%  COIN-TOSS
+    T24    UP/flat/  UP        0     --     --     --  (no pool months)
+    T25    UP/  UP/  DN       16  68.8%  44.4%  85.8%  COIN-TOSS  <== PULLED (ACT)
+    T26    UP/  UP/flat       71  46.5%  35.4%  58.0%  COIN-TOSS
+    T27    UP/  UP/  UP       45  51.1%  37.0%  65.0%  COIN-TOSS
+
+[PULLS — standing ACT rules (WF>67.5% & n>=8, measured at H=3)]
+    T1   DN/  DN/  DN: n=13  WF=84.6%  LB=57.8%
+    T2   DN/  DN/flat: n=56  WF=69.6%  LB=56.7%
+    T25   UP/  UP/  DN: n=16  WF=68.8%  LB=44.4%
+    PULL coverage: 85 months of 435 scored (19.5%)  blended ACT acc = 71.8%
+
+[OOS-METHOD VERIFICATION] expanding window; train frontier = decision month t-3 (3-mo label gap):
+    decision 1990-01-01: train n=  195  span 1973-07-01..1989-10-01  frontier gap=3 rows (>= 3)
+    decision 1999-03-01: train n=  304  span 1973-07-01..1998-12-01  frontier gap=3 rows (>= 3)
+    decision 2008-04-01: train n=  413  span 1973-07-01..2008-01-01  frontier gap=3 rows (>= 3)
+    decision 2017-05-01: train n=  522  span 1973-07-01..2017-02-01  frontier gap=3 rows (>= 3)
+    decision 2026-08-01: train n=  632  span 1973-07-01..2026-05-01  frontier gap=3 rows (>= 3)
+    window EXPANDS across checkpoints: YES   checkpoints=5 (>=5 required)
+
+[ACCOUNTING]  decision months=439 (EVERY calendar month >= 1990-01)  pulled=85  POOL=354 (untypeable=0)
+              pool -> emitted=188 (scored=187)  abstained=166
+              abstain reasons: {'type-train<floor8': 25, 'gate-fail-r2': 62, 'leaf<floor8': 65, 'degenerate-screen': 12, 'candidate-missing': 2}
+              RECONCILES: pool_total == emitted + abstained -> True
+
+[CASCADE HEADLINE — remainder pool only, sequential 3-mo-forward OOS]
+    variant A (bare flip                   ): acc= 52.4%  n=187  LB=45.3%  LB_ovl(n/3)=40.2%
+    variant B (Wilson-gated flip (PRIMARY) ): acc= 51.9%  n=187  LB=44.7%  LB_ovl(n/3)=39.7%
+    drift baseline (always-UP on emitted months): 53.5%
+
+[CASCADE TIER TABLE — ALL 27 TYPES, no display filtering; B primary, A comparison]
+type                 tier      n    IS%   OOS%     LB     UB     R2   O-val zone
+--------------------------------------------------------------------------------
+T1    DN/  DN/  DN   PULLED (standing ACT rule)  months=13
+T2    DN/  DN/flat   PULLED (standing ACT rule)  months=56
+T3    DN/  DN/  UP   tier2     7  97.8%  57.1%  25.0%  84.2%  28.0%   0.725 coin-toss
+T3    DN/  DN/  UP   tier4    11  47.4%  54.5%  28.0%  78.7%  35.0%   0.566 coin-toss
+T3    DN/  DN/  UP   --     pool=20 emitted=18 abstained=2 {'leaf<floor8': 2}   RECONCILES=True
+T4    DN/flat/  DN   n=0 pool months  --
+T5    DN/flat/flat   --     pool=4 emitted=0 abstained=4 {'type-train<floor8': 4}   RECONCILES=True
+T6    DN/flat/  UP   tier2     5  89.0%  60.0%  23.1%  88.2%  27.7%   1.624 coin-toss
+T6    DN/flat/  UP   tier4     1  22.2% 100.0%  20.7% 100.0%  59.3%   2.955 coin-toss
+                       (A)     1  77.8%   0.0%   0.0%                -0.522
+T6    DN/flat/  UP   --     pool=20 emitted=6 abstained=14 {'type-train<floor8': 1, 'degenerate-screen': 2, 'leaf<floor8': 11}   RECONCILES=True
+T7    DN/  UP/  DN   n=0 pool months  --
+T8    DN/  UP/flat   n=0 pool months  --
+T9    DN/  UP/  UP   --     pool=4 emitted=0 abstained=4 {'type-train<floor8': 4}   RECONCILES=True
+T10 flat/  DN/  DN   tier2     4  86.1%  25.0%   4.6%  69.9%  26.3%   0.052 coin-toss
+T10 flat/  DN/  DN   tier4     6  85.0%  66.7%  30.0%  90.3%  29.9%  -0.215 coin-toss
+T10 flat/  DN/  DN   --     pool=13 emitted=10 abstained=3 {'leaf<floor8': 3}   RECONCILES=True
+T11 flat/  DN/flat   --     pool=2 emitted=0 abstained=2 {'type-train<floor8': 2}   RECONCILES=True
+T12 flat/  DN/  UP   n=0 pool months  --
+T13 flat/flat/  DN   tier2     2  83.9%  50.0%   9.5%  90.5%  24.8%  -0.968 coin-toss
+T13 flat/flat/  DN   tier3     2 100.0%   0.0%   0.0%  65.8%  20.8%  -0.311 coin-toss
+T13 flat/flat/  DN   tier4     5  53.3%  60.0%  23.1%  88.2%  27.1%   0.319 coin-toss
+                       (A)     5  76.7%  40.0%  11.8%                 0.060
+T13 flat/flat/  DN   --     pool=22 emitted=9 abstained=13 {'gate-fail-r2': 8, 'leaf<floor8': 5}   RECONCILES=True
+T14 flat/flat/flat   tier1     1  93.3% 100.0%  20.7% 100.0%  22.8%   1.956 coin-toss
+T14 flat/flat/flat   tier2    21  84.5%  42.9%  24.5%  63.5%  31.4%  -0.172 coin-toss
+                       (A)    21  86.1%  38.1%  20.8%                -0.253
+T14 flat/flat/flat   tier3    12  96.3%  66.7%  39.1%  86.2%  25.7%   1.873 coin-toss
+T14 flat/flat/flat   tier4    10  41.8%  40.0%  16.8%  68.7%  30.5%  -0.736 coin-toss
+                       (A)    10  72.3%  60.0%  31.3%                 0.343
+T14 flat/flat/flat   --     pool=67 emitted=44 abstained=23 {'gate-fail-r2': 19, 'leaf<floor8': 4}   RECONCILES=True
+T15 flat/flat/  UP   tier2    16  90.3%  31.2%  14.2%  55.6%  28.5%  -0.055 coin-toss
+T15 flat/flat/  UP   tier4     8  83.2%  62.5%  30.6%  86.3%  32.4%   0.518 coin-toss
+                       (A)     8  89.5%  50.0%  21.5%                 0.012
+T15 flat/flat/  UP   --     pool=31 emitted=24 abstained=7 {'leaf<floor8': 7}   RECONCILES=True
+T16 flat/  UP/  DN   n=0 pool months  --
+T17 flat/  UP/flat   --     pool=7 emitted=0 abstained=7 {'type-train<floor8': 7}   RECONCILES=True
+T18 flat/  UP/  UP   tier2     1  66.7%   0.0%   0.0%  79.3%  22.8%  -0.452 coin-toss
+T18 flat/  UP/  UP   tier4     2  59.1% 100.0%  34.2% 100.0%  39.2%   4.663 coin-toss
+                       (A)     2  78.4%  50.0%   9.5%                 1.163
+T18 flat/  UP/  UP   --     pool=21 emitted=3 abstained=18 {'degenerate-screen': 8, 'leaf<floor8': 10}   RECONCILES=True
+T19   UP/  DN/  DN   n=0 pool months  --
+T20   UP/  DN/flat   n=0 pool months  --
+T21   UP/  DN/  UP   n=0 pool months  --
+T22   UP/flat/  DN   tier2     4  92.5%  50.0%  15.0%  85.0%  34.9%   0.121 coin-toss
+T22   UP/flat/  DN   --     pool=19 emitted=4 abstained=15 {'degenerate-screen': 2, 'gate-fail-r2': 9, 'leaf<floor8': 4}   RECONCILES=True
+T23   UP/flat/flat   --     pool=7 emitted=0 abstained=7 {'type-train<floor8': 7}   RECONCILES=True
+T24   UP/flat/  UP   n=0 pool months  --
+T25   UP/  UP/  DN   PULLED (standing ACT rule)  months=16
+T26   UP/  UP/flat   tier2    10  89.7%  50.0%  23.7%  76.3%  29.8%   0.760 coin-toss
+T26   UP/  UP/flat   tier3     2  88.9%  50.0%   9.5%  90.5%  24.1%   0.132 coin-toss
+T26   UP/  UP/flat   tier4    21  69.2%  71.4%  50.0%  86.2%  32.5%   2.008 PREDICTIVE
+T26   UP/  UP/flat   --     pool=71 emitted=33 abstained=38 {'leaf<floor8': 12, 'gate-fail-r2': 24, 'candidate-missing': 2}   RECONCILES=True
+T27   UP/  UP/  UP   tier2    17  93.7%  58.8%  36.0%  78.4%  29.2%   1.224 coin-toss
+T27   UP/  UP/  UP   tier4    19  40.2%  36.8%  19.1%  59.0%  34.3%  -0.020 coin-toss
+                       (A)    19  75.6%  57.9%  36.3%                -0.217
+T27   UP/  UP/  UP   --     pool=46 emitted=37 abstained=9 {'gate-fail-r2': 2, 'leaf<floor8': 7}   RECONCILES=True
+
+[MIRROR TEST — ACTED months only (ACT pulls + cascade emissions), variant B]
+   mirror = act on the OPPOSITE signal; a real directional edge beats its mirror & drift.
+    acted months n=272   IS(in-fold) acc=70.5%   OOS acc=58.1% (LB 52.2%)
+    MIRROR OOS acc (opposite signal) = 41.9%   drift(always-UP) = 57.0%
+    flip-composition predB in {+/-base_dir} on all acted months: True
+    MIRROR VERDICT: EDGE — OOS beats mirror AND drift [CAVEAT: pull-set membership selected in-sample (full-sample WF>67.5%); per-month routing is walk-forward but acted-months edge is an UPPER BOUND]
+
+[PRODUCTION BOARD — final summary]
+    bucket                         types                          months  share%  status
+    ACT standing rules (pulled)    T1,T2,T25                          85   19.4%  ACT (standing rules)
+    CASCADE split-permitted        T3,T6,T10,T13,T14,T15,T18...      188   42.8%  ACT via in-fold cascade (R2>=20%)
+    ABSTAIN gate-fail              T13,T14,T22,T26,T27                62   14.1%  ABSTAIN — no filter cleared R2>=20%
+    ABSTAIN floor                  T3,T5,T6,T9,T10,T11,T13,T...      104   23.7%  ABSTAIN — n<8 / degenerate / missing
+    partition check: 85 + 188 + 62 + 104 = 439 (decision months=439) -> OK
+

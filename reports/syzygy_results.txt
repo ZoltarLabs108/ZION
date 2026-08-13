@@ -1,0 +1,77 @@
+========================================================================================================
+SYZYGY RESULTS — WITHOUT surviving cells (pulls only)
+========================================================================================================
+
+--- FULL (1990+) ---
+entity  window  way      n    CAGR%  Sortino  Calmar   MaxDD%
+SPY     full    FIRE   282     12.9     2.29    1.01    -12.8
+Gold    full    FIRE    85     10.7     1.02    0.34    -31.2
+Silver  full    FIRE    61     50.1     3.21    2.39    -20.9
+WTI     full    FIRE    64     47.1     2.61    1.92    -24.5
+USD     full    FIRE     0      n/a      n/a     n/a      n/a
+BOOK    full    FIRE   350      6.2     2.47    0.87     -7.1
+
+SPY     full    CAL    440      8.1     1.83    0.63    -12.8
+Gold    full    CAL    439      2.0     0.45    0.06    -31.2
+Silver  full    CAL    313      8.2     1.42    0.39    -20.9
+WTI     full    CAL    439      5.8     1.00    0.24    -24.5
+USD     full    CAL    439      0.0      n/a     n/a      0.0
+BOOK    full    CAL    440      4.9     2.20    0.69     -7.1
+
+
+--- LAST 10 YEARS ---
+entity  window  way      n    CAGR%  Sortino  Calmar   MaxDD%
+SPY     last10  FIRE    82     16.4     3.45    1.42    -11.5
+Gold    last10  FIRE    19     34.3     6.65    5.70     -6.0
+Silver  last10  FIRE    35     45.1     3.05    2.15    -20.9
+WTI     last10  FIRE    12    119.5     3.96    5.43    -22.0
+USD     last10  FIRE     0      n/a      n/a     n/a      n/a
+BOOK    last10  FIRE    98      9.3     3.88    2.12     -4.4
+
+SPY     last10  CAL    121     10.8     2.84    0.94    -11.5
+Gold    last10  CAL    120      4.8     2.65    0.79     -6.0
+Silver  last10  CAL    121     11.4     1.64    0.54    -20.9
+WTI     last10  CAL    120      8.2     1.25    0.37    -22.0
+USD     last10  CAL    120      0.0      n/a     n/a      0.0
+BOOK    last10  CAL    121      7.5     3.49    1.70     -4.4
+
+========================================================================================================
+SYZYGY RESULTS — WITH surviving cells (Gold T26-t4, WTI T18-t2)
+========================================================================================================
+
+--- FULL (1990+) ---
+entity  window  way      n    CAGR%  Sortino  Calmar   MaxDD%
+SPY     full    FIRE   282     12.9     2.29    1.01    -12.8
+Gold    full    FIRE   106      9.1     0.94    0.27    -33.2
+Silver  full    FIRE    61     50.1     3.21    2.39    -20.9
+WTI     full    FIRE    80     50.4     2.74    2.06    -24.5
+USD     full    FIRE     0      n/a      n/a     n/a      n/a
+BOOK    full    FIRE   358      6.6     2.50    0.93     -7.1
+
+SPY     full    CAL    440      8.1     1.83    0.63    -12.8
+Gold    full    CAL    439      2.1     0.46    0.06    -33.2
+Silver  full    CAL    313      8.2     1.42    0.39    -20.9
+WTI     full    CAL    439      7.7     1.17    0.32    -24.5
+USD     full    CAL    439      0.0      n/a     n/a      0.0
+BOOK    full    CAL    440      5.3     2.25    0.75     -7.1
+
+
+--- LAST 10 YEARS ---
+entity  window  way      n    CAGR%  Sortino  Calmar   MaxDD%
+SPY     last10  FIRE    82     16.4     3.45    1.42    -11.5
+Gold    last10  FIRE    23     30.9     6.66    6.07     -5.1
+Silver  last10  FIRE    35     45.1     3.05    2.15    -20.9
+WTI     last10  FIRE    16     92.7     3.73    4.22    -22.0
+USD     last10  FIRE     0      n/a      n/a     n/a      n/a
+BOOK    last10  FIRE    99      9.6     3.98    2.18     -4.4
+
+SPY     last10  CAL    121     10.8     2.84    0.94    -11.5
+Gold    last10  CAL    120      5.3     2.92    1.04     -5.1
+Silver  last10  CAL    121     11.4     1.64    0.54    -20.9
+WTI     last10  CAL    120      9.1     1.36    0.42    -22.0
+USD     last10  CAL    120      0.0      n/a     n/a      0.0
+BOOK    last10  CAL    121      7.8     3.60    1.77     -4.4
+
+
+BOOK COVERAGE (base / without-cells): 440 calendar months (1990+); 350 with >=1 sleeve firing (79.5%); 90 all-cash months (20.5%).
+PROPOSED-ratio sleeves (NOT operator-confirmed): Silver, WTI, USD. SPY=CAPE prior, Gold=Dollar/M2 prior. USD has NO rules (always cash, 0 pulls).
