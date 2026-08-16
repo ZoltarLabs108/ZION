@@ -251,3 +251,15 @@ the family is 100% long — first SHORT emission = review, don't follow.
 Always report firing AND calendar bases; always report sub-period splits (the locked book is
 2007–16 +0.3% / 2017–26 +17.1% — a named caveat, not a footnote); always disclose search size on any
 screen; leverage/financing flagged wherever quoted.
+
+### 8.5 Structural overlays + the ZION-universe combination (added 2026-08-16, Amendment 1)
+- **Gold 7.5% always-on** (Amendment 1): structural PP inflation leg, NO signal claim — admitted on
+  corr/book-Sortino criteria only. Measured law: always-on ballast beats stress-timed exposure
+  (stress-only added nothing — the throttle+micro already own those windows). Amended weekly book:
+  Sortino 2.56, CAGR 11.80% @1.220×, MaxDD −9.9%.
+- **Cross-cadence combination** (`ZION_UNIVERSE_BOOK_20260816.md`): weekly × monthly SYZYGY at a
+  deliberate naive 50/50 (zero DOF). Corr +0.20 → **Sortino 4.13, MaxDD −3.9%, 95% years positive,
+  positive through 2008 AND 2022**; the monthly leg fills the weekly leg's burn-in decade
+  (cross-cadence decorrelation is temporal, not just cross-sectional). Before shared capital:
+  per-instrument NETTING across cadences (SYZYGY mandate) + the universe book on the forward
+  as-issued tape.

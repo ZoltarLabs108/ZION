@@ -61,3 +61,22 @@ Frozen template (N=8, H=4, episodic, no sweeping) + four gates, all mandatory:
 reduce book Sortino. Then PROVISIONAL until the forward tape confirms.
 Validated on a pre-declared 11-cell grid (`micro_screen.py`): **1 survivor = the silver control;
 10/11 fail.** The pipeline discriminates — silver is unique, not the first of an easy family.
+
+---
+
+## AMENDMENT 1 (2026-08-16, operator) — 7.5% always-on GOLD structural overlay
+
+Gold re-enters **not as a signal sleeve** (that stays dead: 50.8% acc, Sortino −0.20) but as the
+**Permanent-Portfolio inflation leg** — always-on ballast, no prediction claim, judged only on
+G3/G4-style criteria. Disclosed 6-cell grid (2.5/5/10% × always/stress): always-on monotone-helps
+(2.49/2.53/2.57), **stress-only adds nothing** (the throttle+micro already own those windows) — the
+simple version wins, the clever version fails. Operator weight **w=0.075** (inside the grid).
+
+| book (weekly basis) | Sortino | CAGR | MaxDD |
+|---|---|---|---|
+| locked + micro (pre-amendment) | 2.43 | 10.79% @1.232× | −9.9% |
+| **AMENDED: + 7.5% gold, @1.220×** | **2.56** | **11.80%** | **−9.9%** |
+
+Gross accounting: overlays are additive → 1.125 unlevered gross, ~1.37× effective at the cap;
+financing (~−1.2%/yr) unmodeled → honest forward ≈ **10.6%**. Gold corr to book +0.10, to silver
+micro −0.04 (near-orthogonal to both). Full run: `universe_book.py` / `gold_overlay_run.log`.
