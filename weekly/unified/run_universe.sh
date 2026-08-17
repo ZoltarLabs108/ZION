@@ -8,4 +8,6 @@ echo "=== universe run $TS ==="
 echo "--- [1/3] refresh weekly panel ---";        (cd "$WT" && $PY build_weekly_panel.py)  || echo "PANEL REFRESH FAILED (continuing on stale panel)"
 echo "--- [2/3] netting ledger + tape issue ---"; (cd "$U"  && $PY netting_ledger.py)       || echo "NETTING LEDGER FAILED"
 echo "--- [3/3] resolve matured issues ---";      (cd "$U"  && $PY universe_tape_resolve.py) || echo "RESOLVER FAILED"
+
+echo "--- [4/4] ZION vs LIVE comparison ---";     (cd "$U"  && $PY zion_vs_live.py)          || echo "COMPARISON FAILED"
 echo "=== done $TS ==="
