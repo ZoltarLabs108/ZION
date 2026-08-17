@@ -12,5 +12,6 @@ echo "--- [2/3] netting ledger + tape issue ---"; (cd "$U"  && $PY netting_ledge
 echo "--- [3/3] resolve matured issues ---";      (cd "$U"  && $PY universe_tape_resolve.py) || echo "RESOLVER FAILED"
 
 echo "--- [4/5] ZION vs LIVE comparison ---";     (cd "$U"  && $PY zion_vs_live.py)          || echo "COMPARISON FAILED"
-echo "--- [5/5] ZION desk ticket ---";            (cd "$U"  && $PY zion_desk_ticket.py)      || echo "TICKET FAILED"
+echo "--- [5/6] ZION desk ticket ---";            (cd "$U"  && $PY zion_desk_ticket.py)      || echo "TICKET FAILED"
+echo "--- [6/6] fills reconcile (read-only) ---"; (cd "$U"  && $PY zion_reconcile.py)        || echo "RECONCILE SKIPPED (token/creds — see output)"
 echo "=== done $TS ==="
