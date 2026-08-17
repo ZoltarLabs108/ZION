@@ -9,5 +9,6 @@ echo "--- [1/3] refresh weekly panel ---";        (cd "$WT" && $PY build_weekly_
 echo "--- [2/3] netting ledger + tape issue ---"; (cd "$U"  && $PY netting_ledger.py)       || echo "NETTING LEDGER FAILED"
 echo "--- [3/3] resolve matured issues ---";      (cd "$U"  && $PY universe_tape_resolve.py) || echo "RESOLVER FAILED"
 
-echo "--- [4/4] ZION vs LIVE comparison ---";     (cd "$U"  && $PY zion_vs_live.py)          || echo "COMPARISON FAILED"
+echo "--- [4/5] ZION vs LIVE comparison ---";     (cd "$U"  && $PY zion_vs_live.py)          || echo "COMPARISON FAILED"
+echo "--- [5/5] ZION desk ticket ---";            (cd "$U"  && $PY zion_desk_ticket.py)      || echo "TICKET FAILED"
 echo "=== done $TS ==="
