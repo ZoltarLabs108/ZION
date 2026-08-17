@@ -43,6 +43,12 @@ def t2_ret(w0, w1):
     return float(y0 / 100 / 52.0 - 1.9 * (y1 - y0) / 100.0) if np.isfinite(y0) and np.isfinite(y1) else np.nan
 
 
+def india_ret(w0, w1):
+    a = wk_ret('%5ENSEI', w0, w1); b = wk_ret('INR%3DX', w0, w1)
+    if np.isnan(a) or np.isnan(b): return np.nan
+    return (1 + a) / (1 + b) - 1.0
+
+
 def main():
     if not os.path.exists(TAPE):
         print('no tape yet — run netting_ledger.py first'); return
@@ -61,6 +67,10 @@ def main():
         if any(np.isnan(v) for k, v in rets.items() if abs(float(r[k])) > 1e-9):
             print(f'  {r["week_ending"]}: instrument data not ready — left ISSUED'); continue
         realized = sum(float(r.get(k, 0) or 0) * (0.0 if np.isnan(v) else v) for k, v in rets.items())
+        if 'paper_india_w' in tape.columns and pd.notna(r.get('paper_india_w')):
+            ir = india_ret(w0, w1)
+            if not np.isnan(ir):
+                tape.at[i, 'paper_india_ret'] = round(float(ir), 6)
         if 'paper_uup_w' in tape.columns and pd.notna(r.get('paper_uup_w')):
             upr = wk_ret('UUP', w0, w1)
             if not np.isnan(upr):

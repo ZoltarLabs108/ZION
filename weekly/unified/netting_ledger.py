@@ -24,6 +24,10 @@ W_RISK, W_2Y, W_GOLD, W_MICRO = 0.80, 0.20, 0.075, 0.05
 SCORE0 = pd.Timestamp('2007-08-01'); GROSS_CAP = 2.0            # legacy/live-book cap (reported)
 UNIVERSE_LEV = 3.80; UNIVERSE_GROSS_CAP = 6.0                    # AMENDMENT 4 REVISED (operator 2026-08-17): 15.7% DD budget
 W_USD_SLEEVE = 0.193  # AMENDMENT 5 (operator 2026-08-17): dollar sleeve (UUP) IN-BOOK, universe-structural.
+PAPER_INDIA_W = 0.025 # PAPER TRACK (2026-08-17): NIFTY-USD composite (Nifty50/USDINR, tradeable INDA/EPI).
+                      # Passed the both-up gauntlet ONLY at 2.5% (CAGR +1.05pp, Sortino +0.06, halves +/+;
+                      # fails at 5%+ — 2008 USD-tail crushes the DD-solved leverage). Marginal + fragile ->
+                      # paper, not in book/gross. Raw composite returns resolved (any weight scalable later).
 PAPER_UUP_W = None    # superseded — sleeve adopted ahead of the paper window by operator ruling. Was:
                       # the characterized peak. NOT in the book, NOT in gross — recorded on the tape
                       # for the November review. Raw UUP returns are resolved, so any weight is
@@ -185,7 +189,7 @@ def main():
     cur = L.iloc[-1]
     row = dict(issued=pd.Timestamp.now().strftime('%Y-%m-%d %H:%M'), week_ending=cur.week, status='ISSUED',
                lev=float(cur.lev), recovery=bool(cur.lev > LEV), L_universe=UNIVERSE_LEV,
-               USD=round(float(cur.USD), 4),
+               USD=round(float(cur.USD), 4), paper_india_w=PAPER_INDIA_W, paper_india_ret='',
                US_EQ=round(cur.US_EQ, 4), NASDAQ=round(cur.NASDAQ, 4), GOLD=round(cur.GOLD, 4),
                SILVER=round(cur.SILVER, 4), WTI=round(cur.WTI, 4), UST2Y=round(cur.UST2Y, 4),
                thr=cur.thr, gross=round(cur.gross, 4), realized_ret='', resolved='')
