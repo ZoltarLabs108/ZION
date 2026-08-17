@@ -1,60 +1,60 @@
 {
   "week": "2026-08-14",
   "capital": 100000.0,
-  "leverage": 3.8,
+  "leverage": 2.5,
   "legs": [
     {
       "bucket": "US_EQ",
       "instrument": "SPY",
       "exposure": 0.1845764503930923,
-      "notional": 70139,
+      "notional": 46144,
       "last": 776.3400268554688,
-      "shares": 90,
+      "shares": 59,
       "side": "BUY/LONG"
     },
     {
       "bucket": "NASDAQ",
       "instrument": "QQQ",
       "exposure": 0.2914235496069077,
-      "notional": 110741,
+      "notional": 72856,
       "last": 731.0700073242188,
-      "shares": 151,
+      "shares": 99,
       "side": "BUY/LONG"
     },
     {
       "bucket": "GOLD",
       "instrument": "GLD",
       "exposure": 0.044625,
-      "notional": 16957,
+      "notional": 11156,
       "last": 401.4800109863281,
-      "shares": 42,
+      "shares": 27,
       "side": "BUY/LONG"
     },
     {
       "bucket": "UST2Y",
       "instrument": "SHY",
       "exposure": 0.119,
-      "notional": 45220,
+      "notional": 29750,
       "last": 82.0,
-      "shares": 551,
+      "shares": 362,
       "side": "BUY/LONG"
     },
     {
       "bucket": "USD",
       "instrument": "UUP",
       "exposure": 0.193,
-      "notional": 73340,
+      "notional": 48250,
       "last": 28.110000610351562,
-      "shares": 2609,
+      "shares": 1716,
       "side": "BUY/LONG"
     },
     {
       "bucket": "INDIA",
       "instrument": "INDA",
       "exposure": 0.025,
-      "notional": 9500,
+      "notional": 6250,
       "last": 49.779998779296875,
-      "shares": 190,
+      "shares": 125,
       "side": "BUY/LONG"
     }
   ]

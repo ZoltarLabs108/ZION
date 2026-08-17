@@ -309,3 +309,8 @@ UUP); capital P&L = 3.80×. Real capital: November review unchanged.
 NIFTY-USD (Nifty/USDINR, INDA/EPI) at 2.5% universe-structural: both-up gauntlet pass (46.62%/5.96,
 halves +/+); 5%+ fails on the 2008 USD-tail — 2.5% is a ceiling, not a starting point. Promoted from
 paper same-day (flag recorded). Tape: INDIA bucket, resolved via the composite.
+
+### 8.11 CUTOVER (2026-08-17) — ZION live, AEGIS shadow
+Operator executes the ZION desk ticket from today; executed lev 2.5× (staged), model tape 3.80×;
+November review = scale-up decision. AEGIS untouched → shadow automatically. Fills-vs-ticket log =
+live record. Supersession #3 recorded.

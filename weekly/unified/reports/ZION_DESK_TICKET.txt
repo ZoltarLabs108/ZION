@@ -1,11 +1,11 @@
-# ZION DESK TICKET — week issued 2026-08-14  (capital $100,000, leverage 3.8x)
+# ZION DESK TICKET — week issued 2026-08-14  (capital $100,000, leverage 2.5x)
   bucket  instr  exposure     notional       last   shares  side
-   US_EQ    SPY    +0.185      +70,139     776.34       90  BUY/LONG
-  NASDAQ    QQQ    +0.291     +110,741     731.07      151  BUY/LONG
-    GOLD    GLD    +0.045      +16,957     401.48       42  BUY/LONG
-   UST2Y    SHY    +0.119      +45,220      82.00      551  BUY/LONG
-     USD    UUP    +0.193      +73,340      28.11    2,609  BUY/LONG
-   INDIA   INDA    +0.025       +9,500      49.78      190  BUY/LONG
+   US_EQ    SPY    +0.185      +46,144     776.34       59  BUY/LONG
+  NASDAQ    QQQ    +0.291      +72,856     731.07       99  BUY/LONG
+    GOLD    GLD    +0.045      +11,156     401.48       27  BUY/LONG
+   UST2Y    SHY    +0.119      +29,750      82.00      362  BUY/LONG
+     USD    UUP    +0.193      +48,250      28.11    1,716  BUY/LONG
+   INDIA   INDA    +0.025       +6,250      49.78      125  BUY/LONG
 
-gross notional $325,898 (3.26x of capital)  |  throttle 1.00  lev-state 1.19
+gross notional $214,406 (2.14x of capital)  |  throttle 1.00  lev-state 1.19
 NOTE: execution is manual by the operator. This sheet mirrors the as-issued tape row; fills-vs-ticket log is the live record.

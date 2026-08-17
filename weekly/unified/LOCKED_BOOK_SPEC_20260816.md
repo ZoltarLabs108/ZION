@@ -225,3 +225,18 @@ at 3.80× for headroom). Corr to book **+0.05** — the most orthogonal componen
 after UUP); the 2.5% optimum sits at the grid edge and 5% FAILS (2008 USD-tail) — the weight is a
 hard ceiling, never to be raised without a fresh gauntlet. Governs from the next issue; capital
 P&L = 3.80 × tape return; REAL trading remains operator-executed and November-gated.
+
+
+---
+
+## CUTOVER (2026-08-17, operator) — ZION IS THE LIVE-EXECUTED BOOK
+
+**Ruling:** effective immediately, the operator executes the ZION desk ticket (manual, Schwab) and
+the AEGIS ticket becomes the SHADOW side of the weekly comparison. **Executed leverage = 2.5×
+(staged)** while the tracked model tape remains 3.80× — the gap is deliberate: the model record
+runs at full spec, real capital runs reduced until the November 12-week review, which now decides
+the SCALE-UP (2.5× → 3.80×) rather than the go-live. Supersession #3 of the original staging
+(go-live was planned mid-November) — on the record. Operational law: the Friday job prints the
+ticket (step 5/5, ZION_LEV=2.5 in the runner); operator places orders; a fills-vs-ticket log is
+the true live record; AEGIS files remain untouched (quarantine holds — shadow by default, not by
+modification). Switch-back = execute the AEGIS ticket again; nothing else changes.
