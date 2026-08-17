@@ -23,6 +23,11 @@ H = 2; LEV = 1.190; LEV_RECOVERY = 2.0; RECOVERY_WKS = 4; SPELL = 2
 W_RISK, W_2Y, W_GOLD, W_MICRO = 0.80, 0.20, 0.075, 0.05
 SCORE0 = pd.Timestamp('2007-08-01'); GROSS_CAP = 2.0            # legacy/live-book cap (reported)
 UNIVERSE_LEV = 2.54; UNIVERSE_GROSS_CAP = 3.5                    # AMENDMENT 4 (operator 2026-08-17)
+PAPER_UUP_W = 0.193   # PAPER TRACK (2026-08-17): candidate dollar sleeve (UUP), structural weight at
+                      # the characterized peak. NOT in the book, NOT in gross — recorded on the tape
+                      # for the November review. Raw UUP returns are resolved, so any weight is
+                      # evaluable later by linear scaling (no re-mining). Candidate config if admitted:
+                      # 19.3% structural @ 2.40x lev -> Sortino 5.11->5.89 at unchanged 10% DD.
 # AMENDMENT 2 (2026-08-17): risk-sleeve positions PERSIST from each gated decision until the next
 # (abstain = hold), and FLATTEN while the dual throttle is stressed (thr < 1.0). Passed G1-G3
 # (Sortino@cap 2.37 -> 2.82, both halves non-negative); pure persistence w/o stress-exit REJECTED.
@@ -178,6 +183,7 @@ def main():
     cur = L.iloc[-1]
     row = dict(issued=pd.Timestamp.now().strftime('%Y-%m-%d %H:%M'), week_ending=cur.week, status='ISSUED',
                lev=float(cur.lev), recovery=bool(cur.lev > LEV), L_universe=UNIVERSE_LEV,
+               paper_uup_w=PAPER_UUP_W, paper_uup_ret='',
                US_EQ=round(cur.US_EQ, 4), NASDAQ=round(cur.NASDAQ, 4), GOLD=round(cur.GOLD, 4),
                SILVER=round(cur.SILVER, 4), WTI=round(cur.WTI, 4), UST2Y=round(cur.UST2Y, 4),
                thr=cur.thr, gross=round(cur.gross, 4), realized_ret='', resolved='')

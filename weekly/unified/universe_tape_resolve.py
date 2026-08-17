@@ -59,6 +59,10 @@ def main():
         if any(np.isnan(v) for k, v in rets.items() if abs(float(r[k])) > 1e-9):
             print(f'  {r["week_ending"]}: instrument data not ready — left ISSUED'); continue
         realized = sum(float(r[k]) * (0.0 if np.isnan(v) else v) for k, v in rets.items())
+        if 'paper_uup_w' in tape.columns and pd.notna(r.get('paper_uup_w')):
+            upr = wk_ret('UUP', w0, w1)
+            if not np.isnan(upr):
+                tape.at[i, 'paper_uup_ret'] = round(float(upr), 6)
         tape.at[i, 'realized_ret'] = round(realized, 6)
         tape.at[i, 'status'] = 'RESOLVED'
         tape.at[i, 'resolved'] = now.strftime('%Y-%m-%d %H:%M')
@@ -70,6 +74,13 @@ def main():
     if len(res):
         rr = pd.to_numeric(res['realized_ret'], errors='coerce').dropna().to_numpy()
         hit = (rr > 0).mean()
+        if 'paper_uup_ret' in res.columns:
+            pu = pd.to_numeric(res['paper_uup_ret'], errors='coerce')
+            pw = pd.to_numeric(res.get('paper_uup_w'), errors='coerce')
+            okp = pu.notna() & pw.notna()
+            if okp.any():
+                with_s = (1 + rr[okp.to_numpy()[:len(rr)]] + (pw[okp]*pu[okp]).to_numpy()[:len(rr)]).prod() - 1
+                print(f'paper dollar-sleeve: {int(okp.sum())} wks resolved; book+sleeve cum {with_s*100:+.2f}% (vs book alone above)')
         print(f'forward record: {len(rr)} wks, {hit*100:.0f}% positive, cum {(np.prod(1+rr)-1)*100:+.2f}%'
               f'   (evidence window: {len(rr)}/12 weeks)')
 
