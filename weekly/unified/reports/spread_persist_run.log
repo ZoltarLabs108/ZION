@@ -1,0 +1,15 @@
+building sleeves (block + persistence in one pass) ...
+
+variant                            Sortino@cap  CAGR@cap  unlevDD   h1 dS   h2 dS  verdict
+LOCKED (baseline)                         2.37    11.20%    -8.2%       —       —  (reference)
+A1a spread always 2.5%                    2.31    11.17%    -8.3%   -0.10   -0.06  [--G2--] REJECT
+A1b spread always 5%                      2.24    11.11%    -8.4%   -0.20   -0.12  [--G2--] REJECT
+A2a spread micro-window 2.5%              2.38    11.20%    -8.3%   -0.05   +0.03  [--G2--] REJECT
+A2b spread micro-window 5%                2.39    11.19%    -8.4%   -0.12   +0.06  [--G2--] REJECT
+B1 persistence (abstain=hold)             1.89     6.45%   -13.9%   +0.00   -0.67  [------] REJECT
+B2 persistence + stress-exit              2.82    12.91%    -8.4%   +0.00   +0.66  [G1G2G3] ADOPT-candidate
+
+context: risk-sleeve in-market 45% (blocks) -> 47% (persistence)
+
+A0 — SI/GC ratio through the unified pipeline (predictive):
+  A0 failed: ValueError('Length of values (1650) does not match length of index (5147)')
