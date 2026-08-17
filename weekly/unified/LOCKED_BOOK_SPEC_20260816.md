@@ -240,3 +240,23 @@ the SCALE-UP (2.5× → 3.80×) rather than the go-live. Supersession #3 of the 
 ticket (step 5/5, ZION_LEV=2.5 in the runner); operator places orders; a fills-vs-ticket log is
 the true live record; AEGIS files remain untouched (quarantine holds — shadow by default, not by
 modification). Switch-back = execute the AEGIS ticket again; nothing else changes.
+
+
+---
+
+## LEVERAGE LADDER (2026-08-17, operator) — 2.5× → 4.0× within ~90 days, evidence-gated
+
+**Target: executed leverage 4.0× by ~2026-11-15.** The path is a ladder with gates, not dates alone:
+
+| step | when | executed lev | gate to advance |
+|---|---|---|---|
+| 1 (now) | 2026-08-17 | **2.5×** | — |
+| 2 | ~week 6 (early Oct) | **3.2×** | 6 resolved tape weeks clean: fills track ticket, resolutions match market, caps unbreached, DD within pro-rata budget |
+| 3 | ~week 12 (mid-Nov = the review) | **4.0×** | 12-week review clean; same criteria |
+
+"Clean" = operational fidelity, not performance: the ladder advances on the machine keeping its
+word, never on a hot streak (and it PAUSES, not reverses, on a cold one unless a gate criterion
+fails). At 4.0× with the full book: backtest MaxDD ≈ **−16.5%** (slightly past the 15.7% budget —
+accepted by this ruling) and peak levered gross ≈6.3× → **universe cap moves 6.0× → 6.5× at step 3**.
+Model tape moves 3.80× → 4.0× at step 3 so model and execution converge. Financing at 4.0× ≈
+−4.5pp/yr (honest CAGR ~42%). Operator advances each step by changing ZION_LEV in run_universe.sh.

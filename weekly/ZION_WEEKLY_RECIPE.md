@@ -314,3 +314,7 @@ paper same-day (flag recorded). Tape: INDIA bucket, resolved via the composite.
 Operator executes the ZION desk ticket from today; executed lev 2.5× (staged), model tape 3.80×;
 November review = scale-up decision. AEGIS untouched → shadow automatically. Fills-vs-ticket log =
 live record. Supersession #3 recorded.
+
+### 8.12 Leverage ladder (2026-08-17) — 2.5→3.2 (~wk 6, clean) →4.0 (~wk 12 review, clean)
+Gates = operational fidelity (fills/resolutions/caps/DD pro-rata), never performance. At 4.0×:
+MaxDD ≈−16.5% accepted, cap →6.5×, model tape →4.0×. ZION_LEV in run_universe.sh is the dial.

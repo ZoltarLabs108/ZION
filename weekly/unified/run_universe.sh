@@ -1,7 +1,7 @@
 #!/bin/zsh
 # com.zoltar.zion.universe — Friday post-close: refresh panel -> issue exposures -> resolve matured
 PY=/Users/castaglia/Desktop/HYACINTH/venv/bin/python3
-export ZION_LEV=2.5        # CUTOVER 2026-08-17: executed leverage (staged; tracked model = 3.80)
+export ZION_LEV=2.5        # LADDER: 2.5 now -> 3.2 (~wk6, clean gates) -> 4.0 (~wk12 review). See spec.
 export ZION_CAPITAL=100000 # operator: set to actual account capital
 U=/Users/castaglia/Desktop/ZION/weekly/unified
 WT=/Users/castaglia/Desktop/ZION_WEEKLY_WT/weekly
