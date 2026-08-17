@@ -131,6 +131,29 @@ the rule earns on the big rebounds, which is the point); financing at 2.0× unmo
 window weeks ≈ −0.1%/yr book-level); PROVISIONAL on the forward tape like everything else. The tape
 emission now carries a `lev` field; the first live recovery event will be flagged by the Friday job.
 
+---
+
+## AMENDMENT 4 (2026-08-17, operator) — UNIVERSE LEVERAGE 2.54× · UNIVERSE GROSS CAP 3.5×
+
+**Ruling:** the universe book is levered **2.54×** — the multiple that spends the operator's 10%
+MaxDD budget exactly — and the **2.0× house gross cap is superseded FOR THE UNIVERSE BOOK by a
+universe-specific cap of 3.5×** (the 2.0× convention was written for the live 5-asset book; at
+2.54× the universe's netted gross peaks at 3.49×, mean 1.21× — the peaks are brief and occur
+precisely in the Amendment-3 recovery windows, the highest-expectancy weeks; clipping them was
+rejected as incoherent).
+
+| universe book | CAGR | Sortino | MaxDD | worst yr | 2008 | 2022 |
+|---|---|---|---|---|---|---|
+| 1× (structural) | 10.82% | 5.20 | −4.0% | −2.3% | + | + |
+| **2.54× (FINAL)** | **28.66%** | **5.20** | **−10.0%** | −5.8% | **+8.5%** | **+22.3%** |
+
+**Honest ≈ 27% after financing** (~−1 to −1.5%/yr; mean borrow modest, recovery bursts heavy).
+Tape semantics unchanged: rows record **1× structural exposures** (as-issued continuity); capital
+P&L = 2.54 × tape return. Caveats, amplified with the leverage: the −10% is calibrated to the
+HISTORICAL worst (a beyond-history event scales by 2.54); decade concentration scales too (the
+burn-in decade levered still earned ~nothing); **12 resolved tape weeks before any real capital
+runs at this multiple — leverage last of all.**
+
 **Same-day companion verdicts (pre-declared, all REJECT):** long-Ag/short-Au spread always-on
 (2.31/2.24 — the ratio bleeds) and micro-window (2.38/2.39, fails the +0.05 bar); dynamic sizing V1–V3
 (sized_variant_test). The spread's live-book work is real but window-specific; not transferable as a

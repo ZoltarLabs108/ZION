@@ -287,3 +287,13 @@ n=23, tail-carried (median window +0.49%), PROVISIONAL on the tape. The complete
 sizing decision in the book — exit, base, max — is keyed to the WORLD's state; the book's own P&L
 is never an input. The tape emission carries `lev`/`recovery` fields; a live recovery event is
 flagged by the Friday job automatically.
+
+
+### 8.8 Amendment 4 — universe leverage 2.54× · universe gross cap 3.5× (added 2026-08-17)
+Operator ruling: the universe book runs at **2.54×** (spends the 10% MaxDD budget exactly) and the
+2.0× house gross cap — a live-5-asset-book convention — is superseded for the universe book by a
+**3.5× universe cap** (levered netted gross peaks 3.49×, mean 1.21×; peaks are brief and live in the
+A3 recovery windows; clipping them rejected as incoherent). **FINAL UNIVERSE: CAGR 28.66% (honest
+~27% after financing), Sortino 5.20, MaxDD −10.0%, worst yr −5.8%, 2008 +8.5% / 2022 +22.3%.**
+Tape stays 1×-structural (capital P&L = 2.54 × tape return; `L_universe` field on emissions).
+Beyond-history events scale by 2.54; 12 resolved tape weeks before capital — leverage last of all.

@@ -21,7 +21,8 @@ WT = '/Users/castaglia/Desktop/ZION_WEEKLY_WT/weekly'
 HERE = os.path.dirname(os.path.abspath(__file__)); REP = os.path.join(HERE, 'reports')
 H = 2; LEV = 1.190; LEV_RECOVERY = 2.0; RECOVERY_WKS = 4; SPELL = 2
 W_RISK, W_2Y, W_GOLD, W_MICRO = 0.80, 0.20, 0.075, 0.05
-SCORE0 = pd.Timestamp('2007-08-01'); GROSS_CAP = 2.0
+SCORE0 = pd.Timestamp('2007-08-01'); GROSS_CAP = 2.0            # legacy/live-book cap (reported)
+UNIVERSE_LEV = 2.54; UNIVERSE_GROSS_CAP = 3.5                    # AMENDMENT 4 (operator 2026-08-17)
 # AMENDMENT 2 (2026-08-17): risk-sleeve positions PERSIST from each gated decision until the next
 # (abstain = hold), and FLATTEN while the dual throttle is stressed (thr < 1.0). Passed G1-G3
 # (Sortino@cap 2.37 -> 2.82, both halves non-negative); pure persistence w/o stress-exit REJECTED.
@@ -176,7 +177,7 @@ def main():
     tape_p = os.path.join(REP, 'universe_forward_tape.csv')
     cur = L.iloc[-1]
     row = dict(issued=pd.Timestamp.now().strftime('%Y-%m-%d %H:%M'), week_ending=cur.week, status='ISSUED',
-               lev=float(cur.lev), recovery=bool(cur.lev > LEV),
+               lev=float(cur.lev), recovery=bool(cur.lev > LEV), L_universe=UNIVERSE_LEV,
                US_EQ=round(cur.US_EQ, 4), NASDAQ=round(cur.NASDAQ, 4), GOLD=round(cur.GOLD, 4),
                SILVER=round(cur.SILVER, 4), WTI=round(cur.WTI, 4), UST2Y=round(cur.UST2Y, 4),
                thr=cur.thr, gross=round(cur.gross, 4), realized_ret='', resolved='')
