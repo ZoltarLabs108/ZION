@@ -1,0 +1,79 @@
+[SPY ] H=2wk  acted 377/714  decision-coverage 52.8%  gated-acc 65.5%
+[QQQ ] H=2wk  acted 314/597  decision-coverage 52.6%  gated-acc 65.9%
+[Gold] H=1wk  acted 65/678  decision-coverage 9.6%  gated-acc 50.8%
+(gold source = GC=F)
+
+==========================================================================
+SLEEVE diagnostics (weekly-calendar, 2007+):
+  SPY  cov 40.1% CAGR  6.08% Sortino 0.86 Calmar 0.24 MaxDD -25.3%
+  QQQ  cov 37.1% CAGR 10.34% Sortino 1.41 Calmar 0.55 MaxDD -18.7%
+  Gold cov  6.5% CAGR -1.20% Sortino -0.20 Calmar -0.04 MaxDD -27.9%
+==========================================================================
+3-LEG (SPY+QQQ+Gold), risk-sleeve coverage 51.8%:
+  no throttle                        cov  51.8%  Sortino  1.10  Calmar  0.42  CAGR  5.23%  MaxDD  -12.5%
+  both throttles (VIX x liquidity)   cov  51.8%  Sortino  2.03  Calmar  0.91  CAGR  6.31%  MaxDD   -6.9%
+
+4-LEG (+ Treasury pure hedge, always-on; both throttles on risk sleeves):
+  + 2Y Treasury hedge                cov 100.0%  Sortino  2.23  Calmar  0.96  CAGR  5.19%  MaxDD   -5.4%
+  + 5Y Treasury hedge                cov 100.0%  Sortino  2.17  Calmar  0.81  CAGR  5.31%  MaxDD   -6.5%
+  + 10Y Treasury hedge               cov 100.0%  Sortino  2.04  Calmar  0.70  CAGR  5.46%  MaxDD   -7.8%
+  + 30Y Treasury hedge               cov 100.0%  Sortino  1.56  Calmar  0.45  CAGR  5.49%  MaxDD  -12.3%
+
+HEDGE-WEIGHT SWEEP (2Y hedge weight w_h; 3 risk sleeves share (1-w_h)/3 each):
+  hedge   0%                         cov  51.8%  Sortino  2.03  Calmar  0.91  CAGR  6.31%  MaxDD   -6.9%
+  hedge  10%                         cov 100.0%  Sortino  2.10  Calmar  0.95  CAGR  5.86%  MaxDD   -6.2%
+  hedge  20%                         cov 100.0%  Sortino  2.18  Calmar  0.98  CAGR  5.41%  MaxDD   -5.5%
+  hedge  25%                         cov 100.0%  Sortino  2.23  Calmar  0.96  CAGR  5.19%  MaxDD   -5.4%
+  hedge  33%                         cov 100.0%  Sortino  2.32  Calmar  0.93  CAGR  4.83%  MaxDD   -5.2%
+  hedge  40%                         cov 100.0%  Sortino  2.41  Calmar  0.89  CAGR  4.51%  MaxDD   -5.0%
+  hedge  50%                         cov 100.0%  Sortino  2.57  Calmar  0.84  CAGR  4.06%  MaxDD   -4.8%
+  hedge  60%                         cov 100.0%  Sortino  2.75  Calmar  0.74  CAGR  3.60%  MaxDD   -4.8%
+  hedge  70%                         cov 100.0%  Sortino  2.93  Calmar  0.65  CAGR  3.15%  MaxDD   -4.9%
+  hedge  80%                         cov 100.0%  Sortino  2.99  Calmar  0.53  CAGR  2.69%  MaxDD   -5.1%
+  -> best Calmar at hedge weight 20%  (Calmar 0.98, Sortino 2.18)
+
+RISK-PARITY (inverse-vol, 4 legs; approx — risk sleeves' cash weeks understate vol):
+  risk-parity 4-leg                  cov 100.0%  Sortino  2.56  Calmar  0.56  CAGR  3.10%  MaxDD   -5.6%
+
+SLEEVE OOS-GATED QUALITY (accuracy on acted weeks + risk-adjusted):
+  SPY  gated-acc 65.5%  Sortino  0.86  Calmar  0.24  CAGR  6.08%
+  QQQ  gated-acc 65.9%  Sortino  1.41  Calmar  0.55  CAGR 10.34%
+  Gold gated-acc 50.8%  Sortino -0.20  Calmar -0.04  CAGR -1.20%
+
+CALENDAR YEAR-BY-YEAR — 20% hedge book (calendar CAGR 5.41%, 80% of years positive):
+  2007:-2.0%  2008:+2.7%  2009:-0.5%  2010:+0.2%  2011:+0.5%  2012:+0.0%  2013:+0.0%  2014:-0.0%  2015:+0.0%  2016:+0.1%  2017:+1.1%  2018:+6.2%  2019:+14.1%  2020:+11.7%  2021:+18.8%  2022:-0.4%  2023:+20.8%  2024:+10.7%  2025:+14.8%  2026:+8.9%
+
+PREDICTION-SIZED books (size sleeves by OOS quality; both throttles + 20% 2Y hedge):
+  baseline (EW risk incl Gold)       cov 100.0%  Sortino  2.18  Calmar  0.98  CAGR  5.41%  MaxDD   -5.5%
+  drop Gold (SPY+QQQ 40/40)          cov 100.0%  Sortino  2.34  Calmar  1.00  CAGR  8.12%  MaxDD   -8.1%
+  Sortino-weighted SPY/QQQ           cov 100.0%  Sortino  2.36  Calmar  1.04  CAGR  8.45%  MaxDD   -8.1%
+
+10% DD-CAP PUSH (drop Gold; Sortino-wt SPY/QQQ; sweep hedge DOWN; Sortino-first):
+  hedge 20.0%  CAGR  8.45%  Sortino 2.36  Calmar 1.04  MaxDD  -8.1%  [OK]
+  hedge 15.0%  CAGR  8.86%  Sortino 2.33  Calmar 1.04  MaxDD  -8.6%  [OK]
+  hedge 10.0%  CAGR  9.28%  Sortino 2.30  Calmar 1.02  MaxDD  -9.1%  [OK]
+  hedge  7.0%  CAGR  9.53%  Sortino 2.28  Calmar 1.01  MaxDD  -9.4%  [OK]
+  hedge  5.0%  CAGR  9.69%  Sortino 2.27  Calmar 1.01  MaxDD  -9.6%  [OK]
+  hedge  3.0%  CAGR  9.86%  Sortino 2.26  Calmar 1.00  MaxDD  -9.9%  [OK]
+  hedge  0.0%  CAGR 10.11%  Sortino 2.25  Calmar 0.99  MaxDD -10.2%  [DD>10%]
+  -> MAX CAGR under 10% DD via WEIGHTING: 9.86%  at hedge 3%  (Sortino 2.26, DD -9.9%)
+  +LEVERAGE: 15%-hedge book @ 1.17x -> CAGR 10.38%  Sortino 2.33  DD -10.0%  (financing unmodeled)
+  +LEVERAGE: 20%-hedge book @ 1.23x -> CAGR 10.44%  Sortino 2.36  DD -9.9%  (financing unmodeled)
+
+LOCKED BOOK (20% 2Y hedge, Sortino-wt SPY/QQQ, drop Gold, dual throttle) + 5% SILVER MICRO:
+  silver micro: active 8% of weeks, corr to locked book -0.01
+  LOCKED (unlevered)                 cov 100.0%  Sortino  2.36  Calmar  1.04  CAGR  8.45%  MaxDD   -8.1%
+  LOCKED + 5% silver micro           cov 100.0%  Sortino  2.43  Calmar  1.08  CAGR  8.73%  MaxDD   -8.1%
+  LOCKED @ 1.23x (10% DD cap)        cov 100.0%  Sortino  2.36  Calmar  1.05  CAGR 10.44%  MaxDD   -9.9%
+  LOCKED @ 1.23x + 5% silver micro   cov 100.0%  Sortino  2.42  Calmar  1.08  CAGR 10.73%  MaxDD   -9.9%
+  [dumped] reports/locked_book.csv (lev=1.232)
+
+GOLD STRUCTURAL OVERLAY on LOCKED book (stress weeks = 23% of calendar):
+  gold corr: to locked book +0.10 (all wks) | to silver micro -0.04 (micro-active wks)
+  +gold always w= 2.5%:  unlev Sortino  2.49 (Δ+0.06) DD  -8.1%  | @cap 1.24x -> CAGR 11.20%  Sortino  2.49
+  +gold always w= 5.0%:  unlev Sortino  2.53 (Δ+0.10) DD  -8.1%  | @cap 1.24x -> CAGR 11.61%  Sortino  2.53
+  +gold always w=10.0%:  unlev Sortino  2.57 (Δ+0.14) DD  -8.4%  | @cap 1.19x -> CAGR 11.86%  Sortino  2.57
+  +gold stress w= 2.5%:  unlev Sortino  2.43 (Δ+0.00) DD  -8.1%  | @cap 1.23x -> CAGR 10.86%  Sortino  2.43
+  +gold stress w= 5.0%:  unlev Sortino  2.42 (Δ-0.01) DD  -8.1%  | @cap 1.24x -> CAGR 10.94%  Sortino  2.42
+  +gold stress w=10.0%:  unlev Sortino  2.39 (Δ-0.04) DD  -8.2%  | @cap 1.22x -> CAGR 10.92%  Sortino  2.39
+  reference (locked+micro, no gold): unlev Sortino 2.43, @1.232x CAGR 10.79% Sortino 2.43

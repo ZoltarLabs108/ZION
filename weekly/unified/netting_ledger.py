@@ -19,8 +19,11 @@ import numpy as np, pandas as pd
 warnings.filterwarnings('ignore')
 WT = '/Users/castaglia/Desktop/ZION_WEEKLY_WT/weekly'
 HERE = os.path.dirname(os.path.abspath(__file__)); REP = os.path.join(HERE, 'reports')
-H = 2; LEV = 1.220; W_RISK, W_2Y, W_GOLD, W_MICRO = 0.80, 0.20, 0.075, 0.05
+H = 2; LEV = 1.190; W_RISK, W_2Y, W_GOLD, W_MICRO = 0.80, 0.20, 0.075, 0.05   # LEV re-solved for Amendment 2
 SCORE0 = pd.Timestamp('2007-08-01'); GROSS_CAP = 2.0
+# AMENDMENT 2 (2026-08-17): risk-sleeve positions PERSIST from each gated decision until the next
+# (abstain = hold), and FLATTEN while the dual throttle is stressed (thr < 1.0). Passed G1-G3
+# (Sortino@cap 2.37 -> 2.82, both halves non-negative); pure persistence w/o stress-exit REJECTED.
 
 
 def _l(n, f, base=WT):
@@ -43,7 +46,9 @@ def yser(t):
 
 
 def sleeve_pos(price):
-    """Rebuild a risk sleeve's POSITION series + return series (mirrors combined_book.sleeve, frozen H=2)."""
+    """Rebuild a risk sleeve's POSITION series + block return series. AMENDMENT 2: the position
+    PERSISTS from each gated decision until the next gated decision (abstain = hold); the
+    stress-exit (flatten while thr < 1.0) is applied downstream where the throttle is known."""
     panel = base.copy(); panel['SP_Price'] = price
     sp = np.asarray(price, float); dts = base['Date'].to_numpy(); cpi = base['US_CPI'].to_numpy(float)
     wf.H = H
@@ -60,14 +65,17 @@ def sleeve_pos(price):
             if n >= 12 and wlb_eff(k, n, H) > 0.50: acted.append((t, c))
             k += int(c == lab[t]); n += 1
     wret = np.full(len(sp), np.nan); wret[1:] = sp[1:] / sp[:-1] - 1.0
-    pos = np.zeros(len(base)); arr = np.zeros(len(base)); last = -10**9
+    arr = np.zeros(len(base)); last = -10**9
     for t, c in sorted(acted):
         if t - last >= H:
             for j in range(1, H + 1):
-                if t + j < len(base):
-                    pos[t + j] = c
-                    if np.isfinite(wret[t + j]): arr[t + j] += c * wret[t + j]
+                if t + j < len(base) and np.isfinite(wret[t + j]): arr[t + j] += c * wret[t + j]
             last = t
+    ai = {t: c for t, c in acted}                       # persistence: hold last gated direction
+    pos = np.zeros(len(base)); cur = 0.0
+    for t in range(len(base)):
+        if t in ai: cur = float(ai[t])
+        pos[t] = cur
     return pos, arr
 
 
@@ -126,7 +134,8 @@ def main():
         m_spy = mw * float(mon['SPY'].get(mper, 0)); m_gld = mw * float(mon['Gold'].get(mper, 0))
         m_slv = mw * float(mon['Silver'].get(mper, 0)); m_wti = mw * float(mon['WTI'].get(mper, 0))
         wl = 0.5 * LEV                                            # universe share x weekly leverage
-        w_spy = wl * wsp * thr[i] * spy_pos[i]; w_qqq = wl * wqq * thr[i] * qqq_pos[i]
+        onoff = 1.0 if thr[i] >= 1.0 else 0.0                     # AMENDMENT 2 stress-exit: flat, not scaled
+        w_spy = wl * wsp * onoff * spy_pos[i]; w_qqq = wl * wqq * onoff * qqq_pos[i]
         w_gld = wl * W_GOLD; w_slv = wl * W_MICRO * mpos[i]; w_t2 = wl * W_2Y
         rows.append(dict(week=str(wdt.date()),
                          US_EQ=w_spy + m_spy, NASDAQ=w_qqq, GOLD=w_gld + m_gld, SILVER=w_slv + m_slv,

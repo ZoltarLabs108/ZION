@@ -263,3 +263,15 @@ screen; leverage/financing flagged wherever quoted.
   (cross-cadence decorrelation is temporal, not just cross-sectional). Before shared capital:
   per-instrument NETTING across cadences (SYZYGY mandate) + the universe book on the forward
   as-issued tape.
+
+### 8.6 Amendment 2 — persistence + stress-exit (added 2026-08-17)
+Risk-sleeve positions **persist** from each gated decision until the next (abstain = hold) and
+**flatten while the dual throttle is stressed** (thr < 1.0). Gate results: pure persistence REJECTS
+(Sortino 1.89, h2 −0.67 — drift-carry into every crash); persistence+stress-exit **ADOPTED**
+(2.37 → **2.82** @cap, CAGR 12.91%, both halves ≥ 0, lev re-solved 1.190×). Universe under Amendment 2:
+**Sortino 4.71, CAGR 9.60%, MaxDD −4.0%**. The pair of verdicts is the doctrine: drift-carry needs an
+EXOGENOUS exit; the book's own P&L is never the exit (own-error rules reject everywhere they're tested).
+Same-day REJECTS (pre-declared): Ag/Au spread (always-on and micro-window), dynamic sizing V1–V3;
+live-vs-ZION disagreement study (7 clean wks): ZION won directions 7–3 — live's edge was sizing, and
+its transferable form is exactly this amendment. Tape: Amendment 2 governs from the next issue; prior
+rows stand as-issued.

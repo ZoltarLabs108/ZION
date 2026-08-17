@@ -80,3 +80,32 @@ simple version wins, the clever version fails. Operator weight **w=0.075** (insi
 Gross accounting: overlays are additive → 1.125 unlevered gross, ~1.37× effective at the cap;
 financing (~−1.2%/yr) unmodeled → honest forward ≈ **10.6%**. Gold corr to book +0.10, to silver
 micro −0.04 (near-orthogonal to both). Full run: `universe_book.py` / `gold_overlay_run.log`.
+
+---
+
+## AMENDMENT 2 (2026-08-17, operator) — PERSISTENCE + STRESS-EXIT on the risk sleeves
+
+**Rule:** each risk-sleeve position PERSISTS from its gated decision until the NEXT gated decision
+(abstain = hold, no H-block expiry) — and FLATTENS while the dual throttle is stressed (thr < 1.0):
+the exit is the *world's* stress state, never the book's own P&L. Transferred from the live-ticket
+forensic + the sister lineage's abstain-as-hold finding; passed the pre-declared gates:
+
+| variant | Sortino@cap | CAGR@cap | h1 ΔS | h2 ΔS | verdict |
+|---|---|---|---|---|---|
+| baseline (blocks, this harness) | 2.37 | 11.20% | — | — | reference |
+| B1 pure persistence (no exit) | 1.89 | 6.45% | +0.00 | −0.67 | **REJECT** — rides drift into every crash |
+| **B2 persistence + stress-exit** | **2.82** | **12.91%** | +0.00 | **+0.66** | **[G1 G2 G3] ADOPTED** |
+
+Leverage re-solved: **1.190×** to the 10% DD cap (unlev DD −8.4%). The B1/B2 split is the lesson:
+persistence supplies the drift-carry, the exogenous stress-exit supplies the crash-sidestep — each
+alone fails, together they clear every gate. (Harness note: this baseline carries sleeve costs and
+reads 2.37 vs Amendment 1's 2.56 construction; the +0.45 delta is the claim, measured like-for-like.)
+
+**Universe book under Amendment 2:** weekly leg (monthly agg) CAGR 12.93% / Sortino 3.75 →
+**UNIVERSE 50/50: CAGR 9.60%, Sortino 4.71, MaxDD −4.0%, 95% years positive** (was 9.05 / 4.13 / −3.9).
+
+**Same-day companion verdicts (pre-declared, all REJECT):** long-Ag/short-Au spread always-on
+(2.31/2.24 — the ratio bleeds) and micro-window (2.38/2.39, fails the +0.05 bar); dynamic sizing V1–V3
+(sized_variant_test). The spread's live-book work is real but window-specific; not transferable as a
+standing component. PROVISIONAL: Amendment 2 governs tape emissions from the next issue; prior tape
+rows stand as-issued under Amendment-1 rules (never rewritten).

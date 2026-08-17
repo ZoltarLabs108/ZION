@@ -1,0 +1,9 @@
+building sleeves ...
+
+variant                                Sortino@cap  CAGR@cap  unlevDD  h1 dSort  h2 dSort  verdict
+LOCKED (baseline)                             2.37    11.20%    -8.2%         —         —  (reference)
+V1 record-sized (LB>=.55 x1.25)               2.33    10.49%    -9.9%     +0.00     -0.05  [------] REJECT
+V2 payoff-tilt (trail-52wk Sortino)           2.28    10.28%    -8.7%     +0.00     -0.13  [--G2--] REJECT
+V3 = V1 + V2                                  2.25     9.55%   -10.6%     +0.00     -0.16  [------] REJECT
+
+Gates: G1 dSortino@cap>=+0.05, G2 unlev MaxDD not worse by >1pp, G3 both halves dSortino>=0. Null is final.

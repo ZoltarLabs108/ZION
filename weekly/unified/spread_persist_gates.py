@@ -160,6 +160,12 @@ def main():
     im_b = float(((np.abs(b_spy) + np.abs(b_qqq))[mask] > 0).mean())
     im_p = float(((np.abs(p_spy) + np.abs(p_qqq))[mask] > 0).mean())
     print(f"\ncontext: risk-sleeve in-market {im_b*100:.0f}% (blocks) -> {im_p*100:.0f}% (persistence)")
+    # dump B2 + baseline series for Amendment 2 (exact lev + universe re-quote)
+    b2 = variants['B2 persistence + stress-exit']; c2, s2, d2 = diag(b2)
+    print(f"B2 exact: unlev DD {d2*100:.2f}% -> lev-to-cap {DD_CAP/abs(d2):.3f}x")
+    pd.DataFrame({'Date': base['Date'][mask].to_numpy(), 'locked': variants[key0], 'b2': b2}).to_csv(
+        os.path.join(REP, 'b2_series.csv'), index=False)
+    print('[dumped] reports/b2_series.csv')
     # A0: ratio through the pipeline (predictive test)
     print('\nA0 — SI/GC ratio through the unified pipeline (predictive):')
     far = _l('far', 'fresh_asset_run.py', HERE)
