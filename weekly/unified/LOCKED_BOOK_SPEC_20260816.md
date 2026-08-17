@@ -104,6 +104,33 @@ reads 2.37 vs Amendment 1's 2.56 construction; the +0.45 delta is the claim, mea
 **Universe book under Amendment 2:** weekly leg (monthly agg) CAGR 12.93% / Sortino 3.75 →
 **UNIVERSE 50/50: CAGR 9.60%, Sortino 4.71, MaxDD −4.0%, 95% years positive** (was 9.05 / 4.13 / −3.9).
 
+---
+
+## AMENDMENT 3 (2026-08-17, operator) — RECOVERY-WINDOW LEVERAGE SCHEDULE
+
+**Rule:** the weekly book's leverage is a WORLD-STATE SCHEDULE, completing the throttle's symmetry:
+sleeves flat in stress (Amendment 2) · **base 1.190× in calm** · **2.0× (the house gross cap) for the
+4 weeks after a recovery event** — a recovery event = the dual throttle's first calm week after ≥2
+consecutive stressed weeks. No own-P&L input anywhere; the trigger is the same exogenous machinery
+as the throttle. Motivated a priori by the mirror-phase screen's co-phasing finding (the book's own
+forward-4wk return after recovery events: +2.32% mean, 74% positive, n=23 — ~3× unconditional).
+
+| gate check | flat 1.19× | **scheduled** | Δ |
+|---|---|---|---|
+| FULL Sortino@cap | 2.82 | **3.17** | **+0.34** ✓ G1 |
+| FULL CAGR / MaxDD | 12.91% / −10.0% | **15.33% / −10.0%** | DD unchanged ✓ G2 |
+| h1 (2007–16) ΔSortino | — | +0.02 | ≥0 ✓ G3 |
+| h2 (2017–26) ΔSortino | — | +0.49 | ≥0 ✓ G3 |
+
+**Trigger is NOT decade-concentrated:** 12 events in h1, 11 in h2 (~1.2/yr, windows ≈9–10% of weeks
+in both halves) — unlike the book's returns, the rule's opportunities are evenly spread.
+
+**Universe under Amendment 3: CAGR 10.82%, Sortino 5.20, MaxDD −4.0%, 95% years positive**
+(was 9.60 / 4.71 / −4.0). Caveats: n=23 events; the mean is tail-carried (median window +0.49% —
+the rule earns on the big rebounds, which is the point); financing at 2.0× unmodeled (~−1%/yr on
+window weeks ≈ −0.1%/yr book-level); PROVISIONAL on the forward tape like everything else. The tape
+emission now carries a `lev` field; the first live recovery event will be flagged by the Friday job.
+
 **Same-day companion verdicts (pre-declared, all REJECT):** long-Ag/short-Au spread always-on
 (2.31/2.24 — the ratio bleeds) and micro-window (2.38/2.39, fails the +0.05 bar); dynamic sizing V1–V3
 (sized_variant_test). The spread's live-book work is real but window-specific; not transferable as a

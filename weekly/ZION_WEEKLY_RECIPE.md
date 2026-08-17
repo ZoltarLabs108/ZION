@@ -275,3 +275,15 @@ Same-day REJECTS (pre-declared): Ag/Au spread (always-on and micro-window), dyna
 live-vs-ZION disagreement study (7 clean wks): ZION won directions 7–3 — live's edge was sizing, and
 its transferable form is exactly this amendment. Tape: Amendment 2 governs from the next issue; prior
 rows stand as-issued.
+
+### 8.7 Amendment 3 — recovery-window leverage schedule (added 2026-08-17)
+Leverage completes the world-state symmetry: **flat in stress (A2) · 1.190× calm · 2.0× (house cap)
+for 4 weeks after a recovery event** (dual throttle's first calm week after ≥2 stressed weeks —
+same exogenous machinery, no own-P&L input, no new data). Basis: the book's own forward-4wk return
+after recovery events = +2.32% mean / 74% positive (n=23) vs +0.80% unconditional. Gates: Sortino@cap
+2.82 → **3.17** (G1 ✓), DD unchanged (G2 ✓), halves +0.02/+0.49 (G3 ✓), events split 12/11 — trigger
+NOT decade-concentrated. **Universe under A3: Sortino 5.20, CAGR 10.82%, MaxDD −4.0%.** Caveats:
+n=23, tail-carried (median window +0.49%), PROVISIONAL on the tape. The completed doctrine: every
+sizing decision in the book — exit, base, max — is keyed to the WORLD's state; the book's own P&L
+is never an input. The tape emission carries `lev`/`recovery` fields; a live recovery event is
+flagged by the Friday job automatically.

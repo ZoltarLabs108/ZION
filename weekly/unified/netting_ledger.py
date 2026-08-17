@@ -19,11 +19,15 @@ import numpy as np, pandas as pd
 warnings.filterwarnings('ignore')
 WT = '/Users/castaglia/Desktop/ZION_WEEKLY_WT/weekly'
 HERE = os.path.dirname(os.path.abspath(__file__)); REP = os.path.join(HERE, 'reports')
-H = 2; LEV = 1.190; W_RISK, W_2Y, W_GOLD, W_MICRO = 0.80, 0.20, 0.075, 0.05   # LEV re-solved for Amendment 2
+H = 2; LEV = 1.190; LEV_RECOVERY = 2.0; RECOVERY_WKS = 4; SPELL = 2
+W_RISK, W_2Y, W_GOLD, W_MICRO = 0.80, 0.20, 0.075, 0.05
 SCORE0 = pd.Timestamp('2007-08-01'); GROSS_CAP = 2.0
 # AMENDMENT 2 (2026-08-17): risk-sleeve positions PERSIST from each gated decision until the next
 # (abstain = hold), and FLATTEN while the dual throttle is stressed (thr < 1.0). Passed G1-G3
 # (Sortino@cap 2.37 -> 2.82, both halves non-negative); pure persistence w/o stress-exit REJECTED.
+# AMENDMENT 3 (2026-08-17): leverage is a WORLD-STATE SCHEDULE — base 1.190x calm; 2.0x (house cap)
+# for RECOVERY_WKS after a recovery event (first calm week after >= SPELL stressed weeks). Gates:
+# Sortino@cap 2.82 -> 3.17, DD unchanged, both halves >= 0; events evenly split 12/11 across halves.
 
 
 def _l(n, f, base=WT):
@@ -115,6 +119,13 @@ def main():
             if len(pri) >= 50 and np.isfinite(series[w]) and (pri <= series[w]).mean() >= 0.70: t[w] = 0.5
         return t
     thr = pctl_thr(vix) * pctl_thr(cred)
+    # Amendment 3: recovery windows (first calm week after >= SPELL stressed weeks -> RECOVERY_WKS at cap)
+    recovery = np.zeros(len(base), bool); run = 0
+    for i in range(len(base)):
+        if thr[i] < 1.0: run += 1
+        else:
+            if run >= SPELL: recovery[i:i + RECOVERY_WKS] = True
+            run = 0
     mpos = micro_pos()
     print('[3/4] monthly leg positions (SYZYGY base) ...')
     ps = pd.read_csv('/Users/castaglia/Desktop/ZION/reports/per_sleeve_ledger.csv')
@@ -133,11 +144,12 @@ def main():
         mw = 0.5 / nd                                             # universe share x sleeve weight
         m_spy = mw * float(mon['SPY'].get(mper, 0)); m_gld = mw * float(mon['Gold'].get(mper, 0))
         m_slv = mw * float(mon['Silver'].get(mper, 0)); m_wti = mw * float(mon['WTI'].get(mper, 0))
-        wl = 0.5 * LEV                                            # universe share x weekly leverage
+        lev_i = LEV_RECOVERY if recovery[i] else LEV               # Amendment 3 schedule
+        wl = 0.5 * lev_i                                           # universe share x weekly leverage
         onoff = 1.0 if thr[i] >= 1.0 else 0.0                     # AMENDMENT 2 stress-exit: flat, not scaled
         w_spy = wl * wsp * onoff * spy_pos[i]; w_qqq = wl * wqq * onoff * qqq_pos[i]
         w_gld = wl * W_GOLD; w_slv = wl * W_MICRO * mpos[i]; w_t2 = wl * W_2Y
-        rows.append(dict(week=str(wdt.date()),
+        rows.append(dict(week=str(wdt.date()), lev=lev_i,
                          US_EQ=w_spy + m_spy, NASDAQ=w_qqq, GOLD=w_gld + m_gld, SILVER=w_slv + m_slv,
                          WTI=m_wti, UST2Y=w_t2,
                          w_spy=w_spy, m_spy=m_spy, w_gold=w_gld, m_gold=m_gld, w_silver=w_slv,
@@ -164,6 +176,7 @@ def main():
     tape_p = os.path.join(REP, 'universe_forward_tape.csv')
     cur = L.iloc[-1]
     row = dict(issued=pd.Timestamp.now().strftime('%Y-%m-%d %H:%M'), week_ending=cur.week, status='ISSUED',
+               lev=float(cur.lev), recovery=bool(cur.lev > LEV),
                US_EQ=round(cur.US_EQ, 4), NASDAQ=round(cur.NASDAQ, 4), GOLD=round(cur.GOLD, 4),
                SILVER=round(cur.SILVER, 4), WTI=round(cur.WTI, 4), UST2Y=round(cur.UST2Y, 4),
                thr=cur.thr, gross=round(cur.gross, 4), realized_ret='', resolved='')
