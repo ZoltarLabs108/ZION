@@ -211,3 +211,17 @@ structural rows, capital P&L = 3.80 × tape return, USD bucket resolved via UUP.
 next issue (wk ending 2026-08-21); prior rows stand as-issued. REAL capital still waits for the
 12-week November review per the standing gate; this amendment changes what is TRACKED, not what is
 traded.
+
+
+---
+
+## AMENDMENT 6 (2026-08-17, operator) — INDIA COMPOSITE IN-BOOK at 2.5%
+
+**Ruling:** the NIFTY-USD composite (Nifty50 / USDINR; tradeable INDA/EPI) enters the tracked book
+at **2.5% universe-structural** — the only weight that passed the both-up gauntlet (CAGR 45.57 →
+**46.62%**, Sortino 5.89 → **5.96**, halves +/+, leverage re-solve allows 3.82×; UNIVERSE_LEV held
+at 3.80× for headroom). Corr to book **+0.05** — the most orthogonal component ever admitted.
+**Flags:** promoted from paper the same day it was declared paper (second same-day supersession
+after UUP); the 2.5% optimum sits at the grid edge and 5% FAILS (2008 USD-tail) — the weight is a
+hard ceiling, never to be raised without a fresh gauntlet. Governs from the next issue; capital
+P&L = 3.80 × tape return; REAL trading remains operator-executed and November-gated.

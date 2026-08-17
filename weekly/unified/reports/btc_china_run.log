@@ -1,0 +1,12 @@
+==========================================================================
+BTC — unified weekly (winner=None, H=1wk, NO drift gate) | 2014-09..2026-08 scored=354
+  Stage1 predictors: evaluated 5, qualified 0  VIX/Dollar 0%/0%cov | VIX/SP 0%/0%cov | Gold/Dollar 0%/0%cov | FedFunds/GS10 0%/0%cov
+  Stage4 engines: RD 49.6%  ODY 57.5%  SANC 51.3%  | DRIFT 52.1%  CONV 50.6% (n=247)
+  Stage5 decision (LB>0.50): acted 0/247 -> COVERAGE 0.0%
+  Stage6 ledger: 0 blocks 1.00x | FIRING CAGR nan% Sortino nan | CALENDAR(0y) CAGR nan%
+==========================================================================
+FXI — unified weekly (winner=None, H=1wk, NO drift gate) | 2004-10..2026-08 scored=873
+  Stage1 predictors: evaluated 5, qualified 0  VIX/Dollar 0%/0%cov | VIX/SP 0%/0%cov | Gold/Dollar 0%/0%cov | FedFunds/GS10 0%/0%cov
+  Stage4 engines: RD 51.9%  ODY 50.9%  SANC 51.3%  | DRIFT 51.2%  CONV 52.6% (n=401)
+  Stage5 decision (LB>0.50): acted 0/401 -> COVERAGE 0.0%
+  Stage6 ledger: 0 blocks 1.00x | FIRING CAGR nan% Sortino nan | CALENDAR(0y) CAGR nan%

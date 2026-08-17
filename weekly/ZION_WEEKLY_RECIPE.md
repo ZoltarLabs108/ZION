@@ -304,3 +304,8 @@ Tracked config = +19.3% structural UUP · 3.80× · cap 6.0× → backtest 45.6%
 Supersedes the same-day 2.54×/10% ruling and the sleeve's paper path (adopted ahead of forward
 evidence, operator authority, in-sample discovery flagged). Tape stays 1×-structural (USD bucket via
 UUP); capital P&L = 3.80×. Real capital: November review unchanged.
+
+### 8.10 Amendment 6 — India composite in-book, 2.5% hard ceiling (2026-08-17)
+NIFTY-USD (Nifty/USDINR, INDA/EPI) at 2.5% universe-structural: both-up gauntlet pass (46.62%/5.96,
+halves +/+); 5%+ fails on the 2008 USD-tail — 2.5% is a ceiling, not a starting point. Promoted from
+paper same-day (flag recorded). Tape: INDIA bucket, resolved via the composite.

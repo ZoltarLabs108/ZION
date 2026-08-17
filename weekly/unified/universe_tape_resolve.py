@@ -64,6 +64,8 @@ def main():
                     WTI=wk_ret('CL%3DF', w0, w1), UST2Y=t2_ret(w0, w1))
         if 'USD' in tape.columns and pd.notna(r.get('USD')):
             rets['USD'] = wk_ret('UUP', w0, w1)
+        if 'INDIA' in tape.columns and pd.notna(r.get('INDIA')):
+            rets['INDIA'] = india_ret(w0, w1)
         if any(np.isnan(v) for k, v in rets.items() if abs(float(r[k])) > 1e-9):
             print(f'  {r["week_ending"]}: instrument data not ready — left ISSUED'); continue
         realized = sum(float(r.get(k, 0) or 0) * (0.0 if np.isnan(v) else v) for k, v in rets.items())

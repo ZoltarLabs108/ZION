@@ -46,6 +46,7 @@ def zion_rows():
     t['trade_week'] = t['week_ending'] + pd.Timedelta(days=7)     # issue week W trades to W+7
     keep = ['trade_week', 'US_EQ', 'NASDAQ', 'GOLD', 'SILVER', 'WTI', 'UST2Y', 'gross', 'realized_ret', 'status']
     if 'USD' in t.columns: keep.insert(7, 'USD')
+    if 'INDIA' in t.columns: keep.insert(8, 'INDIA')
     z = t[keep].rename(columns={c: f'zion_{c}' for c in keep if c != 'trade_week'})
     return z.drop_duplicates('trade_week', keep='last')
 

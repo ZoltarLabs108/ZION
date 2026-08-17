@@ -1,7 +1,7 @@
-=== universe run 20260817_0909 ===
+=== universe run 20260817_1133 ===
 --- [1/3] refresh weekly panel ---
 [panel] fetching Yahoo weekly ^GSPC ...
-        SP weekly: n=5145  1927-12-30..2026-08-07
+        SP weekly: n=5146  1927-12-30..2026-08-14
 [panel] FRED DGS10     -> GS10_Rate            coverage=65.5%
 [panel] FRED DGS2      -> US_2Y_Treasury       coverage=50.9%
 [panel] FRED T10Y2Y    -> Term_Spread_10Y_2Y   coverage=50.9%
@@ -13,32 +13,40 @@
 [panel] loading monthly panel for Shiller legs + macro ...
 [panel] monthly M2_Money               -> M2_Money               lag=2mo coverage=68.4%
 [panel] monthly Industrial_Production  -> Industrial_Production  lag=2mo coverage=100.0%
-[panel] monthly US_CPI                 -> US_CPI                 lag=2mo coverage=80.5%
+[panel] monthly US_CPI                 -> US_CPI                 lag=2mo coverage=80.6%
 [panel] monthly Gold_Close             -> Gold_Close             lag=0mo coverage=59.4%
 [panel] monthly WTI_Crude_Close        -> WTI_Crude_Close        lag=0mo coverage=41.2%
 
 [panel] WROTE /Users/castaglia/Desktop/ZION_WEEKLY_WT/weekly/weekly_panel_spy.csv
-        rows=5146  span 1927-12-30..2026-08-07
+        rows=5147  span 1927-12-30..2026-08-14
         columns=['SP_Price', 'GS10_Rate', 'US_2Y_Treasury', 'Term_Spread_10Y_2Y', 'Term_Spread_10Y_3M', 'Fed_Funds_Rate', 'VIX_Close', 'Credit_BAA10Y', 'Dollar_Index', 'Real_Price', 'Real_Earnings', 'CAPE', 'M2_Money', 'Industrial_Production', 'US_CPI', 'Gold_Close', 'WTI_Crude_Close']
 --- [2/3] netting ledger + tape issue ---
 [1/4] rebuilding weekly sleeve positions (frozen H=2) ...
-      sleeve Sortinos 0.93/1.48 -> weights SPY 0.309 QQQ 0.491 (of book)
+      sleeve Sortinos 0.94/1.48 -> weights SPY 0.310 QQQ 0.490 (of book)
 [2/4] throttle + silver micro positions ...
 [3/4] monthly leg positions (SYZYGY base) ...
 [4/4] summary + forward-tape emission ...
 
-NETTING LEDGER — 993 weeks (2007-08-03..2026-08-07) -> reports/netting_ledger.csv
-  netted gross : max 0.96x  mean 0.46x   (house cap 2.0x -> NEVER breached)
-  vs stacked   : max 0.96x  (netting saves up to 0.09x in the worst week)
-  per-bucket max |net|: US_EQ 0.36  NASDAQ 0.30  GOLD 0.15  SILVER 0.13  WTI 0.10  UST2Y 0.12
-  US_EQ  legs: opposing 0 wks / stacking 242 wks
+NETTING LEDGER — 994 weeks (2007-08-03..2026-08-14) -> reports/netting_ledger.csv
+  netted gross : max 0.94x  mean 0.46x   (house cap 2.0x -> NEVER breached)
+  vs stacked   : max 0.94x  (netting saves up to 0.09x in the worst week)
+  per-bucket max |net|: US_EQ 0.35  NASDAQ 0.29  GOLD 0.14  SILVER 0.13  WTI 0.10  UST2Y 0.12
+  US_EQ  legs: opposing 0 wks / stacking 269 wks
   GOLD   legs: opposing 13 wks / stacking 176 wks
   SILVER legs: opposing 0 wks / stacking 18 wks
 
-FORWARD TAPE: week 2026-08-07 already issued — no duplicate append.
-  as-issued exposures (2026-08-07): US_EQ +0.189  NASDAQ +0.000  GOLD +0.046  SILVER +0.000  WTI +0.000  UST2Y +0.122  (thr 1.00, gross 0.36x)
+FORWARD TAPE: week 2026-08-14 already issued — no duplicate append.
+  as-issued exposures (2026-08-14): US_EQ +0.185  NASDAQ +0.291  GOLD +0.045  SILVER +0.000  WTI +0.000  UST2Y +0.119  (thr 1.00, gross 0.64x)
 --- [3/3] resolve matured issues ---
 
-tape: 1 rows, 1 resolved, 0 newly resolved.
+tape: 2 rows, 1 resolved, 0 newly resolved.
 forward record: 1 wks, 100% positive, cum +0.02%   (evidence window: 1/12 weeks)
-=== done 20260817_0909 ===
+--- [4/4] ZION vs LIVE comparison ---
+ZION vs LIVE — standing weekly comparison (2 trade weeks tracked)
+  trade wk | ZION: eq   gold    slv    2y  gross | LIVE: sp   gold    slv     pt     ng  gross |  agree |   z_ret   l_ret
+2026-08-14 | +0.19 +0.05 +0.00 +0.12 +0.36 | +0.00 +0.18 +0.32 -0.06 +0.00 +0.56 |      = |  +0.02%  +0.00%
+2026-08-21 | +0.18 +0.04 +0.00 +0.12 +0.64 | +0.00 +0.00 +0.00 +0.00 +0.00 +0.00 |     -- |    open    open
+
+cumulative (1 resolved wks): ZION +0.02%  vs LIVE +0.00%  | ZION wins 1/1 wks
+evidence window: 1/12 — no verdicts before 12 resolved weeks (house rule).
+=== done 20260817_1133 ===
