@@ -111,6 +111,14 @@ ASSETS = {
     "USD":    dict(outcome="Dollar_Index", num="Gold_Close", den="US_CPI", deflate=False,
                    proposed=True,
                    note="PROPOSED Gold/CPI — dollar-FREE predictor (no circularity), distinct legs."),
+    "NatGas": dict(outcome="Natural_Gas_Close", num="Industrial_Production", den="TermSpread_p10",
+                   deflate=False, proposed=True,
+                   note="PORT (operator 2026-08-17) of the ASSET_PIPELINE-validated Industrial/"
+                        "Term_Spread NG anchor (monthly 60.3% LB .53, two-sided, 2026-08-04 enforced "
+                        "run). Term_Spread crosses zero -> raw ratio ILLEGAL; den = Term_Spread_10Y_2Y "
+                        "+ 10.0 (pre-declared level shift; spread bounds ~[-3,+4] -> den>6; NOT swept). "
+                        "IndProd mid-month -> +2mo PIT lag (global). CAVEAT: reuses the IndProd leg "
+                        "(Silver's num) — cross-asset leg-uniqueness relaxed, disclosed."),
 }
 
 
@@ -1136,6 +1144,9 @@ def main():
     for c, lag in PUB_LAG.items():
         if c in df.columns:
             df[c] = df[c].shift(lag)
+    # NatGas anchor den (see ASSETS['NatGas'] note): level-shifted term spread, ratio-legal
+    if "Term_Spread_10Y_2Y" in df.columns:
+        df["TermSpread_p10"] = df["Term_Spread_10Y_2Y"] + 10.0
 
     os.makedirs(REPORTS, exist_ok=True)
     loop_log = []
