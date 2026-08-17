@@ -297,3 +297,10 @@ A3 recovery windows; clipping them rejected as incoherent). **FINAL UNIVERSE: CA
 ~27% after financing), Sortino 5.20, MaxDD −10.0%, worst yr −5.8%, 2008 +8.5% / 2022 +22.3%.**
 Tape stays 1×-structural (capital P&L = 2.54 × tape return; `L_universe` field on emissions).
 Beyond-history events scale by 2.54; 12 resolved tape weeks before capital — leverage last of all.
+
+
+### 8.9 Amendment 5 + A4 revision — dollar sleeve in-book, 3.80×, 15.7% budget (2026-08-17)
+Tracked config = +19.3% structural UUP · 3.80× · cap 6.0× → backtest 45.6%/Sortino 5.89/−15.7%.
+Supersedes the same-day 2.54×/10% ruling and the sleeve's paper path (adopted ahead of forward
+evidence, operator authority, in-sample discovery flagged). Tape stays 1×-structural (USD bucket via
+UUP); capital P&L = 3.80×. Real capital: November review unchanged.

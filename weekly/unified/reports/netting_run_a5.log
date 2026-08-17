@@ -1,0 +1,16 @@
+[1/4] rebuilding weekly sleeve positions (frozen H=2) ...
+      sleeve Sortinos 0.94/1.48 -> weights SPY 0.310 QQQ 0.490 (of book)
+[2/4] throttle + silver micro positions ...
+[3/4] monthly leg positions (SYZYGY base) ...
+[4/4] summary + forward-tape emission ...
+
+NETTING LEDGER — 994 weeks (2007-08-03..2026-08-14) -> reports/netting_ledger.csv
+  netted gross : max 1.57x  mean 0.67x   (house cap 2.0x -> NEVER breached)
+  vs stacked   : max 1.38x  (netting saves up to -0.10x in the worst week)
+  per-bucket max |net|: US_EQ 0.41  NASDAQ 0.49  GOLD 0.17  SILVER 0.13  WTI 0.10  UST2Y 0.20
+  US_EQ  legs: opposing 0 wks / stacking 269 wks
+  GOLD   legs: opposing 13 wks / stacking 176 wks
+  SILVER legs: opposing 0 wks / stacking 18 wks
+
+FORWARD TAPE: week 2026-08-14 already issued — no duplicate append.
+  as-issued exposures (2026-08-14): US_EQ +0.185  NASDAQ +0.291  GOLD +0.045  SILVER +0.000  WTI +0.000  UST2Y +0.119  (thr 1.00, gross 0.83x)

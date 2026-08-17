@@ -56,9 +56,11 @@ def main():
         rets = dict(US_EQ=wk_ret('%5EGSPC', w0, w1), NASDAQ=wk_ret('QQQ', w0, w1),
                     GOLD=wk_ret('GC%3DF', w0, w1), SILVER=wk_ret('SI%3DF', w0, w1),
                     WTI=wk_ret('CL%3DF', w0, w1), UST2Y=t2_ret(w0, w1))
+        if 'USD' in tape.columns and pd.notna(r.get('USD')):
+            rets['USD'] = wk_ret('UUP', w0, w1)
         if any(np.isnan(v) for k, v in rets.items() if abs(float(r[k])) > 1e-9):
             print(f'  {r["week_ending"]}: instrument data not ready — left ISSUED'); continue
-        realized = sum(float(r[k]) * (0.0 if np.isnan(v) else v) for k, v in rets.items())
+        realized = sum(float(r.get(k, 0) or 0) * (0.0 if np.isnan(v) else v) for k, v in rets.items())
         if 'paper_uup_w' in tape.columns and pd.notna(r.get('paper_uup_w')):
             upr = wk_ret('UUP', w0, w1)
             if not np.isnan(upr):

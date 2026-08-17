@@ -159,3 +159,55 @@ runs at this multiple — leverage last of all.**
 (sized_variant_test). The spread's live-book work is real but window-specific; not transferable as a
 standing component. PROVISIONAL: Amendment 2 governs tape emissions from the next issue; prior tape
 rows stand as-issued under Amendment-1 rules (never rewritten).
+
+---
+
+## AMENDMENT 5 (2026-08-17, operator) — RE-LOCK UNIVERSE LEVERAGE 4.0× · DD BUDGET 10% → 16%
+
+**Ruling:** the operator raises the universe MaxDD budget from **10% to 16%** and re-locks the
+universe leverage to **4.0×** (the multiple that spends the 16% budget), **superseding Amendment 4's
+2.54×**. Numbers are the already-computed 4.0× series (`universe_monthly_backtest.csv`, col `uni_400`;
+the "examined, declined" row of `UNIVERSE_BACKTEST_20260817.md`), not an extrapolation.
+
+| universe book | final mult | CAGR | Sortino | Calmar | MaxDD | worst yr | 2008 | 2022 |
+|---|---|---|---|---|---|---|---|---|
+| 2.54× (was FINAL, Amdt 4) | 123.3× | 28.70% | 5.20 | 2.87 | −10.0% | −5.8% | +8.5% | +22.3% |
+| **4.0× (RE-LOCKED FINAL)** | **1,560×** | **47.00%** | **5.20** | **2.99** | **−15.7%** | −9.1% | **+12.9%** | **+36.2%** |
+
+**Honest ≈ 42.5% after financing** (~−4.5pp/yr at 4×; recovery bursts heavy). Sortino is
+leverage-invariant (5.20 unchanged) — this buys return by spending drawdown budget, not by adding
+risk-adjusted quality. Tape semantics unchanged: rows record **1× structural exposures**; capital
+P&L = 4.0 × tape return.
+
+**The binding gate is NOT waived.** The Amendment-4 rule still stands verbatim: **"12 resolved tape
+weeks before any real capital runs at this multiple — leverage last of all."** Forward tape is at
+**1 / 12 resolved** (clears ~mid-November 2026).
+
+**Go-live 2026-08-17 = FORWARD RUN LIVE IN TRACKING MODE ONLY** (`com.zoltar.zion.universe`, Fri
+17:30). Real capital deploys at **12/12**, not before. Risk note amplified with the leverage: the
+−16% is calibrated to the HISTORICAL worst — a beyond-history concurrent draw scales by 4.0×
+(→ ~−25%+ off-model); decade concentration scales too. This amendment records the target spec and
+the tracking go-live; it authorizes **no capital** ahead of the gate.
+
+
+---
+
+## AMENDMENT 5 + AMENDMENT 4 REVISION (2026-08-17, operator) — DOLLAR SLEEVE IN-BOOK · 3.80× · 15.7% DD BUDGET
+
+**Ruling:** the tracked ZION configuration becomes the characterized aggressive tier:
+**+19.3% structural UUP (dollar sleeve, always-on) · leverage 3.80× · DD budget 15.7% · universe
+gross cap 6.0×** (levered structural gross peaks ≈5.98×).
+
+| tracked config | CAGR | Sortino | MaxDD |
+|---|---|---|---|
+| prior (2.54×, no sleeve) | 28.4% | 5.11 | −10.0% |
+| **CURRENT: 3.80× + dollar sleeve** | **45.6%** (honest ≈41% after financing) | **5.89** | **−15.7%** |
+
+**Recorded flags (integrity):** this supersedes two same-day rulings — the 2.54×/10%-DD "wait for
+the tape" and the sleeve's paper-track admission path. The sleeve is adopted AHEAD of forward
+evidence, on operator authority, with its in-sample discovery (found on the book's own down months,
+weight tuned on the same history) explicitly on the record. The tape remains the arbiter: 1×
+structural rows, capital P&L = 3.80 × tape return, USD bucket resolved via UUP. Governs from the
+next issue (wk ending 2026-08-21); prior rows stand as-issued. REAL capital still waits for the
+12-week November review per the standing gate; this amendment changes what is TRACKED, not what is
+traded.

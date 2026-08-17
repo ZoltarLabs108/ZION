@@ -22,8 +22,9 @@ HERE = os.path.dirname(os.path.abspath(__file__)); REP = os.path.join(HERE, 'rep
 H = 2; LEV = 1.190; LEV_RECOVERY = 2.0; RECOVERY_WKS = 4; SPELL = 2
 W_RISK, W_2Y, W_GOLD, W_MICRO = 0.80, 0.20, 0.075, 0.05
 SCORE0 = pd.Timestamp('2007-08-01'); GROSS_CAP = 2.0            # legacy/live-book cap (reported)
-UNIVERSE_LEV = 2.54; UNIVERSE_GROSS_CAP = 3.5                    # AMENDMENT 4 (operator 2026-08-17)
-PAPER_UUP_W = 0.193   # PAPER TRACK (2026-08-17): candidate dollar sleeve (UUP), structural weight at
+UNIVERSE_LEV = 3.80; UNIVERSE_GROSS_CAP = 6.0                    # AMENDMENT 4 REVISED (operator 2026-08-17): 15.7% DD budget
+W_USD_SLEEVE = 0.193  # AMENDMENT 5 (operator 2026-08-17): dollar sleeve (UUP) IN-BOOK, universe-structural.
+PAPER_UUP_W = None    # superseded — sleeve adopted ahead of the paper window by operator ruling. Was:
                       # the characterized peak. NOT in the book, NOT in gross — recorded on the tape
                       # for the November review. Raw UUP returns are resolved, so any weight is
                       # evaluable later by linear scaling (no re-mining). Candidate config if admitted:
@@ -155,12 +156,13 @@ def main():
         onoff = 1.0 if thr[i] >= 1.0 else 0.0                     # AMENDMENT 2 stress-exit: flat, not scaled
         w_spy = wl * wsp * onoff * spy_pos[i]; w_qqq = wl * wqq * onoff * qqq_pos[i]
         w_gld = wl * W_GOLD; w_slv = wl * W_MICRO * mpos[i]; w_t2 = wl * W_2Y
-        rows.append(dict(week=str(wdt.date()), lev=lev_i,
+        usd_slv = W_USD_SLEEVE
+        rows.append(dict(week=str(wdt.date()), lev=lev_i, USD=usd_slv,
                          US_EQ=w_spy + m_spy, NASDAQ=w_qqq, GOLD=w_gld + m_gld, SILVER=w_slv + m_slv,
                          WTI=m_wti, UST2Y=w_t2,
                          w_spy=w_spy, m_spy=m_spy, w_gold=w_gld, m_gold=m_gld, w_silver=w_slv,
                          m_silver=m_slv, thr=thr[i],
-                         gross=sum(abs(x) for x in (w_spy + m_spy, w_qqq, w_gld + m_gld, w_slv + m_slv, m_wti, w_t2)),
+                         gross=sum(abs(x) for x in (w_spy + m_spy, w_qqq, w_gld + m_gld, w_slv + m_slv, m_wti, w_t2, usd_slv)),
                          gross_stacked=sum(abs(x) for x in (w_spy, m_spy, w_qqq, w_gld, m_gld, w_slv, m_slv, m_wti, w_t2))))
     L = pd.DataFrame(rows)
     L.to_csv(os.path.join(REP, 'netting_ledger.csv'), index=False)
@@ -183,7 +185,7 @@ def main():
     cur = L.iloc[-1]
     row = dict(issued=pd.Timestamp.now().strftime('%Y-%m-%d %H:%M'), week_ending=cur.week, status='ISSUED',
                lev=float(cur.lev), recovery=bool(cur.lev > LEV), L_universe=UNIVERSE_LEV,
-               paper_uup_w=PAPER_UUP_W, paper_uup_ret='',
+               USD=round(float(cur.USD), 4),
                US_EQ=round(cur.US_EQ, 4), NASDAQ=round(cur.NASDAQ, 4), GOLD=round(cur.GOLD, 4),
                SILVER=round(cur.SILVER, 4), WTI=round(cur.WTI, 4), UST2Y=round(cur.UST2Y, 4),
                thr=cur.thr, gross=round(cur.gross, 4), realized_ret='', resolved='')

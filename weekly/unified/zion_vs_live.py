@@ -45,6 +45,7 @@ def zion_rows():
     t = pd.read_csv(TAPE); t['week_ending'] = pd.to_datetime(t['week_ending'])
     t['trade_week'] = t['week_ending'] + pd.Timedelta(days=7)     # issue week W trades to W+7
     keep = ['trade_week', 'US_EQ', 'NASDAQ', 'GOLD', 'SILVER', 'WTI', 'UST2Y', 'gross', 'realized_ret', 'status']
+    if 'USD' in t.columns: keep.insert(7, 'USD')
     z = t[keep].rename(columns={c: f'zion_{c}' for c in keep if c != 'trade_week'})
     return z.drop_duplicates('trade_week', keep='last')
 
@@ -74,6 +75,14 @@ def main():
     if len(new):
         new['zion_ret'] = np.nan; new['live_ret'] = np.nan; new['resolved'] = ''
         led = pd.concat([led, new], ignore_index=True)
+    # refresh exposure columns on still-OPEN rows (a ticket side may publish after the row was created)
+    exp_cols = [c for c in m.columns if c != 'trade_week']
+    mi = m.set_index('trade_week')
+    for i, r in led.iterrows():
+        tw = pd.Timestamp(r['trade_week'])
+        if str(r.get('resolved', '')) in ('', 'nan') and tw in mi.index:
+            for c in exp_cols:
+                if c in led.columns: led.at[i, c] = mi.at[tw, c]
     # resolve matured trade weeks
     now = pd.Timestamp.now()
     for i, r in led.iterrows():
