@@ -9,8 +9,11 @@
 
 gross notional $214,406 (2.14x of capital)  |  throttle 1.00  lev-state 1.19
 
-TIMING — signal issued Fri 2026-08-14 from Friday-close data; forecast horizon 2026-08-14 -> 2026-08-21
-  ENTER : Monday 2026-08-17 at/near the open (first session after issue). Prices above are Friday closes — re-check at entry.
-  EXIT  : Friday 2026-08-21 after the 17:30 re-issue — ROLL into the new ticket (close legs the new sheet drops, resize the rest).
-  Holding any leg past the next issue = outside its forecast horizon. If the Friday job fails to print, EXIT to the new sheet's absence is NOT implied — hold and flag.
+TIMING (Tuesday baseline, 2026-08-18) — signal week issued Fri 2026-08-14; forecast horizon 2026-08-14 -> 2026-08-21
+  This sheet's EXECUTION BASELINE is the Tuesday 01:15 refresh — first run where ALL of last week's
+  macro is published (H.15/Moody's/VIX post Monday PM). The Friday 17:30 issue remains the frozen
+  as-issued tape row (model record); if this sheet was printed Friday, re-check Tuesday's before entry.
+  ENTER : Tuesday 2026-08-18 at/near the open, from the Tuesday-printed sheet. Prices shown are last closes — re-check at entry.
+  EXIT  : ROLL at the next Tuesday print (close legs the new sheet drops, resize the rest).
+  Holding any leg past the next print = outside its forecast horizon. If Tuesday's job fails to print, hold and flag — absence of a sheet is NOT an exit signal.
 NOTE: execution is manual by the operator. This sheet mirrors the as-issued tape row; fills-vs-ticket log is the live record.

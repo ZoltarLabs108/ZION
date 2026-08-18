@@ -1,0 +1,96 @@
+=== universe run 20260818_0952 ===
+--- [1/3] refresh weekly panel ---
+[panel] fetching Yahoo weekly ^GSPC ...
+        SP weekly: n=5146  1927-12-30..2026-08-14
+[panel] FRED DGS10     -> GS10_Rate            coverage=65.5%
+[panel] FRED DGS2      -> US_2Y_Treasury       coverage=50.9%
+[panel] FRED T10Y2Y    -> Term_Spread_10Y_2Y   coverage=50.9%
+[panel] FRED T10Y3M    -> Term_Spread_10Y_3M   coverage=45.2%
+[panel] FRED DFF       -> Fed_Funds_Rate       coverage=73.1%
+[panel] FRED VIXCLS    -> VIX_Close            coverage=37.1%
+[panel] FRED BAA10Y    -> Credit_BAA10Y        coverage=41.2%
+[panel] Dollar_Index spliced DTWEXM+DTWEXBGS x0.8114 join=2020-01-03 coverage=54.4%
+[panel] loading monthly panel for Shiller legs + macro ...
+[panel] monthly M2_Money               -> M2_Money               lag=2mo coverage=68.4%
+[panel] monthly Industrial_Production  -> Industrial_Production  lag=2mo coverage=100.0%
+[panel] monthly US_CPI                 -> US_CPI                 lag=2mo coverage=80.6%
+[panel] monthly Gold_Close             -> Gold_Close             lag=0mo coverage=59.4%
+[panel] monthly WTI_Crude_Close        -> WTI_Crude_Close        lag=0mo coverage=41.2%
+
+[panel] WROTE /Users/castaglia/Desktop/ZION_WEEKLY_WT/weekly/weekly_panel_spy.csv
+        rows=5147  span 1927-12-30..2026-08-14
+        columns=['SP_Price', 'GS10_Rate', 'US_2Y_Treasury', 'Term_Spread_10Y_2Y', 'Term_Spread_10Y_3M', 'Fed_Funds_Rate', 'VIX_Close', 'Credit_BAA10Y', 'Dollar_Index', 'Real_Price', 'Real_Earnings', 'CAPE', 'M2_Money', 'Industrial_Production', 'US_CPI', 'Gold_Close', 'WTI_Crude_Close']
+--- [2/3] netting ledger + tape issue ---
+[1/4] rebuilding weekly sleeve positions (frozen H=2) ...
+      sleeve Sortinos 0.94/1.48 -> weights SPY 0.310 QQQ 0.490 (of book)
+[2/4] throttle + silver micro positions ...
+[3/4] monthly leg positions (SYZYGY base) ...
+[4/4] summary + forward-tape emission ...
+
+NETTING LEDGER — 994 weeks (2007-08-03..2026-08-14) -> reports/netting_ledger.csv
+  netted gross : max 1.59x  mean 0.70x   (house cap 2.0x -> NEVER breached)
+  vs stacked   : max 1.38x  (netting saves up to -0.13x in the worst week)
+  per-bucket max |net|: US_EQ 0.41  NASDAQ 0.49  GOLD 0.17  SILVER 0.13  WTI 0.10  UST2Y 0.20
+  US_EQ  legs: opposing 0 wks / stacking 269 wks
+  GOLD   legs: opposing 13 wks / stacking 176 wks
+  SILVER legs: opposing 0 wks / stacking 18 wks
+
+FORWARD TAPE: week 2026-08-14 already issued — no duplicate append.
+  as-issued exposures (2026-08-14): US_EQ +0.185  NASDAQ +0.291  GOLD +0.045  SILVER +0.000  WTI +0.000  UST2Y +0.119  (thr 1.00, gross 0.86x)
+--- [3/3] resolve matured issues ---
+
+tape: 2 rows, 1 resolved, 0 newly resolved.
+forward record: 1 wks, 100% positive, cum +0.02%   (evidence window: 1/12 weeks)
+--- [4/7] ZION vs LIVE comparison ---
+ZION vs LIVE — standing weekly comparison (2 trade weeks tracked)
+  trade wk | ZION: eq   gold    slv    2y  gross | LIVE: sp   gold    slv     pt     ng  gross |  agree |   z_ret   l_ret
+2026-08-14 | +0.19 +0.05 +0.00 +0.12 +0.36 | +0.00 +0.18 +0.32 -0.06 +0.00 +0.56 |      = |  +0.02%  +0.00%
+2026-08-21 | +0.18 +0.04 +0.00 +0.12 +0.64 | +0.00 +0.00 +0.00 +0.00 +0.00 +0.00 |     -- |    open    open
+
+cumulative (1 resolved wks): ZION +0.02%  vs LIVE +0.00%  | ZION wins 1/1 wks
+evidence window: 1/12 — no verdicts before 12 resolved weeks (house rule).
+--- [5/7] paper Mon-close rule ---
+snapshotted 0 new print(s), resolved 0 period(s) -> paper_monclose_ledger.csv
+
+PAPER-TRACK — Monday-close exit vs full Wednesday-hold (live AEGIS book, paper only)
+       print   wd       entry  bf  full-hold  mon-close     edge  status
+  2026-07-09  Thu  2026-07-09   1       open       open       --  OPEN
+  2026-07-15  Wed  2026-07-15   1     +0.82%     +1.30%   +0.48%  RESOLVED
+  2026-07-22  Wed  2026-07-23   1     +0.25%     +0.80%   +0.55%  RESOLVED
+  2026-07-29  Wed  2026-07-29   1     +2.16%     +1.36%   -0.80%  RESOLVED
+  2026-08-06  Thu  2026-08-06   1     -0.19%     +0.09%   +0.28%  RESOLVED
+  2026-08-12  Wed  2026-08-12   1       open       open       --  OPEN
+
+all resolved (4, incl backfill): full-hold +3.06%  mon-close +3.60%  | rule wins 3/4
+FORWARD evidence window: 0/12 resolved — no adoption verdict before 12 (backfill rows are context only; hindsight-chosen split, see funnel-miner doctrine).
+
+LIVE BOOK TIMING — held print 2026-08-12 (Wednesday), entered 2026-08-12
+  forecast horizon ends Fri 2026-08-14  ->  today is OUTSIDE the horizon (+4d vs horizon end)
+  FULL-HOLD exit (live practice)      : next mid-week print (Tue 01:15 baseline; Wed = catch-up only)
+  MON-CLOSE exit (paper rule, 0/12) : Monday 2026-08-17 at the close
+--- [6/7] ZION desk ticket ---
+# ZION DESK TICKET — week issued 2026-08-14  (capital $100,000, leverage 2.5x)
+  bucket  instr  exposure     notional       last   shares  side
+   US_EQ    SPY    +0.185      +46,144     776.34       59  BUY/LONG
+  NASDAQ    QQQ    +0.291      +72,856     731.07       99  BUY/LONG
+    GOLD    GLD    +0.045      +11,156     401.48       27  BUY/LONG
+   UST2Y    SHY    +0.119      +29,750      82.00      362  BUY/LONG
+     USD    UUP    +0.193      +48,250      28.11    1,716  BUY/LONG
+   INDIA   INDA    +0.025       +6,250      49.78      125  BUY/LONG
+
+gross notional $214,406 (2.14x of capital)  |  throttle 1.00  lev-state 1.19
+
+TIMING (Tuesday baseline, 2026-08-18) — signal week issued Fri 2026-08-14; forecast horizon 2026-08-14 -> 2026-08-21
+  This sheet's EXECUTION BASELINE is the Tuesday 01:15 refresh — first run where ALL of last week's
+  macro is published (H.15/Moody's/VIX post Monday PM). The Friday 17:30 issue remains the frozen
+  as-issued tape row (model record); if this sheet was printed Friday, re-check Tuesday's before entry.
+  ENTER : Tuesday 2026-08-18 at/near the open, from the Tuesday-printed sheet. Prices shown are last closes — re-check at entry.
+  EXIT  : ROLL at the next Tuesday print (close legs the new sheet drops, resize the rest).
+  Holding any leg past the next print = outside its forecast horizon. If Tuesday's job fails to print, hold and flag — absence of a sheet is NOT an exit signal.
+NOTE: execution is manual by the operator. This sheet mirrors the as-issued tape row; fills-vs-ticket log is the live record.
+--- [7/7] fills reconcile (read-only) ---
+✗ Schwab read failed: HTTPStatusError: Client error '401 Unauthorized' for url 'https://api.schwabapi.com/trader/v1/accounts/accountNumbers'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401
+  If token expired (7-day wall): re-run AEGIS/schwab_login_manual.py.
+RECONCILE SKIPPED (token/creds — see output)
+=== done 20260818_0952 ===
