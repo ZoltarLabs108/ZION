@@ -1,4 +1,4 @@
-=== universe run 20260817_1133 ===
+=== universe run 20260817_1602 ===
 --- [1/3] refresh weekly panel ---
 [panel] fetching Yahoo weekly ^GSPC ...
         SP weekly: n=5146  1927-12-30..2026-08-14
@@ -28,20 +28,20 @@
 [4/4] summary + forward-tape emission ...
 
 NETTING LEDGER — 994 weeks (2007-08-03..2026-08-14) -> reports/netting_ledger.csv
-  netted gross : max 0.94x  mean 0.46x   (house cap 2.0x -> NEVER breached)
-  vs stacked   : max 0.94x  (netting saves up to 0.09x in the worst week)
-  per-bucket max |net|: US_EQ 0.35  NASDAQ 0.29  GOLD 0.14  SILVER 0.13  WTI 0.10  UST2Y 0.12
+  netted gross : max 1.59x  mean 0.70x   (house cap 2.0x -> NEVER breached)
+  vs stacked   : max 1.38x  (netting saves up to -0.13x in the worst week)
+  per-bucket max |net|: US_EQ 0.41  NASDAQ 0.49  GOLD 0.17  SILVER 0.13  WTI 0.10  UST2Y 0.20
   US_EQ  legs: opposing 0 wks / stacking 269 wks
   GOLD   legs: opposing 13 wks / stacking 176 wks
   SILVER legs: opposing 0 wks / stacking 18 wks
 
 FORWARD TAPE: week 2026-08-14 already issued — no duplicate append.
-  as-issued exposures (2026-08-14): US_EQ +0.185  NASDAQ +0.291  GOLD +0.045  SILVER +0.000  WTI +0.000  UST2Y +0.119  (thr 1.00, gross 0.64x)
+  as-issued exposures (2026-08-14): US_EQ +0.185  NASDAQ +0.291  GOLD +0.045  SILVER +0.000  WTI +0.000  UST2Y +0.119  (thr 1.00, gross 0.86x)
 --- [3/3] resolve matured issues ---
 
 tape: 2 rows, 1 resolved, 0 newly resolved.
 forward record: 1 wks, 100% positive, cum +0.02%   (evidence window: 1/12 weeks)
---- [4/4] ZION vs LIVE comparison ---
+--- [4/5] ZION vs LIVE comparison ---
 ZION vs LIVE — standing weekly comparison (2 trade weeks tracked)
   trade wk | ZION: eq   gold    slv    2y  gross | LIVE: sp   gold    slv     pt     ng  gross |  agree |   z_ret   l_ret
 2026-08-14 | +0.19 +0.05 +0.00 +0.12 +0.36 | +0.00 +0.18 +0.32 -0.06 +0.00 +0.56 |      = |  +0.02%  +0.00%
@@ -49,4 +49,16 @@ ZION vs LIVE — standing weekly comparison (2 trade weeks tracked)
 
 cumulative (1 resolved wks): ZION +0.02%  vs LIVE +0.00%  | ZION wins 1/1 wks
 evidence window: 1/12 — no verdicts before 12 resolved weeks (house rule).
-=== done 20260817_1133 ===
+--- [5/5] ZION desk ticket ---
+# ZION DESK TICKET — week issued 2026-08-14  (capital $100,000, leverage 2.5x)
+  bucket  instr  exposure     notional       last   shares  side
+   US_EQ    SPY    +0.185      +46,144     776.34       59  BUY/LONG
+  NASDAQ    QQQ    +0.291      +72,856     731.07       99  BUY/LONG
+    GOLD    GLD    +0.045      +11,156     401.48       27  BUY/LONG
+   UST2Y    SHY    +0.119      +29,750      82.00      362  BUY/LONG
+     USD    UUP    +0.193      +48,250      28.11    1,716  BUY/LONG
+   INDIA   INDA    +0.025       +6,250      49.78      125  BUY/LONG
+
+gross notional $214,406 (2.14x of capital)  |  throttle 1.00  lev-state 1.19
+NOTE: execution is manual by the operator. This sheet mirrors the as-issued tape row; fills-vs-ticket log is the live record.
+=== done 20260817_1602 ===

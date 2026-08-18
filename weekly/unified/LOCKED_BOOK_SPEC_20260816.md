@@ -260,3 +260,10 @@ fails). At 4.0× with the full book: backtest MaxDD ≈ **−16.5%** (slightly p
 accepted by this ruling) and peak levered gross ≈6.3× → **universe cap moves 6.0× → 6.5× at step 3**.
 Model tape moves 3.80× → 4.0× at step 3 so model and execution converge. Financing at 4.0× ≈
 −4.5pp/yr (honest CAGR ~42%). Operator advances each step by changing ZION_LEV in run_universe.sh.
+
+## PAPER STUDY P1 — Monday-close exit on the live (AEGIS) book  [2026-08-18, paper only]
+Hypothesis (operator): live Wednesday-print P&L concentrates Wed->Mon-close; Tue+Wed-morning tail gives it back.
+Weekday intel (5 periods, 22 trading days): Wed->Mon +2.25% vs tail -2.34% — hindsight split, NOT adoptable evidence.
+Ledger-basis backfill (entry = print-day close, full hold to next print entry): full-hold +3.06% vs mon-close +3.60%, rule wins 3/4 — more modest than the weekday split suggested.
+Tracker: paper_monclose.py (step 5/7 of Friday job) — snapshots every mid-week print append-only (immune to the Wednesday row-overwrite), scores FULL-HOLD vs MON-CLOSE arms close-to-close.
+Gate: 12 FORWARD resolved periods (backfill = context only) before any adoption discussion. Changes no execution, sizes nothing. Calendar timing is exogenous (world-state-legal), which is the only reason this is testable at all.

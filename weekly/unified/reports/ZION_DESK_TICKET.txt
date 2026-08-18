@@ -8,4 +8,9 @@
    INDIA   INDA    +0.025       +6,250      49.78      125  BUY/LONG
 
 gross notional $214,406 (2.14x of capital)  |  throttle 1.00  lev-state 1.19
+
+TIMING — signal issued Fri 2026-08-14 from Friday-close data; forecast horizon 2026-08-14 -> 2026-08-21
+  ENTER : Monday 2026-08-17 at/near the open (first session after issue). Prices above are Friday closes — re-check at entry.
+  EXIT  : Friday 2026-08-21 after the 17:30 re-issue — ROLL into the new ticket (close legs the new sheet drops, resize the rest).
+  Holding any leg past the next issue = outside its forecast horizon. If the Friday job fails to print, EXIT to the new sheet's absence is NOT implied — hold and flag.
 NOTE: execution is manual by the operator. This sheet mirrors the as-issued tape row; fills-vs-ticket log is the live record.
