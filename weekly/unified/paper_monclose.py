@@ -160,7 +160,7 @@ def report(led):
             print(f"  forecast horizon ends Fri {horizon_end.date()}"
                   f"  ->  today is {'INSIDE' if today <= horizon_end else 'OUTSIDE'} the horizon"
                   f" ({(today - horizon_end).days:+d}d vs horizon end)")
-            print(f"  FULL-HOLD exit (live practice)      : next mid-week print (~Wed 01:15 re-run)")
+            print(f"  FULL-HOLD exit (live practice)      : next mid-week print (Tue 01:15 baseline; Wed = catch-up only)")
             print(f"  MON-CLOSE exit (paper rule, {len(fwd)}/12) : Monday {dm.date() if dm is not None else '--'} at the close")
 
 
