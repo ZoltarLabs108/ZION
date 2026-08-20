@@ -9,6 +9,16 @@
 
 gross notional $214,406 (2.14x of capital)  |  throttle 1.00  lev-state 1.19
 
+------------------------------------------------------------------------
+SHADOW WATCH — DE-CONCENTRATION (Candidate C2, report-only, NOT LIVE)
+------------------------------------------------------------------------
+  leg    standard ZION           de-concentration (inv-vol 0.60/0.40)   Δ
+  SPY      59 sh $    46,144       92 sh $    71,649     +33
+  QQQ      99 sh $    72,856       64 sh $    47,351     -35
+  26wk vol: SPY 2.0%/wk  QQQ 3.0%/wk  (higher-vol leg trimmed). Combined equity + all hedges UNCHANGED.
+  backtest net of costs: book Sortino +0.039 full · +0.063/+0.024 both halves · DD-neutral.
+  STATUS: WATCH-ONLY (Candidate C2) — forward-tracked 0/12, decides ~Nov 6. NOT the live sheet.
+
 TIMING (Tuesday baseline, 2026-08-18) — signal week issued Fri 2026-08-14; forecast horizon 2026-08-14 -> 2026-08-21
   This sheet's EXECUTION BASELINE is the Tuesday 01:15 refresh — first run where ALL of last week's
   macro is published (H.15/Moody's/VIX post Monday PM). The Friday 17:30 issue remains the frozen

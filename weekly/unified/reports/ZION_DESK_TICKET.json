@@ -58,6 +58,14 @@
       "side": "BUY/LONG"
     }
   ],
+  "deconc_shadow": [
+    "  leg    standard ZION           de-concentration (inv-vol 0.60/0.40)   \u0394",
+    "  SPY      59 sh $    46,144       92 sh $    71,649     +33",
+    "  QQQ      99 sh $    72,856       64 sh $    47,351     -35",
+    "  26wk vol: SPY 2.0%/wk  QQQ 3.0%/wk  (higher-vol leg trimmed). Combined equity + all hedges UNCHANGED.",
+    "  backtest net of costs: book Sortino +0.039 full \u00b7 +0.063/+0.024 both halves \u00b7 DD-neutral.",
+    "  STATUS: WATCH-ONLY (Candidate C2) \u2014 forward-tracked 0/12, decides ~Nov 6. NOT the live sheet."
+  ],
   "market_read": [
     "CALM TAPE. Volatility is quiet \u2014 VIX 14.2, only the 28th percentile of its own history \u2014 and investment-grade credit spreads (1.69) sit in the 20th. Both are well below the 70th-percentile line where the book starts pulling risk off, so the throttle is fully open and the risk sleeves are on.",
     "Leverage is at its calm baseline (1.19x weekly).",

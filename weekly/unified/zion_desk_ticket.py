@@ -72,6 +72,32 @@ def market_read(cur):
     return S
 
 
+def deconc_shadow(cur):
+    """Candidate C2 shadow: inverse 26wk-vol SPY/QQQ split vs the live Sortino split. WATCH-ONLY,
+    not the live recommendation; forward-tracked by paper_deconcentration.py."""
+    eS, eQ = float(cur.get('US_EQ', 0) or 0), float(cur.get('NASDAQ', 0) or 0); eqc = eS + eQ
+    if eqc < 1e-9: return []
+    def vol(tk):
+        s = zw.yahoo_weekly(tk)
+        if isinstance(s, pd.DataFrame): s = s['Close'] if 'Close' in s.columns else s.iloc[:, 0]
+        s = s.dropna(); return float(s.pct_change().dropna().tail(26).std()), float(s.iloc[-1])
+    try:
+        vS, pS = vol('SPY'); vQ, pQ = vol('QQQ')
+    except Exception:
+        return []
+    if not (np.isfinite(vS) and np.isfinite(vQ) and vS > 0 and vQ > 0): return []
+    iv = (1 / vS) / ((1 / vS) + (1 / vQ)); nS, nQ = eqc * iv, eqc * (1 - iv)
+    shr = lambda e, px: int(e * LEV * CAP / px) if px > 0 else 0
+    return [
+        f"  leg    standard ZION           de-concentration (inv-vol {iv:.2f}/{1-iv:.2f})   Δ",
+        f"  SPY   {shr(eS,pS):>5} sh ${eS*LEV*CAP:>10,.0f}    {shr(nS,pS):>5} sh ${nS*LEV*CAP:>10,.0f}     {shr(nS,pS)-shr(eS,pS):+d}",
+        f"  QQQ   {shr(eQ,pQ):>5} sh ${eQ*LEV*CAP:>10,.0f}    {shr(nQ,pQ):>5} sh ${nQ*LEV*CAP:>10,.0f}     {shr(nQ,pQ)-shr(eQ,pQ):+d}",
+        f"  26wk vol: SPY {vS*100:.1f}%/wk  QQQ {vQ*100:.1f}%/wk  (higher-vol leg trimmed). Combined equity + all hedges UNCHANGED.",
+        f"  backtest net of costs: book Sortino +0.039 full · +0.063/+0.024 both halves · DD-neutral.",
+        f"  STATUS: WATCH-ONLY (Candidate C2) — forward-tracked 0/12, decides ~Nov 6. NOT the live sheet.",
+    ]
+
+
 led=pd.read_csv(os.path.join(REP,'netting_ledger.csv')); cur=led.iloc[-1]
 lines=[f"# ZION DESK TICKET — week issued {cur['week']}  (capital ${CAP:,.0f}, leverage {LEV:g}x)",
        f"{'bucket':>8} {'instr':>6} {'exposure':>9} {'notional':>12} {'last':>10} {'shares':>8}  side"]
@@ -91,6 +117,13 @@ for b,(tk,label) in INSTR.items():
     lines.append(f"{b:>8} {label:>6} {e:>+9.3f} {notion:>+12,.0f} {px:>10,.2f} {sh:>8,d}  {side}")
     tick['legs'].append(dict(bucket=b,instrument=label,exposure=e,notional=round(notion),last=px,shares=sh,side=side))
 lines.append(f"\ngross notional ${gross:,.0f} ({gross/CAP:.2f}x of capital)  |  throttle {cur['thr']:.2f}  lev-state {cur.get('lev','?')}")
+ds=deconc_shadow(cur)
+if ds:
+    lines.append("\n" + "-"*72)
+    lines.append("SHADOW WATCH — DE-CONCENTRATION (Candidate C2, report-only, NOT LIVE)")
+    lines.append("-"*72)
+    lines += ds
+    tick['deconc_shadow']=ds
 wk=pd.Timestamp(cur['week']); entry=wk+pd.Timedelta(days=4); horizon=wk+pd.Timedelta(days=7)
 lines.append(f"\nTIMING (Tuesday baseline, 2026-08-18) — signal week issued Fri {wk.date()}; forecast horizon {wk.date()} -> {horizon.date()}")
 lines.append(f"  This sheet's EXECUTION BASELINE is the Tuesday 01:15 refresh — first run where ALL of last week's")
