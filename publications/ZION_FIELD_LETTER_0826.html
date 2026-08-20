@@ -1,0 +1,321 @@
+<meta charset="utf-8">
+<title>ZION Field Letter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap">
+<style>
+  :root{
+    --paper:#ECE7DB; --panel:#F4EFE4; --panel-2:#E6E0D0;
+    --ink:#241F17; --ink-soft:#57513f; --faint:#918a76; --rule:#D3CCB9;
+    --accent:#A9791F; --accent-soft:#e9dcc0;
+    --up:#3F7A5F; --down:#A85A38; --hold:#918a76;
+    --serif:'Spectral','Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;
+    --display:'Fraunces','Iowan Old Style',Palatino,Georgia,serif;
+    --mono:'SF Mono',ui-monospace,'Roboto Mono',Menlo,Consolas,monospace;
+  }
+  :root:not([data-theme="light"]){}
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --paper:#16161A; --panel:#1D1D22; --panel-2:#26262c;
+      --ink:#EAE4D6; --ink-soft:#A69F8C; --faint:#726c5c; --rule:#2C2C33;
+      --accent:#D6AA55; --accent-soft:#2e2818;
+      --up:#63A385; --down:#CB7A56; --hold:#726c5c;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#16161A; --panel:#1D1D22; --panel-2:#26262c;
+    --ink:#EAE4D6; --ink-soft:#A69F8C; --faint:#726c5c; --rule:#2C2C33;
+    --accent:#D6AA55; --accent-soft:#2e2818;
+    --up:#63A385; --down:#CB7A56; --hold:#726c5c;
+  }
+
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);
+    -webkit-font-smoothing:antialiased;line-height:1.62;font-size:17px;}
+  .wrap{max-width:660px;margin:0 auto;padding:clamp(26px,6vw,60px) clamp(18px,5vw,34px) 72px;}
+  .num{font-variant-numeric:tabular-nums}
+  .up{color:var(--up)} .down{color:var(--down)}
+
+  /* Masthead */
+  .mast{border-bottom:2.5px solid var(--ink);padding-bottom:12px}
+  .mast .row{display:flex;justify-content:space-between;align-items:baseline;gap:14px;flex-wrap:wrap}
+  .mast .name{font-family:var(--display);font-weight:600;font-size:clamp(26px,6vw,36px);letter-spacing:.005em;line-height:1}
+  .mast .name b{color:var(--accent);font-weight:600}
+  .mast .issue{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);text-align:right}
+  .kicker{font-family:var(--mono);font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;
+    color:var(--faint);margin:13px 0 0}
+
+  h2.sec{font-family:var(--display);font-weight:600;font-size:clamp(22px,4.4vw,28px);letter-spacing:-.005em;
+    line-height:1.14;text-wrap:balance;margin:44px 0 4px}
+  h2.sec .n{font-family:var(--mono);font-size:12px;color:var(--accent);letter-spacing:.1em;
+    vertical-align:middle;margin-right:12px;font-weight:400}
+  .dek{color:var(--ink-soft);font-style:italic;margin:0 0 18px;font-size:16px}
+  p{margin:0 0 16px}
+  p.lede{font-size:19px;line-height:1.55}
+  em{color:var(--ink)}
+  strong{font-weight:600}
+  a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent-soft)}
+
+  .drop::first-letter{font-family:var(--display);font-weight:600;float:left;font-size:3.35em;line-height:.78;
+    padding:6px 10px 0 0;color:var(--accent)}
+
+  /* pull / callout */
+  .pull{border-left:3px solid var(--accent);padding:2px 0 2px 18px;margin:22px 0;
+    font-family:var(--display);font-weight:500;font-size:19px;line-height:1.4;color:var(--ink)}
+  .box{background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:18px 20px;margin:22px 0}
+  .box .bh{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+
+  /* Hidden Correspondence marquee */
+  .marquee{margin:36px 0 10px;padding:26px 28px 24px;background:var(--panel);
+    border:1px solid var(--rule);border-top:3px solid var(--accent);border-radius:5px}
+  .mq-eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;
+    color:var(--accent);margin-bottom:15px}
+  .mq-head{font-family:var(--display);font-weight:600;font-size:clamp(23px,4.6vw,31px);line-height:1.12;
+    letter-spacing:-.01em;margin:0 0 15px;text-wrap:balance;color:var(--ink)}
+  .mq-head .mq-em{color:var(--accent)}
+  .mq-body{font-size:16.5px;margin:0 0 17px}
+  .mq-status{display:flex;gap:13px;align-items:flex-start;padding-top:16px;border-top:1px solid var(--rule);
+    font-size:14.5px;color:var(--ink-soft);line-height:1.52}
+  .mq-status .mq-dot{flex:none;width:9px;height:9px;border-radius:50%;background:var(--hold);
+    margin-top:6px;box-shadow:0 0 0 3px var(--accent-soft)}
+  .mq-status b{color:var(--ink)}
+
+  /* tables */
+  .tw{overflow-x:auto;margin:20px 0}
+  table{border-collapse:collapse;width:100%;font-size:14.5px}
+  caption{caption-side:top;text-align:left;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--faint);padding-bottom:9px}
+  th,td{text-align:right;padding:9px 10px;border-bottom:1px solid var(--rule)}
+  th:first-child,td:first-child{text-align:left}
+  thead th{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--ink-soft);font-weight:400;border-bottom:1.5px solid var(--ink)}
+  tbody td{font-variant-numeric:tabular-nums}
+  tbody tr.hl td{background:var(--panel)}
+  tbody td.lab{font-family:var(--serif);color:var(--ink)}
+  .foot-note{font-size:12.5px;color:var(--faint);font-style:italic;margin-top:8px}
+
+  /* the book grid */
+  .book{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:18px 0}
+  .pos{background:var(--panel);border:1px solid var(--rule);border-radius:9px;padding:12px 14px;
+    display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+  .pos .p-nm{font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--ink-soft)}
+  .pos .p-v{font-family:var(--mono);font-size:15px;font-variant-numeric:tabular-nums;font-weight:600}
+  .pos.flat .p-v{color:var(--faint);font-weight:400}
+  .stance{display:flex;flex-wrap:wrap;gap:8px 22px;margin:16px 0 4px;padding:14px 0;
+    border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+  .stance .s{display:flex;flex-direction:column}
+  .stance .s .sl{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+  .stance .s .sv{font-family:var(--mono);font-size:17px;font-weight:600;font-variant-numeric:tabular-nums}
+
+  ol.disc-list{margin:16px 0;padding-left:0;list-style:none;counter-reset:d}
+  ol.disc-list li{counter-increment:d;position:relative;padding-left:34px;margin-bottom:13px;font-size:15.5px;color:var(--ink-soft)}
+  ol.disc-list li::before{content:counter(d,decimal-leading-zero);position:absolute;left:0;top:2px;
+    font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.05em}
+  ol.disc-list li b{color:var(--ink)}
+
+  .signoff{margin-top:40px;padding-top:18px;border-top:2px solid var(--ink)}
+  .signoff .by{font-family:var(--display);font-size:18px;font-weight:600}
+  .signoff .by span{color:var(--ink-soft);font-weight:400;font-size:14px;font-family:var(--serif)}
+  .disclaimer{margin-top:22px;font-size:11.5px;line-height:1.6;color:var(--faint);font-style:italic}
+  .colophon{margin-top:16px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+
+  @media(max-width:520px){.book{grid-template-columns:1fr}}
+</style>
+
+<div class="wrap">
+
+  <header class="mast">
+    <div class="row">
+      <div class="name">Zoltar <b>Predicts</b></div>
+      <div class="issue">Field Letter № 01<br>August 2026</div>
+    </div>
+    <p class="kicker">ZION · The Structural Book · Out-of-sample walk-forward · Provisional until the live tape</p>
+  </header>
+
+  <h2 class="sec" style="margin-top:34px">A different kind of edge</h2>
+  <p class="dek">Why ZION's first letter leads with drawdown, not a price target.</p>
+  <p class="lede drop">Most market letters open with a call — a number, a direction, a target. This one opens
+    with a distinction. ZION's big equity sleeves — S&amp;P and Nasdaq — converge to roughly their own long-run
+    drift, and we don't pretend the directional edge <em>there</em> is more than a fraction of a percent. The
+    book's ballast doesn't need a forecast to work. <strong>But direction is not absent — it is rationed.</strong>
+    On the roughly one-in-five months a certified filter fires, ZION takes a real, out-of-sample directional
+    edge (§02). The rest of the time it engineers the ride and waits.</p>
+  <p>What ZION engineers underneath that is the <em>shape of the ride</em> — the second moment. A book of
+    near-orthogonal sleeves, an always-on hedge, and a throttle that cuts exposure when market stress rises,
+    assembled so that <strong>something is usually working when the rest is not.</strong> The claim is not that
+    we predict everything. It is that we lose less, and less often, act on direction only where it survives
+    out-of-sample, and can show you exactly how.</p>
+
+  <div class="pull">Loss-limiting every month by construction; directional only where a filter clears
+    out-of-sample. Both are testable claims — and the live tape is now testing them.</div>
+
+  <section class="marquee">
+    <div class="mq-eyebrow">The Hidden Correspondence · August 2026</div>
+    <h2 class="mq-head">This month's dominant relationship — <span class="mq-em">the dollar, measured against the money supply.</span></h2>
+    <p class="mq-body">Out of a mound of macro series, ZOLTAR distils each asset down to a handful of
+      <em>named</em> relationships — a ratio in a specific configuration that has, historically, preceded a move.
+      The highest-conviction one it holds is a single, plain relationship: the <strong>Dollar Index against the
+      M2 money supply.</strong> When that ratio takes one of three specific shapes, gold's next month has been
+      right about <strong>72% of the time it acts.</strong> A black-box model can hand you a number and nothing
+      else; ZOLTAR can name the pattern it found — hidden in the data, stated in plain sight.</p>
+    <div class="mq-status">
+      <span class="mq-dot"></span>
+      <span><b>Status this month — dormant, across the board.</b> The dollar-to-M2 ratio is sitting
+        flat-flat-down: a shape history reads as a coin-toss, not one of its three acting configurations.
+        Silver's, oil's and the dollar's own correspondences are all quiet too — none sits in a predictive tier
+        this cycle. So ZOLTAR does the one thing a black box cannot: it tells you, plainly, that there is no
+        pattern worth betting this month. That is precisely why the book below is in cash. (The full roster is
+        in §02.)</span>
+    </div>
+  </section>
+
+  <h2 class="sec"><span class="n">01</span>The book this cycle</h2>
+  <p class="dek">As-issued, week of 14 August 2026. Nothing here is a prediction of level — only a set of sized,
+    netted exposures.</p>
+  <p>The throttle reads <strong>unstressed</strong>, so the weekly book is carrying risk. Equity sits in the
+    S&amp;P and Nasdaq sleeves, balanced by the standing hedges — a 20% two-year-Treasury leg and a 7.5% gold
+    overlay that are always on. Silver and WTI are flat this week. On the monthly cadence, all five directional
+    sleeves abstained, so the <strong>monthly leg is simply in cash</strong> — the system's default when no cell
+    clears its bar.</p>
+
+  <div class="book">
+    <div class="pos"><span class="p-nm">S&amp;P / US_EQ</span><span class="p-v">+0.185</span></div>
+    <div class="pos"><span class="p-nm">Nasdaq</span><span class="p-v">+0.291</span></div>
+    <div class="pos"><span class="p-nm">Gold overlay</span><span class="p-v">+0.045</span></div>
+    <div class="pos"><span class="p-nm">2Y Treasury hedge</span><span class="p-v">+0.119</span></div>
+    <div class="pos flat"><span class="p-nm">Silver</span><span class="p-v">0.000</span></div>
+    <div class="pos flat"><span class="p-nm">WTI</span><span class="p-v">0.000</span></div>
+  </div>
+
+  <div class="stance">
+    <div class="s"><span class="sl">Netted gross</span><span class="sv">0.86&times;</span></div>
+    <div class="s"><span class="sl">Throttle</span><span class="sv">1.00</span></div>
+    <div class="s"><span class="sl">Monthly leg</span><span class="sv">Cash</span></div>
+    <div class="s"><span class="sl">House cap</span><span class="sv">2.0&times;</span></div>
+  </div>
+  <p class="foot-note">Positions persist to the next gated decision and go flat while the throttle is stressed.
+    Gross is well under the house cap — the book is not reaching for exposure this cycle.</p>
+
+  <h2 class="sec"><span class="n">02</span>The directional engine</h2>
+  <p class="dek">Structure is the chassis and runs every month. But ZION is not agnostic about direction — it
+    rations it, and acts only where the out-of-sample edge is real.</p>
+  <p>The RED DAWN cascade keeps a small set of predictors defined by <strong>articulable, real-world ratio
+    thresholds</strong> — hidden patterns in plain sight, not black-box weights. Two clear the bar today, meaning
+    the drift-guard confirms their acted-months accuracy beats <em>both</em> a naïve always-long book
+    <em>and</em> the drift benchmark, out-of-sample:</p>
+
+  <div class="tw">
+    <table>
+      <caption>Certified directional cells — OOS-confirmed to beat drift</caption>
+      <thead><tr><th>Cell</th><th>The correspondence</th><th>Fires</th><th>Acted acc.</th><th>OOS verdict</th></tr></thead>
+      <tbody>
+        <tr><td class="lab">Gold</td><td style="text-align:left">Dollar Index &divide; M2 money</td><td>~19.5% of mo</td><td>71.8%</td><td class="up">beats drift</td></tr>
+        <tr><td class="lab">Silver</td><td style="text-align:left">Industrial prod. &divide; 10-yr yield</td><td>~25.5% of mo</td><td>70.5%</td><td class="up">beats drift</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="foot-note">Gold is the more robust of the two (~270 acted months); Silver shows a higher point-OOS on
+    a thinner record. Both are single certified cells — <em>not</em> the full multi-round cascade, which runs
+    near coin and is deliberately never traded.</p>
+
+  <p style="margin-top:18px">The discipline that makes this credible is what the system <em>throws away</em>. The
+    highest raw accuracy on the board this cycle is <strong>WTI at 73.4%</strong> — and it is rejected, because
+    out-of-sample it only recaptures drift. ZION keeps the cell with the lower headline and the real edge, not
+    the higher headline without one. (It is the same reason the S&amp;P's ~71% is booked as drift capture, not
+    skill.) <strong>The credential is the out-of-sample test, never the in-sample tier.</strong></p>
+
+  <div class="box">
+    <div class="bh">The honest bound</div>
+    <p style="margin:0">Pull-set membership is chosen in-sample; per-month routing is walk-forward. So read the
+      ~70% as an <strong>acted-months figure, confirmed to beat drift</strong> — an upper bound, not a clean 71%
+      OOS. The as-issued tape is where it converts to fact.</p>
+  </div>
+
+  <p style="margin-top:18px">Why, then, is the monthly leg in cash this cycle? Because none of the assets sit in
+    their certified pull tiers right now — Gold is at tier 13, Silver at tier 4, off the tiers that carry the
+    edge. <strong>The edge is episodic by design:</strong> the system waits for the filter and stands aside when
+    it isn't there. This month, it isn't.</p>
+
+  <h2 class="sec"><span class="n">03</span>The evidence</h2>
+  <p class="dek">Out-of-sample walk-forward, 2007–2026. Every signal, gate, and monthly call is one-step-ahead;
+    the assembly is fitted, which is why the live tape is the binding test.</p>
+  <p>Read the table below as a single sentence: <strong>the same risk-adjusted quality at every leverage
+    level, and leverage buys drawdown — nothing else.</strong> The Sortino ratio is 5.20 whether the book runs
+    at 1&times; or 4&times;, because leverage scales the ride up and down without changing its shape. What
+    changes is the drawdown budget you choose to spend.</p>
+
+  <div class="tw">
+    <table>
+      <caption>Risk &amp; return — ZION vs. the market</caption>
+      <thead><tr><th>Book</th><th>Sortino</th><th>Max drawdown</th><th>2008</th><th>2022</th></tr></thead>
+      <tbody>
+        <tr><td class="lab">ZION · 1&times; (structural)</td><td>5.20</td><td>&minus;4%</td><td class="up">+3%</td><td class="up">+9%</td></tr>
+        <tr><td class="lab">ZION · 2.54&times;</td><td>5.20</td><td>&minus;10%</td><td class="up">+9%</td><td class="up">+22%</td></tr>
+        <tr class="hl"><td class="lab">ZION · 4.0&times; (locked spec)</td><td>5.20</td><td>&minus;16%</td><td class="up">+13%</td><td class="up">+36%</td></tr>
+        <tr><td class="lab">S&amp;P 500 buy &amp; hold</td><td>0.91</td><td class="down">&minus;52%</td><td class="down">&minus;41%</td><td class="down">&minus;19%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="foot-note">2008 and 2022 columns are full-year returns. The point of the two worst equity years:
+    ZION was <span class="up">positive in both</span>, at every level.</p>
+  <p class="foot-note">On the Sortino: 5.20 is the ZION <em>system</em> figure, leverage-invariant. The combined
+    weekly&times;monthly <em>universe</em> book reports its own on a different basis &mdash; 4.13 monthly-basis
+    (50/50), 4.71 as last served &mdash; which the forward tape will confirm.</p>
+
+  <p style="margin-top:20px">Compounded over the window, a $100,000 stake grows to roughly <strong>$700K at
+    1&times;</strong>, <strong>$12M at 2.54&times;</strong>, and <strong>$150M at the locked 4&times;</strong> —
+    against about <strong>$500K</strong> for buying and holding the S&amp;P. The structural book already beats
+    the market at a fraction of its drawdown; leverage is then applied to a book whose <em>quality is already
+    fixed</em>, at a pre-set &minus;16% drawdown budget re-locked on 17 August 2026.</p>
+
+  <h2 class="sec"><span class="n">04</span>Why it holds up in a crisis</h2>
+  <p class="dek">Three mechanisms, none of which requires calling the top.</p>
+  <p><strong>Decorrelation across cadence.</strong> ZION runs a weekly book and a monthly book, combined
+    50/50 with zero selection freedom. Their returns correlate just <strong>+0.20</strong> — they make money in
+    different months. The monthly sleeves even carried the years the weekly book was still in its gate burn-in
+    (2007–2016), so the combined record has no dead decade.</p>
+  <p><strong>An always-on hedge.</strong> The two-year-Treasury leg and gold overlay are not tactical bets that
+    have to be right on timing — they are standing ballast that rises when risk assets bleed.</p>
+  <p><strong>A stress throttle.</strong> A daily tail-risk overlay (GreekWatch) feeds a governor that cuts gross
+    exposure as liquidity and volatility deteriorate, and takes the book flat under stress — mechanically, before
+    a drawdown compounds.</p>
+
+  <div class="box">
+    <div class="bh">The universe book, in one line</div>
+    <p style="margin:0">Weekly &times; monthly, 50/50 · correlation +0.20 · <strong>95% of years positive</strong>,
+      worst year &minus;2.3% (2015) · positive through both 2008 and 2022. The Permanent-Portfolio ambition —
+      something is always up — reached through structure rather than forecasting.</p>
+  </div>
+
+  <h2 class="sec"><span class="n">05</span>What this is not</h2>
+  <p class="dek">The same disclosures we hold ourselves to internally.</p>
+  <ol class="disc-list">
+    <li><b>Structure first; direction rationed.</b> The big equity sleeves track their own drift. The directional
+      edge is real but episodic — a few certified cells firing on ~1-in-5 months. If you need a directional call
+      every month, this isn't that; if you want an edge taken only when it clears out-of-sample, it is.</li>
+    <li><b>The assembly is fitted.</b> The components are walk-forward, but sleeve weights, hedge sizes, and
+      leverage were chosen on the full record. That is precisely why we gate real capital on a forward tape.</li>
+    <li><b>Provisional evidence.</b> One decade of armed history, concentrated post-2017. Equity legs are
+      price-only; financing on the leverage is unmodeled (about &minus;4.5 points a year at 4&times;).</li>
+    <li><b>The tape is 1 of 12 weeks in.</b> The as-issued forward record is 100% positive so far at a cumulative
+      +0.02% — a start, not a verdict. The 50/50 book confirms, or doesn't, around <b>mid-November 2026</b>.</li>
+  </ol>
+
+  <div class="pull">We would rather show you a small, honest live number than a large, unfalsifiable backtest.
+    Watch the tape fill in — that is the number that decides this.</div>
+
+  <div class="signoff">
+    <p style="margin-bottom:6px">A working MVP is live and issuing these calls in real time. If the structure
+      is the thing that interests you, the forward tape is the place to watch it earn its keep.</p>
+    <div class="by">Shaun Nanavati <span>· Zoltar Predicts · shaun@zoltarpredicts.com</span></div>
+  </div>
+
+  <p class="disclaimer">For informational purposes only and not an offer to sell or a solicitation to buy any
+    security. Performance figures referenced are backtested and hypothetical; backtested results have inherent
+    limitations and do not reflect actual trading. Past and hypothetical performance is not indicative of future
+    results. The prediction reports contain forward-looking forecasts that may prove incorrect. ZOLTAR Predicts
+    is an early-stage company; an investment involves substantial risk, including loss of the entire amount
+    invested.</p>
+  <p class="colophon">Zoltar Predicts · Hidden patterns in plain sight · Generated by the ZION system, August 2026</p>
+
+</div>

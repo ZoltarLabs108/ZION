@@ -1,0 +1,419 @@
+<meta charset="utf-8">
+<title>ZION Live Book</title>
+<style>
+  :root{
+    --ground:#ffffff; --surface:#f6f5fb; --surface-2:#eeecf8; --panel-line:#e4e1f2;
+    --ink:#181919; --ink-soft:#54525f; --faint:#8b8898; --rule:#e6e3f1;
+    --mystic:#6a49e8; --mystic-soft:#efeafe; --luck:#7bbf3f; --luck-fill:#9adc60;
+    --forest:#3f8f6e; --up:#1a7a3a; --down:#c0392b; --hold:#8b8898;
+    --sans:'Helvetica Neue',Helvetica,Arial,'Segoe UI',system-ui,sans-serif;
+    --mono:'SF Mono',ui-monospace,'Roboto Mono',Menlo,Consolas,monospace;
+    --shadow:0 1px 2px rgba(24,25,25,.04),0 8px 24px -12px rgba(106,73,232,.14);
+  }
+  :root:not([data-theme="light"]){}
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --ground:#121319; --surface:#1b1d25; --surface-2:#22242e; --panel-line:#2b2d38;
+      --ink:#ecebf3; --ink-soft:#a8a5b6; --faint:#6f6c7d; --rule:#2a2c37;
+      --mystic:#8f78f2; --mystic-soft:#221f3a; --luck:#9adc60; --luck-fill:#79ba43;
+      --forest:#5fa385; --up:#5fa385; --down:#e0725c; --hold:#6f6c7d;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px -14px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#121319; --surface:#1b1d25; --surface-2:#22242e; --panel-line:#2b2d38;
+    --ink:#ecebf3; --ink-soft:#a8a5b6; --faint:#6f6c7d; --rule:#2a2c37;
+    --mystic:#8f78f2; --mystic-soft:#221f3a; --luck:#9adc60; --luck-fill:#79ba43;
+    --forest:#5fa385; --up:#5fa385; --down:#e0725c; --hold:#6f6c7d;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px -14px rgba(0,0,0,.6);
+  }
+
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);
+    -webkit-font-smoothing:antialiased;line-height:1.5;}
+  .page{max-width:1120px;margin:0 auto;padding:clamp(20px,4vw,44px) clamp(16px,4vw,40px) 64px;}
+
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--faint);}
+  .num{font-variant-numeric:tabular-nums;}
+
+  /* Masthead */
+  .mast{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px;
+    border-bottom:2px solid var(--ink);padding-bottom:16px;}
+  .brand{display:flex;flex-direction:column;gap:6px}
+  .brand .wm{font-size:clamp(30px,6vw,46px);font-weight:700;letter-spacing:.14em;line-height:1}
+  .brand .wm .z-o{color:var(--mystic)}
+  .brand .sub{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft)}
+  .mast .meta{text-align:right;display:flex;flex-direction:column;gap:7px;align-items:flex-end}
+  .mast .asof{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+  .pill{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;
+    letter-spacing:.08em;text-transform:uppercase;padding:5px 11px;border-radius:999px;
+    background:var(--surface-2);color:var(--ink-soft);border:1px solid var(--panel-line)}
+  .pill .dot{width:7px;height:7px;border-radius:50%;background:var(--up)}
+  .pill.hold .dot{background:var(--hold)}
+
+  .thesis{margin:26px 0 6px;font-size:clamp(21px,3.4vw,30px);font-weight:600;letter-spacing:-.01em;
+    text-wrap:balance;max-width:22ch;line-height:1.15}
+  .thesis .g{color:var(--forest)}
+  .thesis-sub{color:var(--ink-soft);max-width:60ch;font-size:15px;margin-top:10px}
+
+  /* KPI hero */
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:30px}
+  .kpi{background:var(--surface);border:1px solid var(--panel-line);border-radius:14px;padding:18px 18px 16px;
+    box-shadow:var(--shadow);display:flex;flex-direction:column;gap:4px;position:relative;overflow:hidden}
+  .kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--mystic)}
+  .kpi.k-luck::before{background:var(--luck-fill)}
+  .kpi.k-forest::before{background:var(--forest)}
+  .kpi .lab{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+  .kpi .big{font-size:clamp(30px,4.4vw,42px);font-weight:700;letter-spacing:-.02em;line-height:1;margin-top:4px}
+  .kpi .vs{font-size:13px;color:var(--ink-soft)}
+  .kpi .vs b{color:var(--down);font-weight:600}
+
+  /* Grid layout */
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+  .card{background:var(--surface);border:1px solid var(--panel-line);border-radius:14px;
+    padding:20px 20px 18px;box-shadow:var(--shadow)}
+  .card h2{margin:0 0 3px;font-size:16px;font-weight:700;letter-spacing:-.01em;display:flex;align-items:center;gap:9px}
+  .card h2 .tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--mystic);background:var(--mystic-soft);padding:3px 7px;border-radius:5px;font-weight:400}
+  .card .note{color:var(--faint);font-size:12px;margin:0 0 14px}
+  .col-span{grid-column:1/-1}
+
+  /* Exposure rows */
+  .exp{display:flex;flex-direction:column;gap:11px}
+  .exp-row{display:grid;grid-template-columns:88px 1fr 56px;align-items:center;gap:12px}
+  .exp-row .nm{font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--ink-soft)}
+  .track{position:relative;height:12px;background:var(--surface-2);border-radius:6px;overflow:hidden}
+  .track .fill{position:absolute;top:0;bottom:0;left:0;border-radius:6px;background:var(--mystic)}
+  .track .fill.hedge{background:var(--forest)}
+  .track.flat{opacity:.55}
+  .exp-row .v{font-family:var(--mono);font-size:12px;text-align:right;color:var(--ink);font-variant-numeric:tabular-nums}
+  .exp-row .v.zero{color:var(--faint)}
+
+  .book-foot{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px;
+    padding-top:14px;border-top:1px solid var(--rule)}
+  .stat{display:flex;flex-direction:column;gap:2px}
+  .stat .s-lab{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+  .stat .s-val{font-size:20px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+  .stat .s-val small{font-size:12px;font-weight:400;color:var(--ink-soft)}
+
+  /* Metric bars (backtest) */
+  .metric{display:flex;flex-direction:column;gap:13px}
+  .mrow{display:grid;grid-template-columns:64px 1fr;align-items:center;gap:12px}
+  .mrow .mnm{font-family:var(--mono);font-size:11px;color:var(--ink-soft);letter-spacing:.03em}
+  .mrow .mnm.spy{color:var(--faint)}
+  .mbar{position:relative;height:22px;display:flex;align-items:center}
+  .mbar .b{height:22px;border-radius:5px;min-width:2px}
+  .mbar .b.pos{background:var(--luck-fill)}
+  .mbar .b.mys{background:var(--mystic)}
+  .mbar .b.neg{background:var(--down);opacity:.85}
+  .mbar .b.spy{background:var(--faint);opacity:.6}
+  .mbar .mv{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;padding:0 8px;white-space:nowrap}
+
+  /* diverging crisis chart */
+  .crisis{display:flex;flex-direction:column;gap:20px}
+  .crisis-grp .ctitle{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--faint);margin-bottom:10px}
+  .drow{display:grid;grid-template-columns:60px 1fr;align-items:center;gap:10px;margin-bottom:8px}
+  .drow .dnm{font-family:var(--mono);font-size:11px;color:var(--ink-soft)}
+  .drow .dnm.spy{color:var(--faint)}
+  .dchart{position:relative;height:20px}
+  .dchart .zero{position:absolute;left:50%;top:-2px;bottom:-2px;width:1px;background:var(--rule)}
+  .dbar{position:absolute;top:0;height:20px;border-radius:4px;display:flex;align-items:center}
+  .dbar.pos{left:50%;background:var(--luck-fill)}
+  .dbar.mys{left:50%;background:var(--mystic)}
+  .dbar.neg{background:var(--down);opacity:.85;justify-content:flex-start}
+  .dbar .dl{font-family:var(--mono);font-size:11px;font-variant-numeric:tabular-nums;padding:0 7px;color:var(--ink)}
+  .dbar.neg .dl{color:#fff}
+
+  /* growth tiles */
+  .growth{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  .gtile{background:var(--surface-2);border-radius:10px;padding:14px 12px;display:flex;flex-direction:column;gap:3px;
+    border:1px solid transparent}
+  .gtile.hi{border-color:var(--mystic)}
+  .gtile .gl{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+  .gtile .gv{font-size:clamp(18px,2.4vw,24px);font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+  .gtile.hi .gv{color:var(--mystic)}
+  .gtile .gx{font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  /* forward tape */
+  .tape-wrap{display:grid;grid-template-columns:1.3fr 1fr;gap:20px;align-items:start}
+  @media(max-width:640px){.tape-wrap{grid-template-columns:1fr}}
+  .weeks{display:flex;gap:5px;margin:12px 0 8px;flex-wrap:wrap}
+  .wk{width:26px;height:26px;border-radius:6px;background:var(--surface-2);border:1px solid var(--panel-line);
+    display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10px;color:var(--faint)}
+  .wk.done{background:var(--up);border-color:var(--up);color:#fff}
+  .wk.live{border-color:var(--mystic);color:var(--mystic);border-style:dashed}
+  .tape-note{font-size:12.5px;color:var(--ink-soft);max-width:44ch}
+  .tape-note b{color:var(--ink)}
+  .vs-live{display:flex;flex-direction:column;gap:9px}
+  .vs-line{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:baseline;
+    padding-bottom:9px;border-bottom:1px solid var(--rule)}
+  .vs-line:last-child{border-bottom:none}
+  .vs-line .who{font-family:var(--mono);font-size:11px;color:var(--ink-soft);letter-spacing:.03em}
+  .vs-line .r{font-family:var(--mono);font-size:13px;font-variant-numeric:tabular-nums;font-weight:600}
+  .vs-line .r.win{color:var(--up)} .vs-line .r.lose{color:var(--down)}
+
+  /* honesty / footer */
+  .honesty{margin-top:14px;background:var(--surface);border:1px solid var(--panel-line);border-radius:14px;padding:20px 22px}
+  .honesty h2{margin:0 0 12px;font-size:13px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;
+    font-family:var(--mono);color:var(--ink-soft)}
+  .hgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px 26px}
+  .hitem{display:flex;gap:10px;font-size:13px;color:var(--ink-soft);line-height:1.45}
+  .hitem .hk{color:var(--mystic);font-weight:700;flex:none}
+  .hitem b{color:var(--ink);font-weight:600}
+  .foot{margin-top:26px;padding-top:16px;border-top:1px solid var(--rule);
+    display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--faint);text-transform:uppercase}
+  .disc{margin-top:14px;font-size:11px;color:var(--faint);line-height:1.6;max-width:92ch}
+
+  /* directional engine */
+  .de-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:4px}
+  .de-cell{background:var(--surface-2);border:1px solid var(--panel-line);border-radius:10px;padding:14px 15px;
+    border-left:3px solid var(--forest)}
+  .de-cell.no{border-left-color:var(--down);opacity:.85}
+  .de-h{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.05em;display:flex;
+    justify-content:space-between;align-items:baseline;gap:8px}
+  .de-h .vtag{font-weight:400;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--forest)}
+  .de-cell.no .de-h .vtag{color:var(--down)}
+  .de-corr{font-size:13px;color:var(--ink-soft);margin:7px 0 12px}
+  .de-stats{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--rule);padding-top:9px}
+  .de-stats .de-fire{font-family:var(--mono);font-size:10px;letter-spacing:.04em;color:var(--faint);text-transform:uppercase}
+  .de-acc{font-size:20px;font-weight:700;font-variant-numeric:tabular-nums}
+  .de-cell.no .de-acc{color:var(--faint)}
+  @media(max-width:720px){.de-grid{grid-template-columns:1fr}}
+  @media(max-width:820px){.kpis{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}
+    .growth{grid-template-columns:repeat(2,1fr)}.hgrid{grid-template-columns:1fr}}
+</style>
+
+<div class="page">
+
+  <header class="mast">
+    <div class="brand">
+      <div class="wm">ZI<span class="z-o">&#9670;</span>N</div>
+      <div class="sub">Agentic AI Fund Manager &middot; Zoltar Predicts</div>
+    </div>
+    <div class="meta">
+      <div class="asof">Live book &middot; as of 20 Aug 2026</div>
+      <span class="pill"><span class="dot"></span>Throttle unstressed &middot; 1.00</span>
+      <span class="pill hold"><span class="dot"></span>Monthly leg &middot; cash this cycle</span>
+    </div>
+  </header>
+
+  <h1 class="thesis">We engineer the risk profile &mdash;<br><span class="g">and act on direction only where it survives OOS.</span></h1>
+  <p class="thesis-sub">ZION is a rules-based book of near-orthogonal sleeves. Its always-on edge is
+    second-moment &mdash; loss-limiting through decorrelation, a standing hedge, and stress-driven throttling. On
+    top of that, a cascade of articulable filters adds a genuine directional edge on the months one fires &mdash;
+    acted only where it beats drift out-of-sample. The numbers below are the walk-forward record, now proving out
+    live on the forward tape.</p>
+
+  <section class="kpis">
+    <div class="kpi">
+      <div class="lab">Sortino ratio</div>
+      <div class="big num">5.20</div>
+      <div class="vs">vs S&amp;P 500 <b>0.91</b></div>
+    </div>
+    <div class="kpi k-forest">
+      <div class="lab">Max drawdown &middot; 4&times;</div>
+      <div class="big num">&minus;16%</div>
+      <div class="vs">vs S&amp;P 500 <b>&minus;52%</b></div>
+    </div>
+    <div class="kpi k-luck">
+      <div class="lab">Both equity crises</div>
+      <div class="big num">Positive</div>
+      <div class="vs">2008 &amp; 2022, every level</div>
+    </div>
+    <div class="kpi">
+      <div class="lab">Live forward proof</div>
+      <div class="big num">1<span style="font-size:.5em;color:var(--faint)"> / 12</span></div>
+      <div class="vs">weeks resolved &middot; gate ~mid-Nov</div>
+    </div>
+  </section>
+
+  <div class="grid">
+
+    <!-- LIVE BOOK -->
+    <section class="card">
+      <h2>The book, right now <span class="tag">Live &middot; wk 2026-08-14</span></h2>
+      <p class="note">As-issued netted exposures per instrument. Positions persist to the next gated decision;
+        the book goes flat while the throttle is stressed.</p>
+      <div class="exp">
+        <div class="exp-row"><span class="nm">US_EQ</span>
+          <div class="track"><span class="fill" style="width:64%"></span></div><span class="v">+0.185</span></div>
+        <div class="exp-row"><span class="nm">NASDAQ</span>
+          <div class="track"><span class="fill" style="width:100%"></span></div><span class="v">+0.291</span></div>
+        <div class="exp-row"><span class="nm">GOLD</span>
+          <div class="track"><span class="fill hedge" style="width:16%"></span></div><span class="v">+0.045</span></div>
+        <div class="exp-row"><span class="nm">UST 2Y</span>
+          <div class="track"><span class="fill hedge" style="width:41%"></span></div><span class="v">+0.119</span></div>
+        <div class="exp-row"><span class="nm">SILVER</span>
+          <div class="track flat"></div><span class="v zero">0.000</span></div>
+        <div class="exp-row"><span class="nm">WTI</span>
+          <div class="track flat"></div><span class="v zero">0.000</span></div>
+      </div>
+      <div class="book-foot">
+        <div class="stat"><span class="s-lab">Netted gross</span><span class="s-val num">0.86&times;<br><small>cap 2.0&times;</small></span></div>
+        <div class="stat"><span class="s-lab">Throttle</span><span class="s-val num">1.00<br><small>unstressed</small></span></div>
+        <div class="stat"><span class="s-lab">Locked spec</span><span class="s-val num">4.0&times;<br><small>&minus;16% DD budget</small></span></div>
+      </div>
+    </section>
+
+    <!-- SORTINO + DD -->
+    <section class="card">
+      <h2>Risk-adjusted quality <span class="tag">OOS walk-forward</span></h2>
+      <p class="note">Sortino is leverage-invariant &mdash; the same 5.20 at every ZION level. Leverage scales
+        drawdown, not quality.</p>
+      <div class="metric" style="margin-bottom:20px">
+        <div class="mrow"><span class="mnm">ZION</span>
+          <div class="mbar"><span class="b pos" style="width:100%"></span><span class="mv">5.20</span></div></div>
+        <div class="mrow"><span class="mnm spy">S&amp;P B&amp;H</span>
+          <div class="mbar"><span class="b spy" style="width:17.5%"></span><span class="mv">0.91</span></div></div>
+      </div>
+      <p class="note" style="margin-bottom:12px">Maximum drawdown &mdash; ZION at each leverage level vs the market.</p>
+      <div class="metric">
+        <div class="mrow"><span class="mnm">ZION 1&times;</span>
+          <div class="mbar"><span class="b neg" style="width:7.7%"></span><span class="mv">&minus;4%</span></div></div>
+        <div class="mrow"><span class="mnm">ZION 2.54&times;</span>
+          <div class="mbar"><span class="b neg" style="width:19.2%"></span><span class="mv">&minus;10%</span></div></div>
+        <div class="mrow"><span class="mnm">ZION 4.0&times;</span>
+          <div class="mbar"><span class="b neg" style="width:30.8%"></span><span class="mv">&minus;16%</span></div></div>
+        <div class="mrow"><span class="mnm spy">S&amp;P B&amp;H</span>
+          <div class="mbar"><span class="b neg" style="width:100%;opacity:.55"></span><span class="mv">&minus;52%</span></div></div>
+      </div>
+      <p class="note" style="margin:14px 0 0;font-size:11px;line-height:1.5">On the number: <b style="color:var(--ink-soft)">5.20</b> is the ZION <i>system</i> figure (leverage-invariant, deck backtest). The combined weekly&times;monthly <i>universe</i> book carries its own provisional Sortino on a different basis &mdash; 4.13 monthly-basis (50/50), 4.71 as last served &mdash; pending the forward tape.</p>
+    </section>
+
+    <!-- CRISIS -->
+    <section class="card">
+      <h2>Positive through both crises <span class="tag">The point of the structure</span></h2>
+      <p class="note">ZION gained in the two worst equity years while the S&amp;P fell hard &mdash; loss-limiting by
+        construction (throttle + hedge + decorrelation), not a directional call.</p>
+      <div class="crisis">
+        <div class="crisis-grp">
+          <div class="ctitle">2008 financial crisis</div>
+          <div class="drow"><span class="dnm">ZION 1&times;</span><div class="dchart"><span class="zero"></span>
+            <span class="dbar pos" style="width:5.4%"><span class="dl">+3%</span></span></div></div>
+          <div class="drow"><span class="dnm">ZION 2.54&times;</span><div class="dchart"><span class="zero"></span>
+            <span class="dbar pos" style="width:16%"><span class="dl">+9%</span></span></div></div>
+          <div class="drow"><span class="dnm">ZION 4.0&times;</span><div class="dchart"><span class="zero"></span>
+            <span class="dbar mys" style="width:23%"><span class="dl">+13%</span></span></div></div>
+          <div class="drow"><span class="dnm spy">S&amp;P 500</span><div class="dchart"><span class="zero"></span>
+            <span class="dbar neg" style="width:50%;left:0;transform:translateX(0)"><span class="dl">&minus;41%</span></span></div></div>
+        </div>
+        <div class="crisis-grp">
+          <div class="ctitle">2022 bear market</div>
+          <div class="drow"><span class="dnm">ZION 1&times;</span><div class="dchart"><span class="zero"></span>
+            <span class="dbar pos" style="width:16%"><span class="dl">+9%</span></span></div></div>
+          <div class="drow"><span class="dnm">ZION 2.54&times;</span><div class="dchart"><span class="zero"></span>
+            <span class="dbar pos" style="width:39%"><span class="dl">+22%</span></span></div></div>
+          <div class="drow"><span class="dnm">ZION 4.0&times;</span><div class="dchart"><span class="zero"></span>
+            <span class="dbar mys" style="width:48%"><span class="dl">+36%</span></span></div></div>
+          <div class="drow"><span class="dnm spy">S&amp;P 500</span><div class="dchart"><span class="zero"></span>
+            <span class="dbar neg" style="width:30%;left:20%"><span class="dl">&minus;19%</span></span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GROWTH -->
+    <section class="card">
+      <h2>Growth of $100,000 <span class="tag">2007&ndash;2026 &middot; log</span></h2>
+      <p class="note">Terminal value of $100k, out-of-sample walk-forward. Equity legs price-only; financing
+        unmodeled (~&minus;4.5pp/yr at 4&times;).</p>
+      <div class="growth">
+        <div class="gtile hi"><span class="gl">ZION &middot; 4.0&times;</span><span class="gv">$150M</span><span class="gx">the locked spec</span></div>
+        <div class="gtile"><span class="gl">ZION &middot; 2.54&times;</span><span class="gv">$12M</span><span class="gx">prior lock</span></div>
+        <div class="gtile"><span class="gl">ZION &middot; 1&times;</span><span class="gv">$700K</span><span class="gx">structural</span></div>
+        <div class="gtile"><span class="gl">S&amp;P 500 B&amp;H</span><span class="gv">$500K</span><span class="gx">the market</span></div>
+      </div>
+      <p class="note" style="margin:16px 0 0">The structural 1&times; book already beats buy-and-hold at a fraction of
+        the drawdown; leverage is applied to a book whose <b style="color:var(--ink)">quality is fixed</b>, at a
+        pre-set &minus;16% drawdown budget.</p>
+    </section>
+
+  </div>
+
+  <!-- DIRECTIONAL ENGINE -->
+  <section class="card col-span" style="margin-top:14px">
+    <h2>The directional engine <span class="tag">RED DAWN cascade &middot; episodic</span></h2>
+    <p class="note">Structure runs every month; direction is rationed. The cascade keeps predictors defined by
+      real-world ratio thresholds and acts only on the ~1-in-5 months one fires &mdash; and only where the
+      drift-guard confirms it beats drift out-of-sample. Two cells clear that bar; the highest raw-accuracy cell
+      does not.</p>
+    <div class="de-grid">
+      <div class="de-cell">
+        <div class="de-h">GOLD <span class="vtag">OOS beats drift</span></div>
+        <div class="de-corr">Dollar Index &divide; M2 money</div>
+        <div class="de-stats"><span class="de-fire">fires ~19.5% of mo</span><span class="de-acc">71.8%</span></div>
+      </div>
+      <div class="de-cell">
+        <div class="de-h">SILVER <span class="vtag">OOS beats drift</span></div>
+        <div class="de-corr">Industrial prod. &divide; 10-yr yield</div>
+        <div class="de-stats"><span class="de-fire">fires ~25.5% of mo</span><span class="de-acc">70.5%</span></div>
+      </div>
+      <div class="de-cell no">
+        <div class="de-h">WTI <span class="vtag">rejected &middot; drift only</span></div>
+        <div class="de-corr">2Y Treasury &divide; Fed Funds</div>
+        <div class="de-stats"><span class="de-fire">highest raw acc.</span><span class="de-acc">73.4%</span></div>
+      </div>
+    </div>
+    <p class="note" style="margin:14px 0 0;font-size:11px;line-height:1.5">The credential is the out-of-sample
+      test, never the in-sample tier &mdash; which is why WTI's 73.4% is dropped and Gold's 71.8% is kept. The
+      ~70% figures are acted-months upper bounds confirmed to beat drift, not clean OOS. This cycle the monthly
+      leg is <b style="color:var(--ink-soft)">cash</b>: no asset sits in its certified pull tier (Gold T13,
+      Silver T4), so the engine stands aside.</p>
+  </section>
+
+  <!-- FORWARD TAPE -->
+  <section class="card col-span" style="margin-top:14px">
+    <h2>The binding test is live <span class="tag">As-issued forward tape</span></h2>
+    <p class="note">The components are out-of-sample; the assembly (weights, hedge sizes, leverage) was chosen
+      on the full record &mdash; so the live tape is the real proof. Every call is frozen at issue and scored only
+      once the outcome is known.</p>
+    <div class="tape-wrap">
+      <div>
+        <div class="weeks">
+          <span class="wk done">&check;</span><span class="wk live">2</span>
+          <span class="wk">3</span><span class="wk">4</span><span class="wk">5</span><span class="wk">6</span>
+          <span class="wk">7</span><span class="wk">8</span><span class="wk">9</span><span class="wk">10</span>
+          <span class="wk">11</span><span class="wk">12</span>
+        </div>
+        <p class="tape-note"><b>1 of 12 resolved weeks.</b> Forward record so far: 100% positive, cumulative
+          +0.02%. The 50/50 universe book confirms &mdash; or doesn't &mdash; around <b>mid-November 2026</b>. Real capital
+          scales in only as the tape clears.</p>
+      </div>
+      <div>
+        <div class="eyebrow" style="margin-bottom:10px">ZION vs the live book</div>
+        <div class="vs-live">
+          <div class="vs-line"><span class="who">2026-08-14 &middot; resolved</span><span class="r win">ZION +0.02% &middot; LIVE &minus;0.61%</span></div>
+          <div class="vs-line"><span class="who">2026-08-21 &middot; open</span><span class="r">&mdash; vs &mdash;</span></div>
+          <div class="vs-line"><span class="who">Record (1 resolved)</span><span class="r win">ZION wins 1 / 1</span></div>
+        </div>
+        <p class="note" style="margin:12px 0 0">Live side recomputed from public closes; AEGIS settlement tapes
+          are the official record. Verdicts need 12 resolved weeks.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HONESTY -->
+  <section class="honesty">
+    <h2>What these results are &mdash; and are not</h2>
+    <div class="hgrid">
+      <div class="hitem"><span class="hk">01</span><span><b>Out-of-sample where it counts.</b> Every signal, gate, and monthly call is one-step-ahead walk-forward &mdash; train &le; t&minus;H, 3-month embargo, in-fold selection, abstain by default.</span></div>
+      <div class="hitem"><span class="hk">02</span><span><b>Structure first, direction rationed.</b> The equity sleeves (SPY/QQQ) &asymp; their own drift (+1.0 / +0.7pp) &mdash; second-moment, loss-limiting. The directional edge is real but episodic: certified cascade cells that beat drift OOS, firing ~1-in-5 months.</span></div>
+      <div class="hitem"><span class="hk">03</span><span><b>The assembly is fitted.</b> Sleeve weights, hedge and overlay sizes, and leverage were chosen on the full record. That is why the live tape is the binding test.</span></div>
+      <div class="hitem"><span class="hk">04</span><span><b>Provisional.</b> One decade of armed evidence, concentrated post-2017. Financing unmodeled (~&minus;4.5pp/yr at 4&times;). Confirms ~mid-November 2026.</span></div>
+    </div>
+  </section>
+
+  <div class="foot">
+    <span>Zoltar Predicts &middot; ZION</span>
+    <span>Hidden patterns in plain sight</span>
+    <span>shaun@zoltarpredicts.com</span>
+  </div>
+  <p class="disc">For informational purposes only; not an offer to sell or a solicitation to buy any security.
+    Performance figures are backtested and hypothetical; backtested results have inherent limitations and do
+    not reflect actual trading. Past and hypothetical performance is not indicative of future results. ZOLTAR
+    Predicts is an early-stage company; an investment involves substantial risk, including loss of the entire
+    amount invested.</p>
+
+</div>
