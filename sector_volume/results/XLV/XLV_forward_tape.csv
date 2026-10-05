@@ -1,0 +1,5 @@
+issued,decision_row,horizon_months,label,integrated_call,type_call,type_cell,second_call,anchor,pulled_types,px,resolves,outcome
+2026-09-13,2026-08-01,1,absolute,UP,UP,T17,silent,P_G,"T2,T14,T17",171.6699981689453,2026-10-01,
+2026-09-28,2026-08-01,1,absolute,UP,UP,T17,silent,P_G,"T2,T14,T17",171.0155029296875,2026-10-01,
+2026-09-28,2026-08-01,1,absolute,UP,UP,T17,silent,P_G,"T2,T14,T17",171.0155029296875,2026-10-01,-2.816
+2026-10-05,2026-09-01,1,absolute,UP,UP,T14,UP,P_G,"T2,T14,T17",166.1999969482422,2026-11-01,

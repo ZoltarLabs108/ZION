@@ -1,0 +1,4 @@
+issued,decision_row,horizon_months,label,integrated_call,type_call,type_cell,second_call,anchor,pulled_types,px,resolves,outcome
+2026-09-14,2026-08-01,1,absolute,ABSTAIN,ABSTAIN,T14,silent,,,85.25,2026-10-01,
+2026-09-28,2026-08-01,1,absolute,ABSTAIN,ABSTAIN,T14,silent,,,84.6929931640625,2026-10-01,-5.152
+2026-10-05,2026-09-01,1,absolute,UP,ABSTAIN,T4,UP,,,80.33000183105469,2026-11-01,

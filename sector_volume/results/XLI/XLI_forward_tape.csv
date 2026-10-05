@@ -1,0 +1,4 @@
+issued,decision_row,horizon_months,label,integrated_call,type_call,type_cell,second_call,anchor,pulled_types,px,resolves,outcome
+2026-09-14,2026-08-01,1,absolute,UP,UP,T14,silent,PE,"T2,T23",172.72999572753906,2026-10-01,
+2026-09-28,2026-08-01,1,absolute,ABSTAIN,UP,T14,silent,PE,"T2,T23",172.2670135498047,2026-10-01,-2.105
+2026-10-05,2026-09-01,1,absolute,DOWN,DOWN,T2,silent,PE,"T2,T23",168.63999938964844,2026-11-01,

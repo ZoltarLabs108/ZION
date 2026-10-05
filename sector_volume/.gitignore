@@ -1,4 +1,6 @@
 data/
-results/
+results/**
+!results/**/
+!results/**/*_forward_tape.csv
 __pycache__/
 *.pyc
